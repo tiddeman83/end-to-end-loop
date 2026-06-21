@@ -278,3 +278,34 @@ Verification:
 - `git diff --check` -> pass.
 - Diff review -> pass; changes are docs/routing only.
 - CI after push.
+
+### Iteration 4 - DevBoss Overnight Sprint Kickoff
+
+Date: 2026-06-21
+Status: in progress on branch `devboss/todoist-routing-20260621203251`
+
+DevBoss office was activated for an overnight improvement sprint. Initial agents/research streams:
+
+- Research: agentic coding loops, verification ladders, SWE-bench-style metrics, ReAct/Reflexion/Self-Refine/SWE-agent patterns.
+- Operations: safe virtual-office workflow with separated GM, architecture, implementation, CI, security, release governance, novice testing, research, and Firebase roles.
+- Repo inspection: README, evaluation protocol, paper consistency, improvement backlog, and Hermes handoff maturity.
+
+Changes made in this pass:
+
+- Expanded README with purpose, validation caveat, and evaluation direction.
+- Rewrote `references/evaluation.md` into a concrete scoring rubric and result-log schema.
+- Expanded `evals/trigger-cases.json` with near-miss, ambiguous, deploy-block, and CAVEMAN-block scenarios.
+- Added overnight priority order and non-safe-without-approval boundaries to `research/improvement-plan.md`.
+- Fixed `paper.md` finding numbering, eval artifact naming, and Hermes/validation status language.
+- Added first-day/overnight operating mode to `handoff/hermes-devboss-brief.md`.
+
+Validation target:
+
+- Validate from a folder named `end-to-end-loop` because the validator intentionally enforces folder-name equality.
+- Run `git diff --check`.
+
+Next expected output:
+
+- Commit/push docs/eval improvement branch.
+- Continue scheduled overnight DevBoss sprint every two hours.
+- Report site progress in the hourly heartbeat; no live Firebase deploy without explicit approval.

@@ -77,6 +77,27 @@ This repository is maintained through a virtual office called **DevBoss**:
 
 See `handoff/hermes-devboss-brief.md` for the full operating model.
 
+## Why this matters
+
+Modern coding agents are powerful but often fail in predictable ways: they skip discovery, edit before reproducing, claim tests passed without evidence, or treat deployment as a normal final step. `end-to-end-loop` turns those failure modes into explicit gates.
+
+The skill's thesis is simple: an agent should keep looping until the requested code or application work is understood, implemented, verified, tested, security-reviewed when relevant, delivered inside approved scope, and reported with real evidence.
+
+## Validation caveat
+
+The validator intentionally checks that `SKILL.md` frontmatter name matches the folder name. Run validation from a checkout or copied skill folder named exactly `end-to-end-loop`; ad-hoc worktree names such as `end-to-end-loop-todoist-routing` will fail that folder-name check even when the skill contents are valid.
+
+## Evaluation direction
+
+Release readiness depends on more than local validation. The next release train tracks:
+
+- trigger accuracy on should-trigger and near-miss prompts;
+- loop compliance across DISCOVER, PLAN, EXECUTE, VERIFY, TEST, DELIVER/DEPLOY, REPORT;
+- CAVEMAN compliance for code-producing phases;
+- deploy safety under missing-CI, no-approval, and green-CI scenarios;
+- evidence quality in final reports;
+- reproducible outcome scenarios inspired by SWE-bench-style task resolution.
+
 ## Current release posture
 
 Private development. Public release later, after:

@@ -113,7 +113,7 @@ Implication: the loop should include a side-effect taxonomy and approval gate fo
 network access, external writes, credentials, production deploys, destructive file
 operations, dependency changes, and irreversible actions.
 
-### Finding 6: Hermes is a viable first-class maintenance target
+### Finding 5: Hermes is a viable first-class maintenance target
 
 Nous Research Hermes Agent documents compatibility with the Agent Skills standard,
 local skills under `~/.hermes/skills/`, external skill directories, context files,
@@ -125,7 +125,7 @@ Implication: Hermes can maintain this repo if given project context, a handoff
 brief, strict write approvals, Todoist routing, and a clear release-governance
 process.
 
-### Finding 5: Evaluation must test both activation and outcomes
+### Finding 6: Evaluation must test both activation and outcomes
 
 Skill evaluation guidance separates trigger accuracy from output quality. It also
 recommends baseline comparisons, fresh contexts, realistic prompts, edge cases, and
@@ -155,8 +155,9 @@ prompts, full task outcomes, safety behavior, and instruction-smell regressions.
 
 ## Limitations
 
-- Hermes compatibility is grounded in public Nous Research Hermes Agent docs, but
-  has not yet been tested inside a live Hermes workspace.
+- Hermes compatibility has been inspected from a live Hermes workspace, but the
+  skill has not yet been installed as an external Hermes skill and trigger-tested
+  end to end.
 - Research sources are current as of 2026-06-21, but these agent ecosystems are
   changing quickly.
 - The first iteration has not yet forward-tested the skill in independent agent
@@ -183,7 +184,7 @@ end-to-end-loop/
 │   ├── hermes-devboss-brief.md      # Hermes office setup and governance
 │   └── hermes-market-research-prompt.md
 ├── evals/
-│   └── evals.json                   # Future realistic eval cases
+│   └── trigger-cases.json           # Seed trigger eval cases
 ├── .github/workflows/validate.yml   # CI validation
 ├── AGENTS.md                        # Cross-agent repo instructions
 ├── .hermes.md                       # Hermes-first repo context
@@ -191,6 +192,19 @@ end-to-end-loop/
 ├── memory.md                        # Discussion memory, not packaged by default
 └── paper.md                         # Research paper draft, not packaged by default
 ```
+
+## Current Validation Status
+
+Observed during the first DevBoss office pass:
+
+- The Todoist-routing branch validates when copied or checked out under a folder
+  named exactly `end-to-end-loop`.
+- `git diff --check` passes on the worktree.
+- Running `python3 scripts/validate_skill.py .` from ad-hoc folder names such as
+  `devboss-end-to-end-loop` or `end-to-end-loop-todoist-routing` fails because the
+  validator intentionally requires the folder name to match `SKILL.md` frontmatter.
+- That failure is a packaging/checkout-path issue, not evidence that the current
+  skill contents are invalid.
 
 ## Current Release Candidate
 
