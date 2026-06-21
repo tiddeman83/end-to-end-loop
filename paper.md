@@ -68,8 +68,56 @@ This separation should improve portability while preserving rigor.
   Compilation for Cross-Framework LLM Agents": https://arxiv.org/abs/2605.03353
 - dos Santos et al. (2026), "Configuration Smells in AGENTS.md Files":
   https://arxiv.org/abs/2606.15828
+- Recent overnight scan additions:
+  - "Probe-and-Refine Tuning of Repository Guidance for Coding Agents":
+    https://arxiv.org/abs/2606.20512
+  - "Phoenix: Safe GitHub Issue Resolution via Multi-Agent LLMs":
+    https://arxiv.org/abs/2606.20243
+  - "SEAGym: An Evaluation Environment for Self-Evolving LLM Agents":
+    https://arxiv.org/abs/2606.17546
+  - "AutoPass: Evidence-Guided LLM Agents for Compiler Performance Tuning":
+    https://arxiv.org/abs/2606.20373
+  - "Beyond Static Endpoints: Tool Programs as an Interface for Flexible Agentic Web
+    Services": https://arxiv.org/abs/2606.19992
 
 ## Findings
+
+### Finding 7: Repository guidance is part of the agent harness
+
+The overnight research scan found recent work arguing that coding agents need
+repository-level operational guidance that does not live in source code: subsystem
+maps, validation commands, known failure patterns, and workflow conventions. This
+aligns with the repo's own `.hermes.md`, `AGENTS.md`, `handoff/`, and Todoist bridge
+pattern.
+
+Implication: DISCOVER should explicitly load project context, repo instructions,
+and current task state before editing. A strong end-to-end loop is not only a task
+algorithm; it is a harness around the agent that supplies the right operational
+memory at the right time.
+
+### Finding 8: Self-improvement should target the loop/harness, not just output
+
+Recent self-evolving-agent evaluation work frames improvement as changes to the
+agent harness: prompts, memory, tools, middleware, runtime state, and model-tool
+interaction loops. That is directly relevant to this project because the skill is
+itself a reusable harness.
+
+Implication: future metrics should track whether changes to the skill reduce failed
+verification cycles, improve validation pass rates, prevent unsafe side effects,
+and make final reports more auditable. Public release should be gated on measured
+loop behavior, not only on prose quality.
+
+### Finding 9: Safe multi-agent office work needs role separation plus evidence
+
+Recent multi-agent GitHub issue-resolution research emphasizes layered safety
+controls and baseline-aware test evaluation. For DevBoss this supports explicit
+planner, implementation, review, security, and release-governance lanes rather than
+one undifferentiated autonomous agent.
+
+Implication: DevBoss Office should treat agent personas as workstream roles with
+clear evidence obligations. Advisory research can happen in parallel, but repo
+changes become authoritative only after worktree implementation, validation, diff
+review, and branch push.
 
 ### Finding 1: The ecosystem is converging on progressive disclosure
 

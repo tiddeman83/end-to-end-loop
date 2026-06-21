@@ -226,3 +226,62 @@ Sources added:
   https://hermes-agent.nousresearch.com/docs/user-guide/features/context-files
 - Hermes Security:
   https://hermes-agent.nousresearch.com/docs/user-guide/security
+
+### Iteration 3 - Overnight DevBoss Research and Readiness Docs
+
+Status: prepared in worktree branch; no live deploy
+
+CAVEMAN/Cavekit lane:
+- Used `caveman-code` wrapper discipline for repo edits: context loaded, acceptance
+  criteria defined before edits, docs-only changes scoped to safe files, validation
+  planned before delivery.
+
+Todoist context ingested:
+- Repo is private and accessible.
+- User confirmed repo-first development and worktrees.
+- User wants a good README before eventual public release.
+- DevBoss board decisions should route through Todoist with parallel Telegram
+  mirroring.
+- Firebase will support a public information website for the skill.
+- Target domain is `dev-boss.nl`.
+- Firebase project context is the existing `tijmensassistant` project; no deploy
+  approval is currently in scope.
+- Website audience is AI researchers and AI users who want efficient work methods.
+- Website should explain the skill as a self-learning for-loop that keeps running
+  until a component/application is safe, tested, and complete.
+
+Research performed:
+- Queried arXiv for recent software-agent, testing/evaluation, self-improving-agent,
+  and multi-agent workflow papers.
+- Added a research note summarizing operational implications from:
+  - `arXiv:2606.20512` repository guidance for coding agents.
+  - `arXiv:2606.20243` Phoenix safe multi-agent GitHub issue resolution.
+  - `arXiv:2606.17546` SEAGym self-evolving agent evaluation.
+  - `arXiv:2606.20373` evidence-guided compiler optimization agents.
+  - `arXiv:2606.19992` tool-program interfaces for long-horizon workflows.
+
+Docs/readiness changes:
+- Added `README.md` so the private repo has an immediate orientation surface.
+- Added `research/overnight-agentic-loop-note-2026-06-21.md`.
+- Updated `paper.md` with new findings on repository guidance, harness-level
+  self-improvement, and safe multi-agent role separation.
+- Updated `memory.md` with DevBoss website/Todoist decisions.
+- Updated `handoff/hermes-devboss-brief.md` with current Firebase/site readiness.
+
+Site progress observed:
+- `https://tijmensassistant.web.app` returns HTTP 200 and serves TinTin assistant
+  cockpit content.
+- `https://dev-boss.nl` fails TLS hostname validation; it is not yet showable as a
+  DevBoss public site.
+- Remaining before showable public site: separate public info-site build/target,
+  correct custom-domain TLS, stats plan, CI/deploy route, smoke/security checks, and
+  explicit deploy approval.
+
+Acceptance criteria:
+- [x] Todoist DevBoss context ingested.
+- [x] Focused research scan completed and recorded.
+- [x] Safe docs/research/roadmap changes only; no Firebase deploy, public release,
+      data deletion, or secret exposure.
+- [x] Correct folder-name validation workaround passes.
+- [x] `git diff --check` passes.
+- [ ] Branch pushed or blocker recorded.

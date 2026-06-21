@@ -114,6 +114,22 @@ Suggested Todoist projects:
 
 The user will set up Firebase. Hermes should later build a website for the skill.
 
+Current known context from Todoist:
+- Desired domain: `dev-boss.nl`.
+- Firebase project context: existing `tijmensassistant` project / project number
+  `873713423755`.
+- Public audience: AI researchers and AI users who want efficient ways of working.
+- Purpose: explain the skill as a self-learning for-loop that keeps running until a
+  code component or application is completed safely and tested.
+- Backend/statistics access should be limited to `tijmenbaas83@gmail.com`.
+- Firebase is preferred for deployment, but no live deploy is approved by default.
+
+Observed site status on 2026-06-21:
+- `https://tijmensassistant.web.app` returns HTTP 200 and serves TinTin assistant
+  cockpit content.
+- `https://dev-boss.nl` fails TLS hostname validation; do not present it as ready.
+- A DevBoss public info-site preview/live URL is therefore not yet confirmed.
+
 Website goals:
 - Explain the end-to-end-loop skill and why it exists.
 - Show supported agents: Codex, Hermes, Claude Code, Cursor, AGENTS.md.

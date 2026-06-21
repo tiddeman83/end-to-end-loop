@@ -78,3 +78,33 @@ iterations do not re-litigate settled points.
 - Agent names can use Silicon Valley characters, Apple-related codenames, Anthropic
   and AI researcher-inspired codenames, but must be treated as codenames/personas.
 - Agents must not impersonate real people or claim affiliation with their companies.
+
+## DevBoss Website / Firebase Decisions
+
+- 2026-06-21: The support website should be a public information site for the skill,
+  not a private cockpit.
+- 2026-06-21: Desired public domain is `dev-boss.nl`.
+- 2026-06-21: The site should explain the skill's purpose and operation to AI
+  researchers and AI users seeking efficient work methods.
+- 2026-06-21: Positioning phrase to preserve: the skill is a self-learning for-loop
+  that keeps running until a code component or application is completed safely and
+  tested.
+- 2026-06-21: Visitor statistics are wanted, but backend/admin access should be
+  restricted to `tijmenbaas83@gmail.com`.
+- 2026-06-21: Firebase deployment is preferred later, but no deploy is approved in
+  the current overnight sprint.
+- 2026-06-21: Observed status: `https://tijmensassistant.web.app` is live for TinTin,
+  while `https://dev-boss.nl` has a certificate hostname mismatch and is not yet a
+  showable DevBoss URL.
+
+## DevBoss Metrics To Track
+
+- Loop completion rate against acceptance criteria.
+- Validation pass rate: local validator, `git diff --check`, CI, and task-specific
+  checks.
+- Iteration count before VERIFY/TEST green.
+- Safety gate hits for deploy, credentials, destructive actions, network writes, and
+  external state changes.
+- CAVEMAN compliance for code-producing phases.
+- Context freshness: Todoist/repo/project context read before edits.
+- PR readiness: branch pushed, PR created or manual PR URL supplied, CI observed.
