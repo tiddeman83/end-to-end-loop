@@ -156,7 +156,7 @@ Verification:
 
 ### Iteration 2 - Production Candidate and Hermes Handoff
 
-Status: implemented and locally validated; commit/push pending
+Status: complete and pushed
 
 User decisions:
 - CAVEMAN is a hard requirement, not an optional preference.
@@ -207,7 +207,7 @@ Acceptance criteria for this iteration:
 - [x] Market research prompt for Hermes exists.
 - [x] Local validation passes.
 - [x] Diff review passes.
-- [ ] Changes committed and pushed to GitHub.
+- [x] Changes committed and pushed to GitHub.
 
 Verification:
 - `python3 scripts/validate_skill.py .` -> pass.
@@ -215,6 +215,8 @@ Verification:
 - YAML frontmatter / config parse -> pass.
 - `python3 -m json.tool evals/trigger-cases.json` -> pass.
 - `git diff --check` -> pass.
+- Commit `38f63c4` pushed to `main`.
+- GitHub Actions `Validate skill` run `27903436563` -> success.
 
 Sources added:
 - Hermes Agent docs: https://hermes-agent.nousresearch.com/docs
