@@ -284,4 +284,4 @@ Acceptance criteria:
       data deletion, or secret exposure.
 - [x] Correct folder-name validation workaround passes.
 - [x] `git diff --check` passes.
-- [ ] Branch pushed or blocker recorded.
+- [x] Branch pushed: `devboss/overnight-research-20260621232145` (`214b7ea`).
