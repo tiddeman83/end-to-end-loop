@@ -104,11 +104,20 @@ For every board decision:
 4. Mirror the Todoist task ID or title back into DevBoss notes.
 5. Do not start approved-release implementation until the task/decision is routed.
 
-Suggested Todoist projects:
-- `DevBoss - End-to-End Loop`
-- `DevBoss - Market Research`
-- `DevBoss - Website/Firebase`
-- `DevBoss - Supervisory Board`
+Suggested Todoist structure:
+- Dedicated project: `DevBoss`.
+- Sections:
+  - `Board Decisions`
+  - `Release Plans`
+  - `Repo & CI`
+  - `Firebase Website`
+  - `Market Research`
+  - `Agent Tasks`
+  - `Done / Archive`
+- New user-created work items may start with `DevBoss :: {description}`. Hermes
+  should treat these as DevBoss office instructions/questions and poll them.
+- Mirror material decisions through Telegram as well when the active Hermes origin
+  supports it, so the user can follow up flexibly.
 
 ## Firebase Website Brief
 

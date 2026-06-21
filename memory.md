@@ -42,6 +42,20 @@ iterations do not re-litigate settled points.
 - 2026-06-21: The user sits on the Supervisory Board and approves new release plans.
 - 2026-06-21: Board decisions should route through the user's AI Assistant into
   Todoist and then back into DevBoss notes.
+- 2026-06-21: DevBoss work always uses git worktrees.
+- 2026-06-21: The repository remains private for now; public release comes later
+  after documentation, metrics, research support, and release readiness improve.
+- 2026-06-21: A good `README.md` is required before broader release.
+- 2026-06-21: Todoist routing should also be mirrored through Telegram where
+  possible so the user can flexibly follow up.
+- 2026-06-21: Use a dedicated Todoist project named `DevBoss` with decision-type
+  sections for board decisions, release plans, repo/CI, Firebase website, market
+  research, and agent tasks.
+- 2026-06-21: Firebase is a supporting website for the product/skill, not the
+  core product; create separate Todoist tasks for each required credential or
+  detail.
+- 2026-06-21: The fine-grained GitHub token supplied in chat works for now, but a
+  later `gh auth` or other durable access path should replace it.
 
 ## Questions To Revisit
 

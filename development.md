@@ -226,3 +226,55 @@ Sources added:
   https://hermes-agent.nousresearch.com/docs/user-guide/features/context-files
 - Hermes Security:
   https://hermes-agent.nousresearch.com/docs/user-guide/security
+
+### Iteration 3 - DevBoss Todoist Routing and README Baseline
+
+Status: in progress from Hermes handoff
+
+User decisions captured from Todoist:
+- `tiddeman83/end-to-end-loop` is the preferred source of truth above local copies.
+- Development continues in the private repo for now.
+- DevBoss work always uses worktrees.
+- A strong `README.md` is required before broader release.
+- Public release is later, after the skill is better supported by documentation,
+  metrics, and release readiness.
+- Firebase is a supporting website for the skill/product. The user will create the
+  Firebase environment; Hermes should create a separate task for each credential or
+  data item needed.
+- DevBoss decisions should be routed through Todoist and mirrored through Telegram
+  when possible.
+- Use a dedicated Todoist project named `DevBoss` with sections by decision/work
+  type.
+- The currently shared fine-grained GitHub token works, but should later be replaced
+  by `gh auth` or another durable access path.
+
+Changes made in this iteration:
+- Created `README.md` as a concise repo/product entry point.
+- Updated `memory.md` with the newly settled decisions.
+- Updated `.hermes.md` to watch `DevBoss ::` Todoist tasks and mirror decisions over
+  Telegram where possible.
+- Updated `handoff/hermes-devboss-brief.md` with the dedicated `DevBoss` Todoist
+  project structure and `DevBoss ::` task prefix.
+- Created Todoist project `DevBoss` with sections: `Board Decisions`,
+  `Release Plans`, `Repo & CI`, `Firebase Website`, `Market Research`,
+  `Agent Tasks`, and `Done / Archive`.
+- Created Firebase prerequisite tasks in the `Firebase Website` section.
+- Updated the local Hermes poller to run every 10 minutes and watch active and
+  recently completed DevBoss tasks, including `DevBoss ::` tasks.
+
+Acceptance criteria:
+- [x] Todoist has a dedicated DevBoss project and decision/work sections.
+- [x] Firebase prerequisite questions are individual Todoist tasks.
+- [x] Polling cadence is 10 minutes.
+- [x] Poller recognizes `DevBoss :: {description}` tasks.
+- [x] Repo documents the new routing and private-release decisions.
+- [x] README baseline exists.
+- [x] Local validation passes.
+- [x] Diff review passes.
+- [ ] Changes committed and pushed.
+
+Verification:
+- `python3 scripts/validate_skill.py .` via basename-matching validation copy -> pass.
+- `git diff --check` -> pass.
+- Diff review -> pass; changes are docs/routing only.
+- CI after push.
