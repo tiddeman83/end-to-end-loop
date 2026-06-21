@@ -17,11 +17,14 @@ with a word on why. This closes the loop back to DISCOVER/PLAN.>
 <The handful of choices that shaped the result — tech, approach, trade-offs — and why.>
 
 ## Testing
-- Smoke tests: <what was exercised, result — pass/fail>
-- Security review: <what was checked, result — clean / fixed items / open follow-ups>
+- CAVEMAN lane: <used lane / approved exception / not applicable>
+- Smoke tests: <what was exercised, result - pass/fail>
+- CI: <workflow/check/local equivalent, result, or why not applicable>
+- Security review: <what was checked, result - clean / fixed items / open follow-ups>
 
-## Deployment
-<Where it was deployed, how it was verified in the target, and how to roll back.>
+## Delivery / deployment
+<Classification: none / repo-only / prep-only / live-deploy. State what was delivered,
+whether live deploy was approved, how it was verified, and how to roll back or continue.>
 
 ## How to use it
 <Concise usage: commands, endpoints, entry points, config the user needs.>

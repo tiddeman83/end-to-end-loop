@@ -113,6 +113,18 @@ Implication: the loop should include a side-effect taxonomy and approval gate fo
 network access, external writes, credentials, production deploys, destructive file
 operations, dependency changes, and irreversible actions.
 
+### Finding 6: Hermes is a viable first-class maintenance target
+
+Nous Research Hermes Agent documents compatibility with the Agent Skills standard,
+local skills under `~/.hermes/skills/`, external skill directories, context files,
+agent-managed skills, write approval, skills hub installation, messaging gateways,
+subagents, persistent memory, scheduled automations, and sandboxed execution
+backends.
+
+Implication: Hermes can maintain this repo if given project context, a handoff
+brief, strict write approvals, Todoist routing, and a clear release-governance
+process.
+
 ### Finding 5: Evaluation must test both activation and outcomes
 
 Skill evaluation guidance separates trigger accuracy from output quality. It also
@@ -124,28 +136,33 @@ prompts, full task outcomes, safety behavior, and instruction-smell regressions.
 
 ## Design Implications
 
-- Remove mandatory CAVEMAN routing from the universal core. Keep it only as an
-  optional Codex/local adapter if the user wants it.
-- Reframe "DEPLOY" as "DELIVER" in the core, with live deployment as a conditional
-  high-risk subcase requiring explicit user approval.
+- Keep CAVEMAN as a mandatory execution lane because the user made it a hard
+  requirement. Portability should come from adapters, not from weakening the rule.
+- Reframe "DEPLOY" as "DELIVER / DEPLOY" in the core, with live deployment as a
+  conditional high-risk subcase requiring explicit user opt-in, project maturity,
+  applicable green CI, rollback, credentials approval, smoke tests, and security
+  review.
 - Preserve the existing phase loop, but make it adaptive by task risk and size.
 - Add a formal side-effect gate before commands that touch network, credentials,
   production systems, package registries, remote state, or destructive operations.
 - Split reference material by concern: phase loop, safety, adapters, evals, and
   report template.
 - Add trigger and outcome evals before declaring the skill mature.
+- Use a core-plus-adapters architecture for scalability: one universal `SKILL.md`
+  plus adapter references for agent-specific installation and invocation behavior.
+- Add a Hermes DevBoss operating layer outside the production skill package so
+  long-running maintenance can happen without bloating `SKILL.md`.
 
 ## Limitations
 
-- Hermes compatibility is not yet grounded in concrete Hermes skill-file
-  conventions. Public material confirms relevant capabilities but not the exact
-  packaging standard.
+- Hermes compatibility is grounded in public Nous Research Hermes Agent docs, but
+  has not yet been tested inside a live Hermes workspace.
 - Research sources are current as of 2026-06-21, but these agent ecosystems are
   changing quickly.
 - The first iteration has not yet forward-tested the skill in independent agent
   contexts.
-- The existing skill has not yet been rewritten; this paper currently supports a
-  plan, not a validated final artifact.
+- The current skill has passed local validation, but full cross-agent trigger and
+  outcome evals are still future work.
 
 ## Proposed Artifact Architecture
 
@@ -156,11 +173,35 @@ end-to-end-loop/
 │   ├── phase-checklists.md          # Core loop gates
 │   ├── test-and-security.md         # Safety and verification checks
 │   ├── adapters.md                  # Tool-specific packaging notes
-│   ├── evals.md                     # Trigger and outcome evaluation plan
+│   ├── evaluation.md                # Trigger and outcome evaluation plan
 │   └── report-template.md           # Final report shape
+├── scripts/
+│   └── validate_skill.py            # Dependency-free repo/skill validator
+├── agents/
+│   └── openai.yaml                  # Codex UI metadata
+├── handoff/
+│   ├── hermes-devboss-brief.md      # Hermes office setup and governance
+│   └── hermes-market-research-prompt.md
 ├── evals/
 │   └── evals.json                   # Future realistic eval cases
+├── .github/workflows/validate.yml   # CI validation
+├── AGENTS.md                        # Cross-agent repo instructions
+├── .hermes.md                       # Hermes-first repo context
 ├── development.md                   # Development log, not packaged by default
 ├── memory.md                        # Discussion memory, not packaged by default
 └── paper.md                         # Research paper draft, not packaged by default
 ```
+
+## Current Release Candidate
+
+The current repository state is a v0.2.0-style production candidate:
+
+- Universal core rewritten.
+- CAVEMAN hard gate added.
+- Deploy policy made conditional and CI-aware.
+- CI validator added.
+- Hermes DevBoss handoff added.
+- Improvement plan and market research prompt added.
+
+It is not yet a v1.0 public release because trigger/outcome evals have not been run
+across independent agent contexts and the Firebase website has not been built.

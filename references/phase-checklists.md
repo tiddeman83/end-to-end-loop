@@ -1,4 +1,4 @@
-# Phase checklists & exit criteria
+# Phase checklists and exit criteria
 
 Use these as concrete gates. A phase is done only when its exit criteria are met.
 Keep the written summaries short — they exist to carry context to the next phase.
@@ -11,6 +11,8 @@ Checklist:
 - [ ] Goal restated in own words; "done" defined concretely.
 - [ ] Inputs, files, access, credentials, target environment identified.
 - [ ] Constraints captured (language, framework, perf, deadline, platform).
+- [ ] Side effects identified: writes, network, installs, external services, data,
+      credentials, destructive actions, deploy.
 - [ ] Assumptions and risks listed.
 - [ ] Ambiguities resolved or explicitly deferred with user consent.
 
@@ -24,7 +26,7 @@ ASSUMPTIONS / RISKS: <...>
 OPEN QUESTIONS: <answered | deferred | none>
 ```
 
-Exit: goal unambiguous, needs known, questions handled.
+Exit: goal unambiguous, needs known, side effects classified, questions handled.
 
 ---
 
@@ -35,7 +37,9 @@ Checklist:
 - [ ] Each step has a verification hook ("how I'll know it worked").
 - [ ] Acceptance criteria for the whole task written (these drive VERIFY).
 - [ ] High-level test strategy noted (smoke paths + security concerns for TEST).
-- [ ] Deploy target and "successful deploy" defined.
+- [ ] Delivery target classified: `none`, `repo-only`, `prep-only`, or `live-deploy`.
+- [ ] Deploy opt-in checked. If live deploy is requested, deploy prerequisites are
+      listed: CI, maturity, rollback, credentials, approvals, target env.
 - [ ] Plan recorded as the task list.
 
 Acceptance criteria template:
@@ -45,14 +49,16 @@ AC2: <pass/fail condition>
 ...
 ```
 
-Exit: written plan + acceptance criteria + deploy target.
+Exit: written plan + acceptance criteria + delivery classification.
 
 ---
 
 ## EXECUTE
 
 Checklist:
-- [ ] CAVEMAN ULTRA / CAVEMAN CODE used if available (else fallback noted once).
+- [ ] CAVEMAN lane resolved before code/repo changes.
+- [ ] CAVEMAN ULTRA / CAVEMAN CODE, or configured equivalents, used for code
+      changes; if unavailable, explicit user exception recorded before edits.
 - [ ] Steps worked in order; task list kept current.
 - [ ] Built testable; verification hooks wired in.
 - [ ] Changes traceable (what changed and why).
@@ -78,7 +84,8 @@ If not green → ITERATE.
 
 Checklist:
 - [ ] VERIFY findings turned into a focused mini-plan.
-- [ ] Re-executed (CAVEMAN if available) and re-verified.
+- [ ] Re-executed through the required CAVEMAN lane or an explicit user-approved
+      exception, then re-verified.
 - [ ] Measurable progress each pass; approach changed if stuck.
 
 Exit: VERIFY all green → TEST.
@@ -90,9 +97,11 @@ Exit: VERIFY all green → TEST.
 Checklist:
 - [ ] Smoke tests cover critical end-to-end paths (see test-and-security.md).
 - [ ] Security review done (see test-and-security.md); use `security-review` skill if available.
+- [ ] CI status checked when a CI pipeline is applicable.
 - [ ] All issues collected; must-fix items routed back into the loop (planned, not patched).
 
-Exit: smoke tests pass AND security review clean. If not → ITERATE (after test).
+Exit: smoke tests pass, security review clean, and applicable CI is green or
+explicitly waived by the user. If not -> ITERATE (after test).
 
 ---
 
@@ -106,14 +115,20 @@ Exit: all tests green → DEPLOY.
 
 ---
 
-## DEPLOY
+## DELIVER / DEPLOY
 
 Checklist:
-- [ ] Prerequisites confirmed: tests green, security clean, target reachable, rollback understood.
-- [ ] Deployed to the agreed target (privileged/irreversible actions handed off to user with instructions).
-- [ ] Deploy verified: artifact runs and smoke path works in target env.
+- [ ] Delivery classification followed: `none`, `repo-only`, `prep-only`, or
+      `live-deploy`.
+- [ ] For live deploy: user explicitly opted in for this task.
+- [ ] For live deploy: project maturity, applicable CI, rollback, credentials, and
+      environment readiness confirmed.
+- [ ] Approved delivery completed: commit/push/PR/artifact/readiness report/deploy.
+- [ ] Delivery verified: branch pushed, artifact exists, PR opened, or deployed
+      target smoke-tested.
 
-Exit: deployed and confirmed working.
+Exit: approved delivery completed and verified. If live deploy conditions fail,
+deliver readiness report instead.
 
 ---
 
@@ -122,6 +137,7 @@ Exit: deployed and confirmed working.
 Checklist:
 - [ ] Report written from report-template.md.
 - [ ] Maps result back to the original goal and acceptance criteria.
-- [ ] Test + security results, deploy location, limitations, usage/rollback included.
+- [ ] CAVEMAN lane or approved exception recorded.
+- [ ] Test, CI, security results, delivery target, limitations, usage/rollback included.
 
 Exit: user has a clear, skimmable report.

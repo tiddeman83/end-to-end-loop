@@ -38,12 +38,12 @@ Initial observations:
 - The current "DEPLOY" phase needs a clearer cross-tool definition because many
   agents cannot deploy directly or should not deploy without user approval.
 
-Open decisions:
-- What exact agent surfaces must be first-class targets besides Codex and Hermes?
-- Should the skill be one universal markdown document, or a canonical core plus
-  adapters for different agent systems?
-- What level of mandatory user approval is required before external writes, deploys,
-  package installs, or destructive operations?
+Resolved / superseded decisions:
+- First-class targets for now: Codex, Hermes, Claude Code, Cursor, and AGENTS.md.
+- Architecture: canonical universal `SKILL.md` core plus adapter references.
+- User approval: live deploy and high-impact side effects require explicit approval
+  or the active tool's approval flow.
+- CAVEMAN is mandatory for code-producing phases; adapters provide portability.
 
 Research summary:
 - Agent Skills is now an open folder format centered on `SKILL.md`, with required
@@ -76,8 +76,8 @@ Safety implications:
   broad "always use me" language unless justified by explicit scope.
 - The skill should classify side effects and require approval for privileged,
   destructive, external, networked, credentialed, or production-impacting actions.
-- The current CAVEMAN execution contract is not portable. It should become an
-  optional Codex/local adapter, not part of the universal core.
+- The current CAVEMAN execution contract needs adapters for portability, but remains
+  part of the universal core because the user made it a hard requirement.
 - The current deploy phase should be generalized to "deliver or hand off" with a
   stricter deployment approval gate.
 
@@ -117,8 +117,8 @@ Proposed five-iteration roadmap:
 Critical questions for the user before Iteration 2:
 - Which surfaces are non-negotiable for v1: Codex, Hermes, Claude Code, Cursor,
   AGENTS.md, or another tool?
-- Should CAVEMAN remain as an optional adapter, or should it be removed entirely from
-  the public skill?
+- How strict should future releases be when a tool lacks any CAVEMAN-compatible
+  execution lane?
 - Should "DEPLOY" mean actual deployment by the agent, or should the default be
   "prepare, verify, and ask for explicit approval before any live deploy"?
 - Do you prefer a single canonical `SKILL.md` that is broadly compatible, or a
@@ -153,3 +153,74 @@ Verification:
 - Ouyang et al., "SkCC": https://arxiv.org/abs/2605.03353
 - dos Santos et al., "Configuration Smells in AGENTS.md Files":
   https://arxiv.org/abs/2606.15828
+
+### Iteration 2 - Production Candidate and Hermes Handoff
+
+Status: implemented and locally validated; commit/push pending
+
+User decisions:
+- CAVEMAN is a hard requirement, not an optional preference.
+- DEPLOY must be conditional per task. The user must explicitly opt in before live
+  deploy can run.
+- Live deploy also requires project maturity and an applicable CI pipeline.
+- Skill architecture choice is delegated to the assistant. Decision: use a
+  scalable core-plus-adapters model.
+- Hermes target follows Nous Research Hermes Agent conventions; no extra private
+  convention supplied.
+- Repo must be ready for later Hermes handoff to a virtual office named DevBoss.
+
+Design decisions:
+- Rewrote `SKILL.md` as the universal production core.
+- Moved tool-specific details into `references/adapters.md`.
+- Added `references/evaluation.md` for trigger/outcome/release evals.
+- Added `scripts/validate_skill.py`, a dependency-free validator for local and CI
+  checks.
+- Added GitHub Actions workflow `.github/workflows/validate.yml`.
+- Added `AGENTS.md` and `.hermes.md` so Hermes and other coding agents get repo
+  context without loading the whole skill into every prompt.
+- Added Hermes handoff files under `handoff/`:
+  - `hermes-devboss-brief.md`
+  - `hermes-market-research-prompt.md`
+- Added `research/improvement-plan.md` as the second-goal research/improvement plan.
+- Added `evals/trigger-cases.json` as the first eval seed.
+- Added `agents/openai.yaml` for Codex UI metadata.
+
+Hermes research updates:
+- Hermes docs state that skills live in `~/.hermes/skills/` and are compatible with
+  the Agent Skills open standard.
+- Hermes supports external skill directories via `skills.external_dirs`.
+- Hermes supports `skills.write_approval`; this should be enabled before Hermes
+  modifies this repo or installed skill copies.
+- Hermes supports context files including `.hermes.md`, `AGENTS.md`, `CLAUDE.md`,
+  and Cursor rule files, with `.hermes.md` highest priority.
+- Hermes includes messaging gateways, persistent memory, scheduled automations,
+  subagents, tool gateway, skills hub, and sandbox backends suitable for DevBoss.
+
+Acceptance criteria for this iteration:
+- [x] Universal core keeps CAVEMAN as a hard gate.
+- [x] Live deploy requires user opt-in, project maturity, applicable CI, rollback,
+      credentials approval, smoke tests, and security review.
+- [x] CI validation exists in the repo.
+- [x] Hermes handoff includes DevBoss office, named agents, Todoist routing, and
+      Firebase website brief.
+- [x] New improvement/research plan exists.
+- [x] Market research prompt for Hermes exists.
+- [x] Local validation passes.
+- [x] Diff review passes.
+- [ ] Changes committed and pushed to GitHub.
+
+Verification:
+- `python3 scripts/validate_skill.py .` -> pass.
+- `quick_validate.py` from `skill-creator` -> pass.
+- YAML frontmatter / config parse -> pass.
+- `python3 -m json.tool evals/trigger-cases.json` -> pass.
+- `git diff --check` -> pass.
+
+Sources added:
+- Hermes Agent docs: https://hermes-agent.nousresearch.com/docs
+- Hermes Skills System:
+  https://hermes-agent.nousresearch.com/docs/user-guide/features/skills
+- Hermes Context Files:
+  https://hermes-agent.nousresearch.com/docs/user-guide/features/context-files
+- Hermes Security:
+  https://hermes-agent.nousresearch.com/docs/user-guide/security

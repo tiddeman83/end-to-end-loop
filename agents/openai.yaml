@@ -1,0 +1,6 @@
+interface:
+  display_name: "End-to-End Loop"
+  short_description: "Disciplined coding delivery loop"
+  default_prompt: "Use $end-to-end-loop to take this coding task from plan through verified delivery."
+policy:
+  allow_implicit_invocation: true

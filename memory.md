@@ -29,12 +29,24 @@ iterations do not re-litigate settled points.
 - 2026-06-21: Repository name chosen as `tiddeman83/end-to-end-loop`.
 - 2026-06-21: Repository created as private.
 - 2026-06-21: Initial repository state pushed to GitHub.
+- 2026-06-21: CAVEMAN is a hard requirement for code-producing phases.
+- 2026-06-21: Live deploy is conditional per task and requires explicit user opt-in,
+  project maturity, applicable green CI, rollback, credentials approval, smoke
+  tests, and security review.
+- 2026-06-21: Architecture decision: use a universal `SKILL.md` core plus
+  adapter/reference files for Codex, Hermes, Claude Code, Cursor, and AGENTS.md.
+- 2026-06-21: Hermes handoff should use Nous Research Hermes Agent conventions,
+  including skills, context files, external dirs, write approval, subagents,
+  scheduled automation, and sandbox backends.
+- 2026-06-21: DevBoss virtual office is the intended Hermes operating model.
+- 2026-06-21: The user sits on the Supervisory Board and approves new release plans.
+- 2026-06-21: Board decisions should route through the user's AI Assistant into
+  Todoist and then back into DevBoss notes.
 
 ## Questions To Revisit
 
 - Define Hermes compatibility requirements from concrete Hermes conventions.
-- Decide whether CAVEMAN-specific routing remains as an optional adapter or is
-  removed from the universal core.
+- Define exact CAVEMAN-compatible adapters for each target tool.
 - Decide how strict the deploy gate should be for agents with limited permission
   models.
 
@@ -55,3 +67,14 @@ iterations do not re-litigate settled points.
   trust/security claims, and unsafe state-changing behavior.
 - A portable delivery loop should distinguish "deliverable prepared" from "live
   deployment executed" and require explicit approval for high-impact side effects.
+- Hermes supports Agent Skills, `~/.hermes/skills/`, external skill directories,
+  context files, write approval for skills, subagents, scheduled automation,
+  messaging gateways, and hardened sandbox backends.
+- Hermes should receive both a project context file and a handoff prompt so it can
+  run long-lived maintenance without needing this conversation.
+
+## DevBoss Naming Constraints
+
+- Agent names can use Silicon Valley characters, Apple-related codenames, Anthropic
+  and AI researcher-inspired codenames, but must be treated as codenames/personas.
+- Agents must not impersonate real people or claim affiliation with their companies.

@@ -1,0 +1,32 @@
+[
+  {
+    "query": "Fix the failing auth tests, update the code, and push the branch when everything is green.",
+    "should_trigger": true,
+    "reason": "Coding task with verification and repo delivery."
+  },
+  {
+    "query": "Build the Firebase landing page and deploy it after CI passes.",
+    "should_trigger": true,
+    "reason": "Build plus conditional deploy request."
+  },
+  {
+    "query": "Refactor this service and make sure the security review is clean before opening a PR.",
+    "should_trigger": true,
+    "reason": "Refactor with security and PR delivery."
+  },
+  {
+    "query": "Explain what a CI pipeline is.",
+    "should_trigger": false,
+    "reason": "Pure explanation, no delivery workflow."
+  },
+  {
+    "query": "Write a concise commit message for these changes.",
+    "should_trigger": false,
+    "reason": "Commit-message generation only."
+  },
+  {
+    "query": "Brainstorm ways we could make deployments safer.",
+    "should_trigger": false,
+    "reason": "Brainstorming, not implementation."
+  }
+]
