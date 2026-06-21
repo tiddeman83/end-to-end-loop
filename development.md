@@ -23,7 +23,7 @@ Started: 2026-06-21
 
 ### Iteration 1 - Repository, Research Frame, and Direction
 
-Status: in progress
+Status: research complete; awaiting user decisions
 
 Goals:
 - Create the private GitHub repository and connect this workspace to it.
@@ -45,6 +45,111 @@ Open decisions:
 - What level of mandatory user approval is required before external writes, deploys,
   package installs, or destructive operations?
 
+Research summary:
+- Agent Skills is now an open folder format centered on `SKILL.md`, with required
+  `name` and `description`, optional `scripts/`, `references/`, and `assets/`, and
+  progressive disclosure as a core design constraint.
+- Codex, Claude Code, and Cursor all support skills or similar rule formats, but
+  they differ in discovery paths, frontmatter extensions, invocation control, and
+  permission models.
+- AGENTS.md is the broadest cross-agent repository instruction format, but it is
+  less structured than a skill and is best treated as a compatibility adapter or
+  short project-level bridge.
+- Cursor distinguishes rules from skills: rules can be always-on, path-scoped,
+  manual, or agent-selected; Cursor also supports the Agent Skills standard and
+  loads from `.agents/skills`, `.cursor/skills`, and compatibility paths.
+- Claude Code adds fields for invocation control, subagent execution, allowed tools,
+  and skill visibility. It treats skills as prompt-based procedures and supports
+  isolated evaluation workflows.
+- Codex expects focused skills with concise descriptions, optional UI metadata, and
+  repo/user/admin/system scopes. Its docs emphasize trigger precision and local
+  authoring versus plugin distribution.
+- Hermes Agent is relevant as a compatibility target because public material says it
+  auto-generates skills, has persistent memory, isolated subagents, Python RPC
+  scripts, and multiple sandbox backends. Its concrete skill file conventions need
+  confirmation from the user or Hermes docs.
+
+Safety implications:
+- Recent research treats `SKILL.md` as operational text, not passive documentation.
+  Natural-language descriptions can influence discovery, selection, and governance.
+- A universal skill should avoid manipulative trigger phrasing, trust claims, and
+  broad "always use me" language unless justified by explicit scope.
+- The skill should classify side effects and require approval for privileged,
+  destructive, external, networked, credentialed, or production-impacting actions.
+- The current CAVEMAN execution contract is not portable. It should become an
+  optional Codex/local adapter, not part of the universal core.
+- The current deploy phase should be generalized to "deliver or hand off" with a
+  stricter deployment approval gate.
+
+Proposed five-iteration roadmap:
+
+1. Research and architecture baseline
+   - Capture sources, risks, and target compatibility requirements.
+   - Decide whether the canonical artifact is a single skill or core-plus-adapters.
+   - Output: this research log, paper draft, user questions.
+
+2. Universal core rewrite
+   - Rewrite `SKILL.md` to remove tool-specific assumptions from the core.
+   - Define the loop as a portable behavioral contract with explicit scaling rules.
+   - Output: universal `SKILL.md` v1 and updated phase checklists.
+
+3. Safety and permissions model
+   - Add side-effect taxonomy, approval gates, sandbox assumptions, rollback rules,
+     and secret-handling requirements.
+   - Output: revised `references/test-and-security.md` and safety acceptance checks.
+
+4. Adapter strategy
+   - Add concise adapters for Codex, Claude Code, Cursor, AGENTS.md, and Hermes.
+   - Decide packaging layout and what belongs in the final distributable versus the
+     development repository.
+   - Output: adapter references or generated target files.
+
+5. Evaluation and hardening
+   - Create trigger evals, task evals, should-not-trigger cases, and regression
+     checks for instruction bloat, conflicting instructions, and unsafe autonomy.
+   - Output: eval specification and results, with revisions based on failures.
+
+6. Paper and release candidate
+   - Consolidate research claims, limitations, and design rationale.
+   - Prepare a clean shareable package and a publication-ready `paper.md`.
+   - Output: release candidate commit and final report.
+
+Critical questions for the user before Iteration 2:
+- Which surfaces are non-negotiable for v1: Codex, Hermes, Claude Code, Cursor,
+  AGENTS.md, or another tool?
+- Should CAVEMAN remain as an optional adapter, or should it be removed entirely from
+  the public skill?
+- Should "DEPLOY" mean actual deployment by the agent, or should the default be
+  "prepare, verify, and ask for explicit approval before any live deploy"?
+- Do you prefer a single canonical `SKILL.md` that is broadly compatible, or a
+  canonical core plus generated/adapted files per agent ecosystem?
+- For Hermes specifically, can you provide the expected skill/rules format if it has
+  one, or should I infer compatibility from the public Hermes Agent capabilities?
+
 Verification:
-- Pending internet research.
-- Pending first commit and push.
+- GitHub repository created and initial commit pushed.
+- Internet research complete for the first pass.
+- Skill folder validates with the skill-creator `quick_validate.py` script after
+  running it in a temporary venv with `PyYAML`.
+
+## Sources Consulted
+
+- Agent Skills overview: https://agentskills.io/home
+- Agent Skills specification: https://agentskills.io/specification
+- Agent Skills best practices: https://agentskills.io/skill-creation/best-practices
+- Agent Skills description optimization: https://agentskills.io/skill-creation/optimizing-descriptions
+- Agent Skills evaluation guidance: https://agentskills.io/skill-creation/evaluating-skills
+- Agent Skills scripts guidance: https://agentskills.io/skill-creation/using-scripts
+- OpenAI Codex Agent Skills: https://developers.openai.com/codex/skills
+- OpenAI Codex sandboxing: https://developers.openai.com/codex/concepts/sandboxing
+- Claude Code skills: https://code.claude.com/docs/en/skills
+- Claude Code settings and permissions: https://code.claude.com/docs/en/settings
+- Cursor rules: https://cursor.com/docs/rules.md
+- Cursor skills: https://cursor.com/docs/skills.md
+- Cursor agent security: https://cursor.com/docs/agent/security.md
+- AGENTS.md open format: https://agents.md/
+- Hermes Agent: https://hermes-agent.nousresearch.com/
+- Saha et al., "Under the Hood of SKILL.md": https://arxiv.org/abs/2605.11418
+- Ouyang et al., "SkCC": https://arxiv.org/abs/2605.03353
+- dos Santos et al., "Configuration Smells in AGENTS.md Files":
+  https://arxiv.org/abs/2606.15828
