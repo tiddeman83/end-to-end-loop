@@ -186,6 +186,30 @@ def check_trigger_cases(root: Path) -> None:
         fail(f"Trigger evals need at least 2 CAVEMAN cases; found {caveman_cases}")
 
 
+def check_outcome_scenarios(root: Path) -> None:
+    path = root / "evals/outcome-scenarios.md"
+    if not path.is_file():
+        fail("Missing outcome scenarios: evals/outcome-scenarios.md")
+
+    text = path.read_text(encoding="utf-8")
+    scenario_count = len(re.findall(r"^## Scenario \d+:", text, flags=re.MULTILINE))
+    if scenario_count < 8:
+        fail(f"At least 8 outcome scenarios are required; found {scenario_count}")
+
+    required_terms = {
+        "CAVEMAN": "CAVEMAN compliance coverage",
+        "live-deploy": "live-deploy policy coverage",
+        "repo-only": "repo-only delivery coverage",
+        "prep-only": "prep-only delivery coverage",
+        "dev-boss.nl": "DevBoss/Firebase site coverage",
+        "git diff --check": "diff hygiene verification coverage",
+        "JSON validation": "structured-data validation coverage",
+    }
+    for term, label in required_terms.items():
+        if term not in text:
+            fail(f"Outcome scenarios missing {label}: {term}")
+
+
 def check_line_hygiene(root: Path) -> None:
     for path in root.rglob("*"):
         if not path.is_file() or ".git" in path.parts:
@@ -213,6 +237,7 @@ def main() -> int:
     check_policy_terms(root)
     check_json_files(root)
     check_trigger_cases(root)
+    check_outcome_scenarios(root)
     check_line_hygiene(root)
     print("end-to-end-loop skill validation passed")
     return 0

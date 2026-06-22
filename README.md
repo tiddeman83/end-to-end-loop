@@ -104,9 +104,9 @@ Release readiness depends on more than local validation. The next release train 
 Current branch baseline:
 
 - `evals/trigger-cases.json` contains 20 seed trigger cases.
-- `evals/outcome-scenarios.md` defines four manual outcome scenarios.
+- `evals/outcome-scenarios.md` defines eight manual outcome scenarios covering bugfix, feature, release, deploy, CAVEMAN, planning-only, and DevBoss cron paths.
 - `references/evaluation.md` defines the scoring rubric and result-log schema.
-- `scripts/validate_skill.py` now enforces baseline trigger-eval quality: minimum case count, positive/negative balance, near-miss negatives, deploy-policy coverage, and CAVEMAN coverage.
+- `scripts/validate_skill.py` now enforces baseline eval quality: trigger case count/balance/coverage and outcome scenario count/coverage.
 - Local validation passes when the repository is checked out or copied under a folder named exactly `end-to-end-loop`.
 - Public release is still blocked on running the evals, recording results, and polishing install docs/examples.
 

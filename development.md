@@ -371,3 +371,33 @@ Verification target:
 - `python3 scripts/validate_skill.py` from a copied folder named `end-to-end-loop`.
 - `python3 -m json.tool evals/trigger-cases.json`.
 - `git diff --check`.
+
+### Iteration 7 - Outcome Scenario Coverage Gate
+
+Date: 2026-06-22
+Status: complete locally on branch `devboss/todoist-routing-20260621203251`; push blocked by missing GitHub HTTPS credentials in this cron environment
+
+Daytime exception scope allowed safe repo/eval/site-readiness improvements. This pass inspected the current branch, confirmed `dev-boss.nl` responds with HTTP 200, and kept site deployment out of scope because this repository still has no Firebase Hosting source/config (`firebase.json` absent).
+
+Changes made in this pass:
+
+- Expanded `evals/outcome-scenarios.md` from four to eight scenarios, adding repo-only feature delivery, prep-only release readiness, conditional CI-green `dev-boss.nl` deploy, and DevBoss cron maintenance/Todoist-routing coverage.
+- Added `check_outcome_scenarios` to `scripts/validate_skill.py` so validation now enforces outcome scenario count and coverage for CAVEMAN, live-deploy, repo-only, prep-only, DevBoss/Firebase site, diff hygiene, and JSON validation.
+- Updated `README.md` and `references/evaluation.md` to describe the stronger eval quality floor.
+
+Acceptance criteria:
+
+- [x] Current repo and branch inspected before editing.
+- [x] Live `dev-boss.nl` state inspected without modifying production.
+- [x] One concrete safe improvement made to the repo.
+- [x] Outcome scenario validator passes through the folder-name workaround.
+- [x] Trigger eval JSON still validates.
+- [x] Diff hygiene passes.
+- [x] Changes committed locally.
+- [ ] Changes pushed (blocked: GitHub HTTPS credential unavailable to cron).
+
+Verification target:
+
+- `python3 scripts/validate_skill.py` from a copied folder named `end-to-end-loop`.
+- `python3 -m json.tool evals/trigger-cases.json`.
+- `git diff --check`.

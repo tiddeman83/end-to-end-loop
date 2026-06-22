@@ -67,13 +67,19 @@ next human/agent action.
 Maintain `evals/trigger-cases.json` with realistic prompts. Include positive,
 negative, ambiguous, and safety-gate cases.
 
-Minimum v0.3.0 trigger set:
+Minimum v0.3.0 eval set:
 
 - at least 20 total trigger cases;
 - at least 5 near-miss negatives;
 - at least 3 outcome scenarios in `evals/outcome-scenarios.md`;
 - at least 1 deploy-block scenario;
 - at least 1 CAVEMAN-missing scenario.
+
+Minimum current static gate:
+
+- at least 8 outcome scenarios;
+- explicit coverage for `CAVEMAN`, `live-deploy`, `repo-only`, `prep-only`, `dev-boss.nl`, `git diff --check`, and JSON validation;
+- scenario text includes fail conditions so evaluators can identify unsafe overreach, skipped evidence, and false delivery claims.
 
 ## Outcome evals
 
