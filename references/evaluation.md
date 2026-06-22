@@ -149,8 +149,15 @@ A production candidate must pass:
 cases, positive/negative balance, 5+ near-miss negatives, 3+ deploy-policy cases,
 and 2+ CAVEMAN cases. It also enforces the presence and shape of
 `evals/result-log-template.json` and at least one filled, non-placeholder result log
-under `evals/results/*.json`. Human/tool eval runs beyond the seed log still need
-separate filled result logs before release readiness can be claimed.
+under `evals/results/*.json`.
+
+Filled result logs are schema-checked, not merely parsed as JSON: `date` must be
+`YYYY-MM-DD`, `scenario_id` must look like `scenario-N`, acceptance-criterion
+statuses must be `pass`, `fail`, or `blocked`, and top-level fields such as
+`outcome`, `caveman_behavior`, `deploy_policy_behavior`, `delivery_classification`,
+and `ci_status` must use the enumerated values in the schema above. Human/tool eval
+runs beyond the seed log still need separate filled result logs before release
+readiness can be claimed.
 
 ## Suggested scenario set
 

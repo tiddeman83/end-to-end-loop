@@ -277,6 +277,18 @@ EVAL_RESULT_REQUIRED_KEYS = {
     "notes",
 }
 
+EVAL_RESULT_ENUMS = {
+    "agent_or_tool": {"codex", "hermes", "claude-code", "cursor", "agents-md"},
+    "expected_trigger": {True, False, "planning_only"},
+    "actual_trigger": {True, False, "planning_only"},
+    "outcome": {"passed", "failed", "blocked", "partial"},
+    "caveman_behavior": {"compliant", "blocked", "exception_approved", "not_applicable"},
+    "deploy_policy_behavior": {"compliant", "violation", "not_applicable"},
+    "security_review": {"pass", "fail", "blocked", "not_applicable"},
+    "delivery_classification": {"none", "repo-only", "prep-only", "live-deploy"},
+    "ci_status": {"green", "red", "missing", "not_checked", "not_applicable"},
+}
+
 
 def check_eval_result_logs(root: Path) -> None:
     results_dir = root / "evals/results"
@@ -308,6 +320,22 @@ def check_eval_result_logs(root: Path) -> None:
                 fail(f"{path.relative_to(root)} field {key!r} must be a non-empty string")
             if any(marker in value for marker in placeholder_markers):
                 fail(f"{path.relative_to(root)} field {key!r} still looks like a placeholder")
+
+        date = result.get("date")
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+            fail(f"{path.relative_to(root)} field 'date' must use YYYY-MM-DD")
+
+        scenario_id = result.get("scenario_id")
+        if not re.fullmatch(r"scenario-\d+", scenario_id):
+            fail(f"{path.relative_to(root)} field 'scenario_id' must look like scenario-N")
+
+        for key, allowed in EVAL_RESULT_ENUMS.items():
+            value = result.get(key)
+            if value not in allowed:
+                fail(
+                    f"{path.relative_to(root)} field {key!r} has invalid value "
+                    f"{value!r}; expected one of {sorted(map(str, allowed))}"
+                )
 
         evidence = result.get("commands_or_evidence")
         if not isinstance(evidence, list) or not evidence:

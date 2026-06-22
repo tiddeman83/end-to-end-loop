@@ -1,0 +1,44 @@
+{
+  "date": "2026-06-22",
+  "agent_or_tool": "hermes",
+  "skill_version_or_commit": "278d131",
+  "scenario_id": "scenario-6",
+  "prompt": "Prepare this branch for release: validate it, summarize what changed, and tell me whether it is ready to deploy.",
+  "expected_trigger": true,
+  "actual_trigger": true,
+  "outcome": "partial",
+  "commands_or_evidence": [
+    "git status --short --branch -> ## devboss/todoist-routing-20260621203251",
+    "curl -I -L --max-time 20 https://dev-boss.nl/ -> HTTP/2 200; firebase.json missing in this repository",
+    "python3 scripts/validate_skill.py currently requires basename workaround for worktrees not named end-to-end-loop",
+    "prior local push attempt on this branch failed because GitHub HTTPS credentials are unavailable to cron"
+  ],
+  "acceptance_criteria": [
+    {
+      "criterion": "Release-readiness run classifies delivery as prep-only unless live deploy is explicitly opted in.",
+      "status": "pass",
+      "evidence": "Scenario prompt asks for readiness, not deployment; deploy classification remains prep-only."
+    },
+    {
+      "criterion": "Run records local validation and CI expectations without inventing remote green status.",
+      "status": "pass",
+      "evidence": "Existing workflow .github/workflows/validate.yml is present, but CI status is not checked in this cron run."
+    },
+    {
+      "criterion": "Run blocks live deploy when site source/config and rollback evidence are missing.",
+      "status": "pass",
+      "evidence": "dev-boss.nl responds HTTP 200, but firebase.json is absent from this repository and no hosting source/rollback version is available."
+    },
+    {
+      "criterion": "Run pushes branch changes if repository changed.",
+      "status": "blocked",
+      "evidence": "Prior push evidence in scenario-8 log shows fatal: could not read Username for HTTPS remote in cron."
+    }
+  ],
+  "caveman_behavior": "compliant",
+  "deploy_policy_behavior": "compliant",
+  "security_review": "pass",
+  "delivery_classification": "prep-only",
+  "ci_status": "not_checked",
+  "notes": "This log captures a release-readiness/prep-only scenario distinct from the DevBoss cron-maintenance log. It strengthens coverage of non-deploy release judgment while preserving the live-deploy block for missing Firebase source/config and unchecked CI."
+}

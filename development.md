@@ -483,3 +483,53 @@ Verification:
 - `git diff --check` -> pass.
 - `git commit -m "test: require filled eval result logs"` -> local commit created.
 - `git push origin devboss/todoist-routing-20260621203251` -> blocked: `fatal: could not read Username for 'https://github.com': No such device or address`.
+
+### Iteration 10 - Stricter Eval Result Schema and Release-Readiness Coverage
+
+Date: 2026-06-22
+Status: in progress on branch `devboss/todoist-routing-20260621203251`
+
+Daytime DevBoss run continued from the current PR branch. The repo and live site
+were inspected first; production deploy stayed blocked because this repository still
+has no Firebase Hosting source/config or rollback evidence. The concrete improvement
+strengthens the evaluation basis rather than touching production.
+
+Plan / acceptance criteria:
+
+- [x] Inspect current branch, live `dev-boss.nl`, Firebase/site config, and CI files
+      before editing.
+- [x] Make one safe repo improvement through the CAVEMAN CODE lane.
+- [x] Add stronger machine validation for filled eval result logs.
+- [x] Add or preserve structured JSON result coverage for a release-readiness case.
+- [x] Run skill validation through the folder-name workaround.
+- [x] Run JSON validation for changed result logs.
+- [x] Run Python syntax check and `git diff --check`.
+- [ ] Commit and push branch if validation is green and credentials allow.
+- [ ] Deploy `dev-boss.nl` only if Firebase/site source, CI, smoke, and rollback gates
+      are satisfied.
+
+Changes made in this pass:
+
+- Tightened `scripts/validate_skill.py` result-log checks with enumerated top-level
+  values, `YYYY-MM-DD` date validation, and `scenario-N` identifier validation.
+- Updated `references/evaluation.md` to document that filled logs are schema-checked,
+  not merely JSON-parsed.
+- Added `evals/results/2026-06-22-scenario-6-release-readiness.json` to cover the
+  prep-only release-readiness scenario separately from the DevBoss cron scenario.
+
+Verification target:
+
+- `python3 <tmp>/end-to-end-loop/scripts/validate_skill.py <tmp>/end-to-end-loop`.
+- `python3 -m json.tool evals/results/2026-06-22-scenario-6-release-readiness.json`.
+- `python3 -m py_compile scripts/validate_skill.py`.
+- `git diff --check`.
+
+Verification:
+
+- `python3 <tmp>/end-to-end-loop/scripts/validate_skill.py <tmp>/end-to-end-loop` -> `end-to-end-loop skill validation passed`.
+- `python3 -m json.tool evals/results/2026-06-22-scenario-6-release-readiness.json` -> pass.
+- `python3 -m json.tool evals/results/2026-06-22-scenario-8-devboss-cron.json` -> pass.
+- `python3 -m json.tool evals/result-log-template.json` -> pass.
+- `python3 -m json.tool evals/trigger-cases.json` -> pass.
+- `python3 -m py_compile scripts/validate_skill.py` -> pass.
+- `git diff --check` -> pass.
