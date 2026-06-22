@@ -258,6 +258,79 @@ def check_eval_result_template(root: Path) -> None:
             fail(f"Eval result template acceptance_criteria entry missing key: {key}")
 
 
+EVAL_RESULT_REQUIRED_KEYS = {
+    "date",
+    "agent_or_tool",
+    "skill_version_or_commit",
+    "scenario_id",
+    "prompt",
+    "expected_trigger",
+    "actual_trigger",
+    "outcome",
+    "commands_or_evidence",
+    "acceptance_criteria",
+    "caveman_behavior",
+    "deploy_policy_behavior",
+    "security_review",
+    "delivery_classification",
+    "ci_status",
+    "notes",
+}
+
+
+def check_eval_result_logs(root: Path) -> None:
+    results_dir = root / "evals/results"
+    if not results_dir.is_dir():
+        fail("Missing eval result logs directory: evals/results")
+
+    logs = sorted(results_dir.glob("*.json"))
+    if not logs:
+        fail("At least one eval result log is required in evals/results/*.json")
+
+    allowed_statuses = {"pass", "fail", "blocked"}
+    placeholder_markers = ("<", "YYYY", "|", "prompt here")
+
+    for path in logs:
+        try:
+            result = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            fail(f"Invalid JSON in {path.relative_to(root)}: {exc}")
+        if not isinstance(result, dict):
+            fail(f"{path.relative_to(root)} must contain a JSON object")
+
+        missing = sorted(EVAL_RESULT_REQUIRED_KEYS - set(result))
+        if missing:
+            fail(f"{path.relative_to(root)} missing required keys: {missing}")
+
+        for key in ("date", "agent_or_tool", "scenario_id", "prompt", "outcome", "notes"):
+            value = result.get(key)
+            if not isinstance(value, str) or not value.strip():
+                fail(f"{path.relative_to(root)} field {key!r} must be a non-empty string")
+            if any(marker in value for marker in placeholder_markers):
+                fail(f"{path.relative_to(root)} field {key!r} still looks like a placeholder")
+
+        evidence = result.get("commands_or_evidence")
+        if not isinstance(evidence, list) or not evidence:
+            fail(f"{path.relative_to(root)} needs non-empty commands_or_evidence")
+        if not all(isinstance(item, str) and item.strip() for item in evidence):
+            fail(f"{path.relative_to(root)} commands_or_evidence entries must be non-empty strings")
+
+        criteria = result.get("acceptance_criteria")
+        if not isinstance(criteria, list) or not criteria:
+            fail(f"{path.relative_to(root)} needs non-empty acceptance_criteria")
+        for idx, criterion in enumerate(criteria, start=1):
+            if not isinstance(criterion, dict):
+                fail(f"{path.relative_to(root)} acceptance criterion {idx} must be an object")
+            for key in ("criterion", "status", "evidence"):
+                if key not in criterion:
+                    fail(f"{path.relative_to(root)} acceptance criterion {idx} missing {key!r}")
+            if criterion["status"] not in allowed_statuses:
+                fail(
+                    f"{path.relative_to(root)} acceptance criterion {idx} has invalid status "
+                    f"{criterion['status']!r}"
+                )
+
+
 def check_line_hygiene(root: Path) -> None:
     for path in root.rglob("*"):
         if not path.is_file() or ".git" in path.parts:
@@ -287,6 +360,7 @@ def main() -> int:
     check_trigger_cases(root)
     check_outcome_scenarios(root)
     check_eval_result_template(root)
+    check_eval_result_logs(root)
     check_line_hygiene(root)
     print("end-to-end-loop skill validation passed")
     return 0

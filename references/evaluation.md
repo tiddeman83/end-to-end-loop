@@ -148,8 +148,9 @@ A production candidate must pass:
 `validate_skill.py` enforces the static floor for `evals/trigger-cases.json`: 20+
 cases, positive/negative balance, 5+ near-miss negatives, 3+ deploy-policy cases,
 and 2+ CAVEMAN cases. It also enforces the presence and shape of
-`evals/result-log-template.json`. Human/tool eval runs still need separate filled
-result logs.
+`evals/result-log-template.json` and at least one filled, non-placeholder result log
+under `evals/results/*.json`. Human/tool eval runs beyond the seed log still need
+separate filled result logs before release readiness can be claimed.
 
 ## Suggested scenario set
 

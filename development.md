@@ -434,3 +434,52 @@ Verification target:
 - `python3 -m json.tool evals/trigger-cases.json`.
 - `python3 -m py_compile scripts/validate_skill.py`.
 - `git diff --check`.
+
+### Iteration 9 - Seed Filled Scenario Result Log
+
+Date: 2026-06-22
+Status: committed locally on branch `devboss/todoist-routing-20260621203251`; push blocked by missing GitHub HTTPS credentials in this cron environment
+
+Daytime exception scope allowed safe repo/eval/site-readiness improvements. This pass
+inspected the current branch and live `dev-boss.nl` state, then converted the eval
+result-log work from template-only to a filled evidence artifact.
+
+Changes made in this pass:
+
+- Added `evals/results/2026-06-22-scenario-8-devboss-cron.json` as the first
+  structured Scenario 8 DevBoss cron-maintenance result log.
+- Added `check_eval_result_logs` to `scripts/validate_skill.py`, requiring at least
+  one filled result log and rejecting missing keys, empty evidence, invalid criterion
+  statuses, and obvious placeholders.
+- Updated `README.md` and `references/evaluation.md` so maintainers know filled
+  result logs are part of the static release-readiness floor.
+
+Acceptance criteria:
+
+- [x] Current repo and branch inspected before editing.
+- [x] Live `dev-boss.nl` state inspected without modifying production.
+- [x] One concrete safe improvement made to the repo.
+- [x] Filled result-log JSON validates.
+- [x] Skill validation passes through the folder-name workaround.
+- [x] Diff hygiene passes.
+- [x] Python syntax check passes for the validator.
+- [x] Changes committed locally.
+- [ ] Changes pushed (blocked: GitHub HTTPS credential unavailable to cron).
+
+Verification target:
+
+- `python3 scripts/validate_skill.py` from a copied folder named `end-to-end-loop`.
+- `python3 -m json.tool evals/results/2026-06-22-scenario-8-devboss-cron.json`.
+- `python3 -m py_compile scripts/validate_skill.py`.
+- `git diff --check`.
+
+Verification:
+
+- `python3 <tmp>/end-to-end-loop/scripts/validate_skill.py <tmp>/end-to-end-loop` -> `end-to-end-loop skill validation passed`.
+- `python3 -m json.tool evals/results/2026-06-22-scenario-8-devboss-cron.json` -> pass.
+- `python3 -m json.tool evals/result-log-template.json` -> pass.
+- `python3 -m json.tool evals/trigger-cases.json` -> pass.
+- `python3 -m py_compile scripts/validate_skill.py` -> pass.
+- `git diff --check` -> pass.
+- `git commit -m "test: require filled eval result logs"` -> local commit created.
+- `git push origin devboss/todoist-routing-20260621203251` -> blocked: `fatal: could not read Username for 'https://github.com': No such device or address`.
