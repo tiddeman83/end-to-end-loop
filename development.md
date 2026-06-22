@@ -337,3 +337,37 @@ Verification target:
 
 - Validate from a folder named `end-to-end-loop` because the validator intentionally enforces folder-name equality.
 - Run JSON validation and `git diff --check`.
+
+### Iteration 6 - Trigger Eval Static Quality Gate
+
+Date: 2026-06-22
+Status: committed locally on branch `devboss/todoist-routing-20260621203251`; push blocked by missing GitHub HTTPS credentials in this cron environment
+
+Daytime exception scope allowed safe repo/eval improvements. This pass inspected the
+repo state and strengthened the validator so evaluation artifacts are no longer just
+present; they must meet a minimum quality floor before release validation can pass.
+
+Changes made in this pass:
+
+- Added `check_trigger_cases` to `scripts/validate_skill.py`.
+- The validator now enforces `evals/trigger-cases.json` shape, 20+ cases,
+  positive/negative balance, 5+ near-miss negatives, 3+ deploy-policy cases, and
+  2+ CAVEMAN cases.
+- Updated `README.md` and `references/evaluation.md` so maintainers know this
+  static eval floor is part of local/CI validation.
+
+Acceptance criteria:
+
+- [x] Current repo and branch inspected before editing.
+- [x] One concrete safe improvement made to the repo.
+- [x] Trigger eval JSON still validates.
+- [x] Local skill validation passes through the folder-name workaround.
+- [x] Diff hygiene passes.
+- [x] Changes committed locally.
+- [ ] Changes pushed (blocked: GitHub HTTPS credential unavailable to cron).
+
+Verification target:
+
+- `python3 scripts/validate_skill.py` from a copied folder named `end-to-end-loop`.
+- `python3 -m json.tool evals/trigger-cases.json`.
+- `git diff --check`.

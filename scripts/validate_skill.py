@@ -118,6 +118,74 @@ def check_json_files(root: Path) -> None:
             fail(f"Invalid JSON in {path.relative_to(root)}: {exc}")
 
 
+def check_trigger_cases(root: Path) -> None:
+    path = root / "evals/trigger-cases.json"
+    if not path.is_file():
+        fail("Missing trigger evals: evals/trigger-cases.json")
+
+    try:
+        cases = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        fail(f"Invalid JSON in evals/trigger-cases.json: {exc}")
+
+    if not isinstance(cases, list):
+        fail("evals/trigger-cases.json must contain a JSON array")
+    if len(cases) < 20:
+        fail(f"At least 20 trigger cases are required; found {len(cases)}")
+
+    positives = 0
+    negatives = 0
+    near_miss_negatives = 0
+    deploy_cases = 0
+    caveman_cases = 0
+
+    for idx, case in enumerate(cases, start=1):
+        if not isinstance(case, dict):
+            fail(f"Trigger case {idx} must be an object")
+
+        query = case.get("query")
+        should_trigger = case.get("should_trigger")
+        reason = case.get("reason")
+
+        if not isinstance(query, str) or not query.strip():
+            fail(f"Trigger case {idx} must include a non-empty query")
+        if not isinstance(should_trigger, bool):
+            fail(f"Trigger case {idx} must include boolean should_trigger")
+        if not isinstance(reason, str) or not reason.strip():
+            fail(f"Trigger case {idx} must include a non-empty reason")
+
+        text = f"{query} {reason}".lower()
+        if should_trigger:
+            positives += 1
+        else:
+            negatives += 1
+            near_miss_terms = (
+                "explain",
+                "brainstorm",
+                "summarize",
+                "plan",
+                "report",
+                "no code",
+            )
+            if any(term in text for term in near_miss_terms):
+                near_miss_negatives += 1
+        if "deploy" in text:
+            deploy_cases += 1
+        if "caveman" in text:
+            caveman_cases += 1
+
+    if positives < 8:
+        fail(f"Trigger evals need at least 8 should-trigger positives; found {positives}")
+    if negatives < 8:
+        fail(f"Trigger evals need at least 8 should-not-trigger negatives; found {negatives}")
+    if near_miss_negatives < 5:
+        fail(f"Trigger evals need at least 5 near-miss negatives; found {near_miss_negatives}")
+    if deploy_cases < 3:
+        fail(f"Trigger evals need at least 3 deploy-policy cases; found {deploy_cases}")
+    if caveman_cases < 2:
+        fail(f"Trigger evals need at least 2 CAVEMAN cases; found {caveman_cases}")
+
+
 def check_line_hygiene(root: Path) -> None:
     for path in root.rglob("*"):
         if not path.is_file() or ".git" in path.parts:
@@ -144,6 +212,7 @@ def main() -> int:
     check_references(root, text)
     check_policy_terms(root)
     check_json_files(root)
+    check_trigger_cases(root)
     check_line_hygiene(root)
     print("end-to-end-loop skill validation passed")
     return 0

@@ -129,6 +129,10 @@ A production candidate must pass:
 - at least one manual scenario review recorded in `development.md`;
 - trigger eval results recorded using the result log schema.
 
+`validate_skill.py` enforces the static floor for `evals/trigger-cases.json`: 20+
+cases, positive/negative balance, 5+ near-miss negatives, 3+ deploy-policy cases,
+and 2+ CAVEMAN cases. Human/tool eval runs still need separate result logs.
+
 ## Suggested scenario set
 
 1. Small bug fix, no deploy.
