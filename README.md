@@ -43,6 +43,7 @@ AGENTS.md                        # general coding-agent project instructions
 .hermes.md                       # Hermes-specific operating context
 handoff/                         # DevBoss/Hermes handoff prompts
 research/                        # improvement/research plans
+evals/                           # trigger, outcome, and result-log eval artifacts
 paper.md                         # shareable rationale/research draft
 memory.md                        # settled decisions
 ```
@@ -105,8 +106,9 @@ Current branch baseline:
 
 - `evals/trigger-cases.json` contains 20 seed trigger cases.
 - `evals/outcome-scenarios.md` defines eight manual outcome scenarios covering bugfix, feature, release, deploy, CAVEMAN, planning-only, and DevBoss cron paths.
+- `evals/result-log-template.json` provides a structured template for recording scenario results with evidence, acceptance criteria, delivery classification, CI, security, CAVEMAN, and deploy-policy status.
 - `references/evaluation.md` defines the scoring rubric and result-log schema.
-- `scripts/validate_skill.py` now enforces baseline eval quality: trigger case count/balance/coverage and outcome scenario count/coverage.
+- `scripts/validate_skill.py` now enforces baseline eval quality: trigger case count/balance/coverage, outcome scenario count/coverage, and result-log template shape.
 - Local validation passes when the repository is checked out or copied under a folder named exactly `end-to-end-loop`.
 - Public release is still blocked on running the evals, recording results, and polishing install docs/examples.
 

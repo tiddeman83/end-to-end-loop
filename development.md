@@ -401,3 +401,36 @@ Verification target:
 - `python3 scripts/validate_skill.py` from a copied folder named `end-to-end-loop`.
 - `python3 -m json.tool evals/trigger-cases.json`.
 - `git diff --check`.
+
+### Iteration 8 - Eval Result Log Template Gate
+
+Date: 2026-06-22
+Status: committed locally on branch `devboss/todoist-routing-20260621203251`; push blocked by missing GitHub HTTPS credentials in this cron environment
+
+Daytime exception scope allowed safe repo/eval/site-readiness improvements. This pass inspected the current branch, confirmed `dev-boss.nl` still responds with HTTP 200, and again kept Firebase deployment out of scope because this repository still has no Firebase Hosting source/config (`firebase.json` absent).
+
+Changes made in this pass:
+
+- Added `evals/result-log-template.json` as a machine-readable template for outcome eval runs, including prompt, trigger behavior, acceptance criteria, evidence, CAVEMAN behavior, deploy-policy behavior, security review, delivery classification, CI status, and notes.
+- Added `check_eval_result_template` to `scripts/validate_skill.py` so local/CI validation now enforces the result-log template's presence and minimum shape.
+- Updated `README.md` and `references/evaluation.md` to route evaluators toward the structured template instead of free-form result notes.
+
+Acceptance criteria:
+
+- [x] Current repo and branch inspected before editing.
+- [x] Live `dev-boss.nl` state inspected without modifying production.
+- [x] One concrete safe improvement made to the repo.
+- [x] Result-log JSON validates.
+- [x] Skill validation passes through the folder-name workaround.
+- [x] Diff hygiene passes.
+- [x] Python syntax check passes for the validator.
+- [x] Changes committed locally.
+- [ ] Changes pushed (blocked: GitHub HTTPS credential unavailable to cron).
+
+Verification target:
+
+- `python3 scripts/validate_skill.py` from a copied folder named `end-to-end-loop`.
+- `python3 -m json.tool evals/result-log-template.json`.
+- `python3 -m json.tool evals/trigger-cases.json`.
+- `python3 -m py_compile scripts/validate_skill.py`.
+- `git diff --check`.

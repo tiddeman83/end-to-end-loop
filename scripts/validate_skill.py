@@ -210,6 +210,54 @@ def check_outcome_scenarios(root: Path) -> None:
             fail(f"Outcome scenarios missing {label}: {term}")
 
 
+def check_eval_result_template(root: Path) -> None:
+    path = root / "evals/result-log-template.json"
+    if not path.is_file():
+        fail("Missing eval result template: evals/result-log-template.json")
+
+    try:
+        template = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        fail(f"Invalid JSON in evals/result-log-template.json: {exc}")
+
+    if not isinstance(template, dict):
+        fail("evals/result-log-template.json must contain a JSON object")
+
+    required_keys = {
+        "date",
+        "agent_or_tool",
+        "skill_version_or_commit",
+        "scenario_id",
+        "prompt",
+        "expected_trigger",
+        "actual_trigger",
+        "outcome",
+        "commands_or_evidence",
+        "acceptance_criteria",
+        "caveman_behavior",
+        "deploy_policy_behavior",
+        "security_review",
+        "delivery_classification",
+        "ci_status",
+        "notes",
+    }
+    missing = sorted(required_keys - set(template))
+    if missing:
+        fail(f"Eval result template missing required keys: {missing}")
+
+    if not isinstance(template.get("commands_or_evidence"), list) or not template["commands_or_evidence"]:
+        fail("Eval result template needs a non-empty commands_or_evidence list")
+    criteria = template.get("acceptance_criteria")
+    if not isinstance(criteria, list) or not criteria:
+        fail("Eval result template needs a non-empty acceptance_criteria list")
+    first_criterion = criteria[0]
+    if not isinstance(first_criterion, dict):
+        fail("Eval result template acceptance_criteria entries must be objects")
+    for key in ("criterion", "status", "evidence"):
+        if key not in first_criterion:
+            fail(f"Eval result template acceptance_criteria entry missing key: {key}")
+
+
 def check_line_hygiene(root: Path) -> None:
     for path in root.rglob("*"):
         if not path.is_file() or ".git" in path.parts:
@@ -238,6 +286,7 @@ def main() -> int:
     check_json_files(root)
     check_trigger_cases(root)
     check_outcome_scenarios(root)
+    check_eval_result_template(root)
     check_line_hygiene(root)
     print("end-to-end-loop skill validation passed")
     return 0

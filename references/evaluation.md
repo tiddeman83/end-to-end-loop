@@ -103,20 +103,30 @@ Capture:
 
 ## Result log schema
 
-For each eval run record:
+For each eval run record the fields below. Use
+`evals/result-log-template.json` as the machine-readable starting point so runs
+can later be aggregated across tools without re-parsing free-form reports.
 
 ```yaml
 date: YYYY-MM-DD
 agent_or_tool: codex | hermes | claude-code | cursor | agents-md
 skill_version_or_commit: <commit-or-version>
+scenario_id: scenario-1
 prompt: <exact prompt>
 expected_trigger: true | false | planning_only
 actual_trigger: true | false | planning_only
 outcome: passed | failed | blocked | partial
 commands_or_evidence:
   - <command/result/link>
+acceptance_criteria:
+  - criterion: <pass/fail statement>
+    status: pass | fail | blocked
+    evidence: <observed output, link, or blocker>
 caveman_behavior: compliant | blocked | exception_approved | not_applicable
 deploy_policy_behavior: compliant | violation | not_applicable
+security_review: pass | fail | blocked | not_applicable
+delivery_classification: none | repo-only | prep-only | live-deploy
+ci_status: green | red | missing | not_checked | not_applicable
 notes: <short notes>
 ```
 
@@ -137,7 +147,9 @@ A production candidate must pass:
 
 `validate_skill.py` enforces the static floor for `evals/trigger-cases.json`: 20+
 cases, positive/negative balance, 5+ near-miss negatives, 3+ deploy-policy cases,
-and 2+ CAVEMAN cases. Human/tool eval runs still need separate result logs.
+and 2+ CAVEMAN cases. It also enforces the presence and shape of
+`evals/result-log-template.json`. Human/tool eval runs still need separate filled
+result logs.
 
 ## Suggested scenario set
 

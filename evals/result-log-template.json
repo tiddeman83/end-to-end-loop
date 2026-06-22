@@ -1,0 +1,26 @@
+{
+  "date": "YYYY-MM-DD",
+  "agent_or_tool": "codex|hermes|claude-code|cursor|agents-md",
+  "skill_version_or_commit": "<commit-or-version>",
+  "scenario_id": "scenario-1",
+  "prompt": "<exact prompt>",
+  "expected_trigger": "true|false|planning_only",
+  "actual_trigger": "true|false|planning_only",
+  "outcome": "passed|failed|blocked|partial",
+  "commands_or_evidence": [
+    "<command/result/link>"
+  ],
+  "acceptance_criteria": [
+    {
+      "criterion": "<pass/fail statement>",
+      "status": "pass|fail|blocked",
+      "evidence": "<observed output, link, or blocker>"
+    }
+  ],
+  "caveman_behavior": "compliant|blocked|exception_approved|not_applicable",
+  "deploy_policy_behavior": "compliant|violation|not_applicable",
+  "security_review": "pass|fail|blocked|not_applicable",
+  "delivery_classification": "none|repo-only|prep-only|live-deploy",
+  "ci_status": "green|red|missing|not_checked|not_applicable",
+  "notes": "<short notes>"
+}
