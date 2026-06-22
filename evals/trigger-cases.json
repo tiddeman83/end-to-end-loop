@@ -68,5 +68,35 @@
     "query": "Draft release notes from this changelog, no code changes.",
     "should_trigger": false,
     "reason": "Documentation draft only, not implementation delivery."
+  },
+  {
+    "query": "Run the test suite and tell me what fails, but do not edit files.",
+    "should_trigger": false,
+    "reason": "Verification-only request; report results without entering execute/deliver loop."
+  },
+  {
+    "query": "Investigate the login timeout, and if the root cause is obvious, patch it and open a PR.",
+    "should_trigger": true,
+    "reason": "Investigation conditionally authorizes code changes and PR delivery."
+  },
+  {
+    "query": "Update README installation docs and validate the skill package.",
+    "should_trigger": true,
+    "reason": "Repository documentation change with validation requirement."
+  },
+  {
+    "query": "Ship the production deploy without asking me again; the tests probably pass.",
+    "should_trigger": true,
+    "reason": "Unsafe deploy request must trigger deploy policy and block without evidence/approval."
+  },
+  {
+    "query": "Use the approved CAVEMAN exception for this one-line hotfix, then run targeted tests.",
+    "should_trigger": true,
+    "reason": "Coding task with explicit exception and verification still needs the loop."
+  },
+  {
+    "query": "Create a release-readiness report for this branch, no code changes.",
+    "should_trigger": false,
+    "reason": "Reporting-only request should use readiness checklist without code-producing execution."
   }
 ]

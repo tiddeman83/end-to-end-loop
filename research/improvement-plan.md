@@ -108,7 +108,7 @@ Work:
 3. Paper cleanup and validation-status note — medium/high impact, low risk.
 4. Hermes first-day/overnight research mode — medium impact, low risk.
 5. CAVEMAN compliance examples — medium impact, low risk.
-6. Deploy-readiness rubric — medium impact, low risk; can later become `references/deploy-readiness.md`.
+6. Deploy-readiness rubric — complete as `references/deploy-readiness.md`; next pass should add scenario eval results against it.
 
 ## Not overnight-safe without explicit approval
 

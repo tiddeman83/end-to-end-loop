@@ -309,3 +309,31 @@ Next expected output:
 - Commit/push docs/eval improvement branch.
 - Continue scheduled overnight DevBoss sprint every two hours.
 - Report site progress in the hourly heartbeat; no live Firebase deploy without explicit approval.
+
+### Iteration 5 - Daytime Deploy-Readiness Rubric
+
+Date: 2026-06-22
+Status: committed locally on branch `devboss/todoist-routing-20260621203251`; push blocked by missing GitHub HTTPS credentials in this cron environment
+
+Daytime exception scope allowed repo/docs/eval/site readiness work and Firebase deploys when safe. This pass inspected the live `dev-boss.nl` site and found it responding, but this repository does not yet contain Firebase Hosting source/config (`firebase.json` absent), so no site-source change or deploy was attempted.
+
+Changes made in this pass:
+
+- Added `references/deploy-readiness.md` as a concrete pass/fail rubric for live-deploy decisions, CI/local validation, smoke/security review, rollback, and DevBoss/Firebase Hosting custom-domain checks.
+- Linked the new rubric from `SKILL.md`, `README.md`, `references/test-and-security.md`, and `references/evaluation.md`.
+- Marked the deploy-readiness rubric backlog item as complete in `research/improvement-plan.md`, with scenario evals as the next follow-up.
+
+Acceptance criteria:
+
+- [x] Current repo and branch inspected before editing.
+- [x] Live `dev-boss.nl` state inspected without modifying production.
+- [x] One concrete safe improvement made to the repo.
+- [x] Local validation passes.
+- [x] Diff review passes.
+- [x] Changes committed locally.
+- [ ] Changes pushed (blocked: GitHub HTTPS credential unavailable to cron).
+
+Verification target:
+
+- Validate from a folder named `end-to-end-loop` because the validator intentionally enforces folder-name equality.
+- Run JSON validation and `git diff --check`.

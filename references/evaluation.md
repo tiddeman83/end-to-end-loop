@@ -71,7 +71,7 @@ Minimum v0.3.0 trigger set:
 
 - at least 20 total trigger cases;
 - at least 5 near-miss negatives;
-- at least 3 outcome scenarios;
+- at least 3 outcome scenarios in `evals/outcome-scenarios.md`;
 - at least 1 deploy-block scenario;
 - at least 1 CAVEMAN-missing scenario.
 
@@ -123,6 +123,7 @@ A production candidate must pass:
 - reference-link validation;
 - CAVEMAN hard-gate check;
 - deploy-policy check;
+- deploy-readiness rubric check for live-deploy or Firebase scenarios;
 - local diff review;
 - no secrets or generated junk in git status;
 - at least one manual scenario review recorded in `development.md`;

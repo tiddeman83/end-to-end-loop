@@ -33,6 +33,7 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 SKILL.md                         # production skill core
 references/phase-checklists.md   # phase gates and summaries
 references/test-and-security.md  # smoke/security/side-effect gates
+references/deploy-readiness.md   # deploy-readiness rubric and Firebase addendum
 references/adapters.md           # Codex/Hermes/Claude/Cursor/AGENTS adapters
 references/evaluation.md         # trigger/release/eval guidance
 references/report-template.md    # delivery report template
@@ -98,6 +99,16 @@ Release readiness depends on more than local validation. The next release train 
 - evidence quality in final reports;
 - reproducible outcome scenarios inspired by SWE-bench-style task resolution.
 
+## Baseline status
+
+Current branch baseline:
+
+- `evals/trigger-cases.json` contains 20 seed trigger cases.
+- `evals/outcome-scenarios.md` defines four manual outcome scenarios.
+- `references/evaluation.md` defines the scoring rubric and result-log schema.
+- Local validation passes when the repository is checked out or copied under a folder named exactly `end-to-end-loop`.
+- Public release is still blocked on running the evals, recording results, and polishing install docs/examples.
+
 ## Current release posture
 
 Private development. Public release later, after:
@@ -107,3 +118,12 @@ Private development. Public release later, after:
 - market/research findings;
 - website support material;
 - board-approved release plan.
+
+## Deploy-readiness discipline
+
+Live deploys are treated as a separate readiness decision, not as the natural end
+of every repo task. Use `references/deploy-readiness.md` to classify the delivery
+target, confirm explicit deploy opt-in, check environment maturity, verify CI/local
+validation, review smoke/security evidence, and produce a readiness report when a
+deploy is blocked or deferred. For `dev-boss.nl`, the custom domain must be checked
+directly after any Firebase Hosting deployment.

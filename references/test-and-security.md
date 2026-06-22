@@ -48,6 +48,9 @@ For live deploy:
   CI gap.
 - If no CI exists, create a minimal CI pipeline when reasonable. If that is out of
   scope, mark live deploy blocked and deliver a readiness report.
+- Use `references/deploy-readiness.md` for the full deployment readiness rubric,
+  including target environment, rollback, ownership, and Firebase/custom-domain
+  checks.
 
 Record:
 - CI system or local equivalent.

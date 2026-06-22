@@ -237,6 +237,8 @@ Use `references/report-template.md` for larger tasks.
 - Read `references/phase-checklists.md` for concrete phase checklists.
 - Read `references/test-and-security.md` for side-effect, CI, smoke, and security
   gates.
+- Read `references/deploy-readiness.md` when a task requests live deploy,
+  release readiness, Firebase Hosting work, or dev-boss.nl verification.
 - Read `references/adapters.md` when installing or adapting the skill for Codex,
   Hermes, Claude Code, Cursor, or AGENTS.md-only agents.
 - Read `references/evaluation.md` when evaluating trigger quality, output quality,
