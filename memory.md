@@ -100,6 +100,15 @@ iterations do not re-litigate settled points.
   skip-link/navigation basics before treating prototypes as production sources.
 - 2026-06-23: Broad secret scans can flag safe documentation references to tokens;
   refine credential-like patterns before classifying findings as real secrets.
+- 2026-06-23: Production handoff dry-runs for static WordPress prototypes should
+  audit local anchors/assets plus mailto/tel/privacy/cookie/legal cues and image
+  width/height/lazy attributes before claiming readiness.
+- 2026-06-23: Presence of privacy/AVG/KVK text is not enough for production
+  readiness when no privacy href, cookie/legal decision, or real contact route
+  exists.
+- 2026-06-23: `gh copilot` may auto-download the Copilot CLI when invoked; in
+  dry-run target audits, record wrapper/auth status but avoid tool installation
+  unless explicitly in scope.
 - A portable delivery loop should distinguish "deliverable prepared" from "live
   deployment executed" and require explicit approval for high-impact side effects.
 - Hermes supports Agent Skills, `~/.hermes/skills/`, external skill directories,

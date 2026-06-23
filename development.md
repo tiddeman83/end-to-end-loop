@@ -589,3 +589,13 @@ Verification:
 - WordPress scaffold evidence: `contact.php` is a placeholder only; theme header has skip link and `front-page.php` has `<main id="main">`; no nonce/admin_post/wp_ajax/wp_mail path; `index.php` still missing; PHP lint remains blocked because `php` is not installed.
 - End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-13-tdrrecherche-form-accessibility-dry-run.json`, updated `memory.md` with a durable contact-form/accessibility dry-run gate.
 - Copilot path: `gh` is authenticated, but `gh copilot ...` returned `! Copilot CLI not installed`, so no Copilot review findings were available.
+
+## 2026-06-23 — Iteration 14: tdrrecherche production handoff dry-run
+
+- Tested `/opt/data/worktrees/tdrrecherche/feat-complete-wordpress-design-samples` in read-only mode; target main and feature worktrees stayed clean.
+- Target state: main `f45b2c9`; feature branch `feat/complete-wordpress-design-samples` at `bde99b7`; no target `.end-to-end-loop/` memory present.
+- Scenario: static sampler/prototype production handoff audit focused on local links/assets plus legal/contact/performance cues before WordPress conversion.
+- Evidence: parser audit found no broken local anchors, no missing local images, no missing image alt attributes, and legal/privacy-related text snippets on sampler plus variants A-E; local HTTP smoke returned 200 for `/`, all five variants, and three generated PNG assets; `node --check wordpress-theme/tdr-recherche/assets/js/theme.js` passed.
+- Blockers/follow-ups: no mailto/tel/external contact links, no privacy href, no cookie mention, images lack explicit width/height and `loading="lazy"`, PHP lint remains blocked because `php` is not installed, and real WordPress contact handling remains unresolved from prior runs.
+- End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-14-tdrrecherche-production-handoff-dry-run.json`, updated `memory.md` with static WordPress handoff dry-run gates.
+- Copilot path: `gh` is authenticated and `gh copilot --help` is available, but no Copilot findings were generated because invoking it may auto-download the Copilot CLI, outside dry-run scope.
