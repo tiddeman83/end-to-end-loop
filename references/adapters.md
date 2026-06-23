@@ -15,6 +15,7 @@ end-to-end-loop/
 │   ├── test-and-security.md
 │   ├── adapters.md
 │   ├── evaluation.md
+│   ├── self-learning.md
 │   └── report-template.md
 ├── scripts/
 │   └── validate_skill.py
@@ -62,8 +63,12 @@ Notes:
   conditions. Do not require those fields in the universal core.
 - For this repo, give Hermes project context through `.hermes.md` and `AGENTS.md`.
 - Turn on `skills.write_approval` before allowing Hermes to modify this skill.
-- Use the DevBoss handoff files under `handoff/` to create the virtual office,
-  research cadence, Todoist routing, and Firebase website plan.
+- Use the DevBoss handoff files under `handoff/` to run private repo-maintenance,
+  research cadence, Todoist routing, and site readiness workflows.
+- Hermes persistent memory may complement repo memory, but repo memory should stay
+  explicit, reviewable, compact, and privacy-safe. Prefer
+  `.end-to-end-loop/memory.md` for sanitized repo facts and
+  `.end-to-end-loop/memory.local.md` for private local facts.
 
 ## Claude Code
 
@@ -94,6 +99,21 @@ If an agent does not support Agent Skills:
    task involves build/fix/refactor/test/release work.
 3. Do not paste the full skill into `AGENTS.md`; that creates context bloat.
 4. Keep CAVEMAN and deploy gates visible in the short project instructions.
+5. If `.end-to-end-loop/memory.md` exists, read it before planning and update it
+   only when the task scope allows documentation writes.
+
+## GitHub Copilot / PR review
+
+When pushing to GitHub, include Copilot findings when possible:
+
+- If an authenticated Copilot/gh-copilot review path exists, run it before or after
+  push according to tool capability.
+- Treat Copilot output as review input, not proof. Verify any suggested change
+  through the loop.
+- Include findings in result logs under `copilot_findings`.
+- If unavailable, record the reason (`not installed`, `not authenticated`,
+  `unsupported for local branch`, or `permission denied`) instead of inventing a
+  review.
 
 ## CAVEMAN adapters
 

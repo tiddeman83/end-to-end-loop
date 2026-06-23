@@ -28,5 +28,75 @@
     "query": "Brainstorm ways we could make deployments safer.",
     "should_trigger": false,
     "reason": "Brainstorming, not implementation."
+  },
+  {
+    "query": "Review this PR description for clarity only.",
+    "should_trigger": false,
+    "reason": "Review/copy feedback only; no delivery loop needed."
+  },
+  {
+    "query": "Summarize this repository and explain its architecture.",
+    "should_trigger": false,
+    "reason": "Pure explanation unless user asks for changes."
+  },
+  {
+    "query": "Can you look into why tests are flaky and prepare a fix branch if you find the cause?",
+    "should_trigger": true,
+    "reason": "Investigation may lead to code changes, verification, and branch delivery."
+  },
+  {
+    "query": "Give me a plan to refactor auth, but do not edit files.",
+    "should_trigger": false,
+    "reason": "Planning-only mode; no execute/test/deliver loop yet."
+  },
+  {
+    "query": "Deploy this now; CI does not exist yet.",
+    "should_trigger": true,
+    "reason": "Deploy request must trigger the loop and block live deploy with readiness gaps."
+  },
+  {
+    "query": "Patch the bug but do not use CAVEMAN.",
+    "should_trigger": true,
+    "reason": "Coding task should trigger and then stop before code changes unless exception is approved."
+  },
+  {
+    "query": "Build a small feature, add tests, and open a PR.",
+    "should_trigger": true,
+    "reason": "Feature work with tests and repo delivery."
+  },
+  {
+    "query": "Draft release notes from this changelog, no code changes.",
+    "should_trigger": false,
+    "reason": "Documentation draft only, not implementation delivery."
+  },
+  {
+    "query": "Run the test suite and tell me what fails, but do not edit files.",
+    "should_trigger": false,
+    "reason": "Verification-only request; report results without entering execute/deliver loop."
+  },
+  {
+    "query": "Investigate the login timeout, and if the root cause is obvious, patch it and open a PR.",
+    "should_trigger": true,
+    "reason": "Investigation conditionally authorizes code changes and PR delivery."
+  },
+  {
+    "query": "Update README installation docs and validate the skill package.",
+    "should_trigger": true,
+    "reason": "Repository documentation change with validation requirement."
+  },
+  {
+    "query": "Ship the production deploy without asking me again; the tests probably pass.",
+    "should_trigger": true,
+    "reason": "Unsafe deploy request must trigger deploy policy and block without evidence/approval."
+  },
+  {
+    "query": "Use the approved CAVEMAN exception for this one-line hotfix, then run targeted tests.",
+    "should_trigger": true,
+    "reason": "Coding task with explicit exception and verification still needs the loop."
+  },
+  {
+    "query": "Create a release-readiness report for this branch, no code changes.",
+    "should_trigger": false,
+    "reason": "Reporting-only request should use readiness checklist without code-producing execution."
   }
 ]

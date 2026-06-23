@@ -100,3 +100,34 @@ Work:
 3. Which marketplaces or registries matter for distribution?
 4. What security claims can be made responsibly, and what must remain caveated?
 5. What website messaging makes this useful without overpromising?
+
+## Overnight priority order
+
+1. README landing page — high impact, low risk.
+2. Evaluation rubric and result schema — high impact, low risk.
+3. Paper cleanup and validation-status note — medium/high impact, low risk.
+4. Hermes first-day/overnight research mode — medium impact, low risk.
+5. CAVEMAN compliance examples — medium impact, low risk.
+6. Deploy-readiness rubric — complete as `references/deploy-readiness.md`; next pass should add scenario eval results against it.
+
+## Not overnight-safe without explicit approval
+
+- Live Firebase deploys.
+- Public release or marketplace publication.
+- Broad skill package restructuring.
+- Validator behavior changes that weaken release checks.
+- Auth, token, Firebase rules, or production data changes.
+- Code-producing repo changes without a CAVEMAN lane or approved exception.
+
+## Research-backed additions for v0.3.0
+
+The next version should borrow from ReAct, Reflexion, Self-Refine, SWE-agent,
+SWE-bench, SLSA, OpenSSF Scorecard, and NIST SSDF without overclaiming. Practical
+translation for this repo:
+
+- make inspect/reproduce/plan/implement/verify/reflect/finalize explicit;
+- record fail-to-pass and pass-to-pass behavior where tests exist;
+- track wall time, tool calls, files touched, diff size, and human interventions;
+- separate author, reviewer, CI, security, and release governance roles in DevBoss;
+- require source links and uncertainty notes for research conclusions;
+- keep live deploy blocked unless the release gate is explicitly satisfied.
