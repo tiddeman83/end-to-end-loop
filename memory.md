@@ -95,6 +95,9 @@ iterations do not re-litigate settled points.
 - 2026-06-23: WordPress production readiness requires `index.php` or another valid
   fallback template, verified PHP syntax/runtime, and real contact-form handling;
   prototype `action="#"` forms are blockers, not green smoke evidence.
+- 2026-06-23: Static-to-WordPress contact-form dry-runs should verify field names,
+  accessible labels/ARIA, nonce/admin-post/ajax/mail path, spam/SMTP decisions, and
+  skip-link/navigation basics before treating prototypes as production sources.
 - 2026-06-23: Broad secret scans can flag safe documentation references to tokens;
   refine credential-like patterns before classifying findings as real secrets.
 - A portable delivery loop should distinguish "deliverable prepared" from "live

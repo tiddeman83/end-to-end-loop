@@ -579,3 +579,13 @@ Verification:
 - Verification: `node --check wordpress-theme/tdr-recherche/assets/js/theme.js` passed; `git diff --check` passed in target; target status clean; end-to-end-loop validation commands recorded in final report.
 - End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-12-tdrrecherche-wordpress-scaffold-audit.json`, updated `memory.md` with required WordPress theme-file/contact-form readiness gate.
 - Copilot path: `gh` is authenticated, but `gh copilot -p ...` again returned `! Copilot CLI not installed`, so no Copilot review findings were available.
+
+## 2026-06-23 — Iteration 13: tdrrecherche form/accessibility handoff audit
+
+- Tested `/opt/data/worktrees/tdrrecherche/feat-complete-wordpress-design-samples` in read-only mode; target main and feature worktrees stayed clean.
+- Target state: main `f45b2c9`; feature branch `feat/complete-wordpress-design-samples` at `bde99b7`; no target `.end-to-end-loop/` memory present.
+- Scenario: static prototype and WordPress scaffold form/accessibility handoff audit focused on whether the sampler can safely drive production contact-form conversion.
+- Evidence: parser audit found sampler `index.html` has 5 POST prototype forms, 19 fields, 15 named/required fields, 4 unlabeled/unnamed optional phone inputs, no detected skip link; variants A-D each have 1 unlabeled/unnamed optional phone input, variant E has none; all standalone variants still use prototype `action="#"`; no prototype skip link detected.
+- WordPress scaffold evidence: `contact.php` is a placeholder only; theme header has skip link and `front-page.php` has `<main id="main">`; no nonce/admin_post/wp_ajax/wp_mail path; `index.php` still missing; PHP lint remains blocked because `php` is not installed.
+- End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-13-tdrrecherche-form-accessibility-dry-run.json`, updated `memory.md` with a durable contact-form/accessibility dry-run gate.
+- Copilot path: `gh` is authenticated, but `gh copilot ...` returned `! Copilot CLI not installed`, so no Copilot review findings were available.
