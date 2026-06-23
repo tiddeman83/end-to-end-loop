@@ -36,6 +36,7 @@ references/test-and-security.md  # smoke/security/side-effect gates
 references/deploy-readiness.md   # deploy-readiness rubric and Firebase addendum
 references/adapters.md           # Codex/Hermes/Claude/Cursor/AGENTS adapters
 references/evaluation.md         # trigger/release/eval guidance
+references/self-learning.md      # per-repo compact memory/result-log rules
 references/report-template.md    # delivery report template
 scripts/validate_skill.py        # dependency-free repo validator
 .github/workflows/validate.yml   # CI validation
@@ -85,6 +86,16 @@ Modern coding agents are powerful but often fail in predictable ways: they skip 
 
 The skill's thesis is simple: an agent should keep looping until the requested code or application work is understood, implemented, verified, tested, security-reviewed when relevant, delivered inside approved scope, and reported with real evidence.
 
+## Self-learning memory
+
+When used inside a target repository, the skill may maintain compact per-repo memory under `.end-to-end-loop/`:
+
+- `memory.md` for sanitized durable repo learnings;
+- `memory.local.md` for private/local-only facts;
+- `results/*.json` for per-run result logs.
+
+Memory uses CAVEMAN ULTRA compact style: `FACT`, `CMD`, `BLOCK`, `PREF`, `RISK`, `FIX`, `AVOID`, and `NEXT`. It must exclude secrets, bulky transcripts, unverified guesses, and non-durable noise. See `references/self-learning.md`.
+
 ## Validation caveat
 
 The validator intentionally checks that `SKILL.md` frontmatter name matches the folder name. Run validation from a checkout or copied skill folder named exactly `end-to-end-loop`; ad-hoc worktree names such as `end-to-end-loop-todoist-routing` will fail that folder-name check even when the skill contents are valid.
@@ -109,6 +120,8 @@ Current branch baseline:
 - `evals/result-log-template.json` provides a structured template for recording scenario results with evidence, acceptance criteria, delivery classification, CI, security, CAVEMAN, and deploy-policy status.
 - `evals/results/` contains filled scenario-result logs; the first seed log records a DevBoss cron-maintenance run against Scenario 8.
 - `references/evaluation.md` defines the scoring rubric and result-log schema.
+- `references/self-learning.md` defines per-repo compact memory, result logs, privacy controls, and learning promotion rules.
+- `research/traction-plan.md` defines the pre-release traction strategy, benchmark assets, launch sequence, and Tijmen review gate.
 - `scripts/validate_skill.py` now enforces baseline eval quality: trigger case count/balance/coverage, outcome scenario count/coverage, result-log template shape, and at least one non-placeholder filled result log.
 - Local validation passes when the repository is checked out or copied under a folder named exactly `end-to-end-loop`.
 - Public release is still blocked on running the evals, recording results, and polishing install docs/examples.
@@ -121,7 +134,8 @@ Private development. Public release later, after:
 - evaluation metrics;
 - market/research findings;
 - website support material;
-- board-approved release plan.
+- board-approved release plan;
+- Tijmen's explicit repo review and approval before any first public pre-release tag.
 
 ## Deploy-readiness discipline
 

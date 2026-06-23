@@ -536,3 +536,13 @@ Verification:
 - `git diff --check` -> pass.
 - `git commit -m "test: tighten eval result validation"` -> local commit `801ad68` created.
 - `git push origin devboss/todoist-routing-20260621203251` -> blocked: `fatal: could not read Username for 'https://github.com': No such device or address`.
+
+## 2026-06-23 — Iteration 9: self-learning, traction, oversight
+
+- Added self-learning as explicit core behavior: per-repo `.end-to-end-loop/` memory and result logs.
+- Added CAVEMAN ULTRA compact memory labels: FACT, CMD, BLOCK, PREF, RISK, FIX, AVOID, NEXT.
+- Added privacy/size/promotion rules in `references/self-learning.md`.
+- Extended eval/result-log schema with memory read/update, learning candidates, privacy review, and Copilot findings.
+- Added traction/pre-release plan in `research/traction-plan.md` with Tijmen review gate before public alpha.
+- Added TinTin cockpit end-to-end-loop facts page in Firebase TinTin source for oversight visibility.
+- Copilot review path checked: no `copilot`/`gh-copilot` command available and `gh` is not authenticated, so findings are documented as unavailable.

@@ -56,6 +56,12 @@ iterations do not re-litigate settled points.
   detail.
 - 2026-06-21: The fine-grained GitHub token supplied in chat works for now, but a
   later `gh auth` or other durable access path should replace it.
+- 2026-06-23: Self-learning is core skill behavior: target repos may keep compact
+  `.end-to-end-loop/` memory/result logs, CAVEMAN ULTRA style, privacy-safe only.
+- 2026-06-23: First public pre-release requires Tijmen's explicit repo review and
+  approval before tagging.
+- 2026-06-23: GitHub pushes should include Copilot findings when an authenticated
+  Copilot/gh-copilot path exists; otherwise log the unavailability honestly.
 
 ## Questions To Revisit
 

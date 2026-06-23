@@ -47,5 +47,25 @@
   "security_review": "pass",
   "delivery_classification": "repo-only",
   "ci_status": "not_checked",
-  "notes": "Structured eval logging has moved from a template-only state to at least one recorded DevBoss maintenance scenario. Live deploy stayed blocked because Firebase Hosting source/config is absent from this repo."
+  "notes": "Structured eval logging has moved from a template-only state to at least one recorded DevBoss maintenance scenario. Live deploy stayed blocked because Firebase Hosting source/config is absent from this repo.",
+  "memory_read": "not_applicable",
+  "memory_update": "not_applicable",
+  "learning_candidates": [
+    {
+      "type": "NEXT",
+      "text": "Run full trigger/outcome eval suite before first pre-release.",
+      "promote": true,
+      "reason": "Durable release-readiness next step"
+    }
+  ],
+  "privacy_review": {
+    "contains_secrets": false,
+    "commit_safe": true,
+    "redactions": []
+  },
+  "copilot_findings": {
+    "available": false,
+    "summary": "Copilot findings not available for this historical eval log.",
+    "items": []
+  }
 }

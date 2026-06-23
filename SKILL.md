@@ -30,6 +30,8 @@ scope, then report clearly.
    in scope, stop at prepared delivery and report what remains to deploy.
 6. Keep this skill portable. Tool-specific behavior belongs in
    `references/adapters.md`, not in the universal core.
+7. Use per-repo memory only for compact, durable, sanitized learnings. Do not
+   store secrets, private user data, bulky transcripts, or unverified guesses.
 
 ## CAVEMAN Hard Gate
 
@@ -107,6 +109,11 @@ Do:
 - Ask only material questions that cannot be safely inferred. Prefer one grouped
   question set over drip-fed clarification.
 - Record assumptions and risks.
+- If present, read `.end-to-end-loop/memory.md` and
+  `.end-to-end-loop/memory.local.md` for repo-specific facts, commands,
+  blockers, preferences, prior outcomes, and failed approaches. Treat memory as
+  context, not proof; re-verify safety or correctness facts before relying on
+  them.
 
 Exit: the goal, scope, risks, side effects, and needed context are known or
 explicitly deferred.
@@ -229,6 +236,8 @@ Report:
 - Delivery/deploy classification and result.
 - CAVEMAN lane used or approved exception.
 - Known limitations, follow-ups, and rollback/recovery notes.
+- Learning update: result-log path, memory update status, durable learning
+  candidates, and privacy/commit-safety decision.
 
 Use `references/report-template.md` for larger tasks.
 
@@ -243,6 +252,9 @@ Use `references/report-template.md` for larger tasks.
   Hermes, Claude Code, Cursor, or AGENTS.md-only agents.
 - Read `references/evaluation.md` when evaluating trigger quality, output quality,
   or release readiness.
+- Read `references/self-learning.md` when maintaining per-repo memory, writing
+  result logs, evaluating memory quality, or improving the skill's self-learning
+  behavior.
 - Read `references/report-template.md` for formal delivery reports.
 
 ## Maintenance Rule
@@ -254,3 +266,5 @@ When improving this skill itself, update:
 - `paper.md` for research findings and shareable rationale.
 - Handoff files under `handoff/` when Hermes or DevBoss operating instructions
   change.
+- `references/self-learning.md`, result-log templates, and validators when memory
+  behavior changes.

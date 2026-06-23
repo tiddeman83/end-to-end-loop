@@ -1,6 +1,6 @@
 {
   "date": "YYYY-MM-DD",
-  "agent_or_tool": "codex|hermes|claude-code|cursor|agents-md",
+  "agent_or_tool": "codex|hermes|claude-code|cursor|agents-md|copilot|other",
   "skill_version_or_commit": "<commit-or-version>",
   "scenario_id": "scenario-1",
   "prompt": "<exact prompt>",
@@ -22,5 +22,25 @@
   "security_review": "pass|fail|blocked|not_applicable",
   "delivery_classification": "none|repo-only|prep-only|live-deploy",
   "ci_status": "green|red|missing|not_checked|not_applicable",
+  "memory_read": "yes|no|not_present|not_applicable",
+  "memory_update": "updated|none|local_only|blocked|not_applicable",
+  "learning_candidates": [
+    {
+      "type": "FACT|CMD|BLOCK|PREF|RISK|FIX|AVOID|NEXT",
+      "text": "<compact sanitized learning>",
+      "promote": true,
+      "reason": "<durability/privacy rationale>"
+    }
+  ],
+  "privacy_review": {
+    "contains_secrets": false,
+    "commit_safe": true,
+    "redactions": []
+  },
+  "copilot_findings": {
+    "available": false,
+    "summary": "<summary or not available>",
+    "items": []
+  },
   "notes": "<short notes>"
 }

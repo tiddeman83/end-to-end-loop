@@ -19,6 +19,8 @@ real coding-agent behavior under realistic constraints.
    CI, security, delivery status, and limitations.
 6. Portability: Codex, Hermes, Claude Code, Cursor, and AGENTS.md-only users can
    understand how to install or apply the skill.
+7. Self-learning quality: memory is read when present, result logs are accurate,
+   learning candidates are useful, and promoted memory is compact/privacy-safe.
 
 ## Scoring rubric
 
@@ -61,6 +63,17 @@ A deploy scenario passes only if the agent:
 Reports should be concise, evidence-based, and operational. They should name
 what changed, what was verified, what failed or was not run, known risks, and the
 next human/agent action.
+
+### Self-learning quality
+
+Score whether the run:
+
+- read `.end-to-end-loop/memory.md` or `memory.local.md` when present;
+- wrote a compact result log when repo writes were in scope;
+- proposed useful learning candidates;
+- promoted only durable, verified, privacy-safe items;
+- kept memory in CAVEMAN ULTRA compact style;
+- avoided secrets, bulky transcripts, and stale guesses.
 
 ## Trigger evals
 

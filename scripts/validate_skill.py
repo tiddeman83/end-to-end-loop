@@ -66,6 +66,7 @@ def check_required_files(root: Path) -> None:
         "references/test-and-security.md",
         "references/adapters.md",
         "references/evaluation.md",
+        "references/self-learning.md",
         "references/report-template.md",
         "scripts/validate_skill.py",
         "handoff/hermes-devboss-brief.md",
@@ -93,7 +94,8 @@ def check_policy_terms(root: Path) -> None:
     safety = (root / "references/test-and-security.md").read_text(encoding="utf-8")
     phase = (root / "references/phase-checklists.md").read_text(encoding="utf-8")
     adapters = (root / "references/adapters.md").read_text(encoding="utf-8")
-    combined = "\n".join([skill, safety, phase, adapters])
+    self_learning = (root / "references/self-learning.md").read_text(encoding="utf-8")
+    combined = "\n".join([skill, safety, phase, adapters, self_learning])
     required_terms = [
         "CAVEMAN",
         "live deploy",
@@ -102,6 +104,10 @@ def check_policy_terms(root: Path) -> None:
         "rollback",
         "Hermes",
         "AGENTS.md",
+        "self-learning",
+        "memory",
+        "privacy",
+        "result log",
     ]
     for term in required_terms:
         if term not in combined:
@@ -239,6 +245,11 @@ def check_eval_result_template(root: Path) -> None:
         "security_review",
         "delivery_classification",
         "ci_status",
+        "memory_read",
+        "memory_update",
+        "learning_candidates",
+        "privacy_review",
+        "copilot_findings",
         "notes",
     }
     missing = sorted(required_keys - set(template))
@@ -274,11 +285,16 @@ EVAL_RESULT_REQUIRED_KEYS = {
     "security_review",
     "delivery_classification",
     "ci_status",
+    "memory_read",
+    "memory_update",
+    "learning_candidates",
+    "privacy_review",
+    "copilot_findings",
     "notes",
 }
 
 EVAL_RESULT_ENUMS = {
-    "agent_or_tool": {"codex", "hermes", "claude-code", "cursor", "agents-md"},
+    "agent_or_tool": {"codex", "hermes", "claude-code", "cursor", "agents-md", "copilot", "other"},
     "expected_trigger": {True, False, "planning_only"},
     "actual_trigger": {True, False, "planning_only"},
     "outcome": {"passed", "failed", "blocked", "partial"},
@@ -287,6 +303,8 @@ EVAL_RESULT_ENUMS = {
     "security_review": {"pass", "fail", "blocked", "not_applicable"},
     "delivery_classification": {"none", "repo-only", "prep-only", "live-deploy"},
     "ci_status": {"green", "red", "missing", "not_checked", "not_applicable"},
+    "memory_read": {"yes", "no", "not_present", "not_applicable"},
+    "memory_update": {"updated", "none", "local_only", "blocked", "not_applicable"},
 }
 
 
@@ -357,6 +375,38 @@ def check_eval_result_logs(root: Path) -> None:
                     f"{path.relative_to(root)} acceptance criterion {idx} has invalid status "
                     f"{criterion['status']!r}"
                 )
+
+        learning_types = {"FACT", "CMD", "BLOCK", "PREF", "RISK", "FIX", "AVOID", "NEXT"}
+        candidates = result.get("learning_candidates")
+        if not isinstance(candidates, list):
+            fail(f"{path.relative_to(root)} learning_candidates must be a list")
+        for idx, item in enumerate(candidates, start=1):
+            if not isinstance(item, dict):
+                fail(f"{path.relative_to(root)} learning candidate {idx} must be an object")
+            if item.get("type") not in learning_types:
+                fail(f"{path.relative_to(root)} learning candidate {idx} has invalid type")
+            text = item.get("text")
+            if not isinstance(text, str) or not text.strip() or len(text) > 220:
+                fail(f"{path.relative_to(root)} learning candidate {idx} needs compact text <= 220 chars")
+            if not isinstance(item.get("promote"), bool):
+                fail(f"{path.relative_to(root)} learning candidate {idx} promote must be boolean")
+
+        privacy = result.get("privacy_review")
+        if not isinstance(privacy, dict):
+            fail(f"{path.relative_to(root)} privacy_review must be an object")
+        for key in ("contains_secrets", "commit_safe", "redactions"):
+            if key not in privacy:
+                fail(f"{path.relative_to(root)} privacy_review missing {key!r}")
+        if not isinstance(privacy["contains_secrets"], bool) or not isinstance(privacy["commit_safe"], bool):
+            fail(f"{path.relative_to(root)} privacy_review booleans must be true/false")
+        if not isinstance(privacy["redactions"], list):
+            fail(f"{path.relative_to(root)} privacy_review.redactions must be a list")
+
+        copilot = result.get("copilot_findings")
+        if not isinstance(copilot, dict) or "available" not in copilot or "summary" not in copilot or "items" not in copilot:
+            fail(f"{path.relative_to(root)} copilot_findings must include available, summary, and items")
+        if not isinstance(copilot["available"], bool) or not isinstance(copilot["items"], list):
+            fail(f"{path.relative_to(root)} copilot_findings has invalid types")
 
 
 def check_line_hygiene(root: Path) -> None:

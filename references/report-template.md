@@ -26,6 +26,14 @@ with a word on why. This closes the loop back to DISCOVER/PLAN.>
 <Classification: none / repo-only / prep-only / live-deploy. State what was delivered,
 whether live deploy was approved, how it was verified, and how to roll back or continue.>
 
+## Learning update
+- Result log: <path written / not written / not in scope>
+- Memory read: <yes / no / not present / not applicable>
+- Memory update: <none / updated / local-only / blocked>
+- New durable learnings:
+  - <CAVEMAN ULTRA compact item: FACT/CMD/BLOCK/PREF/RISK/FIX/AVOID/NEXT>
+- Privacy/commit safety: <commit-safe / local-only / redacted / not applicable>
+
 ## How to use it
 <Concise usage: commands, endpoints, entry points, config the user needs.>
 
