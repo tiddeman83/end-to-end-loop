@@ -112,6 +112,9 @@ iterations do not re-litigate settled points.
 - 2026-06-23: WordPress theme readiness dry-runs should include required theme
   files, text-domain/escaping/hooks, contact nonce/mail/sanitization path,
   external font/privacy choice, PHP lint, CI status, and GitHub access state.
+- 2026-06-23: Static prototype readiness must fail/partial when contact forms
+  still use `action="#"` or empty action, even if HTML anchors/assets and HTTP
+  smoke pass.
 - 2026-06-23: `tdrrecherche` GitHub API/remote reads can fail from cron with
   repo not resolved or HTTP 403 despite local clone and `gh auth`; use local refs
   as evidence and report remote-access blocker.

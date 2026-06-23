@@ -610,3 +610,14 @@ Verification:
 - Blockers/follow-ups: no verified contact nonce/admin-post/ajax/mail/sanitization path; Google Fonts enqueue remains external runtime dependency needing privacy/performance decision; `php` absent so PHP lint blocked; `.github/workflows` missing; GitHub repo/API/read access blocked despite `gh auth` (`gh repo view` repo unresolved, `git ls-remote` HTTP 403).
 - End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-15-tdrrecherche-wordpress-theme-readiness-audit.json`, updated `memory.md` with durable WordPress theme readiness/access-check learnings.
 - Copilot path: `gh copilot --help` is available, but no Copilot findings were generated because invoking it may auto-download the Copilot CLI; kept out of dry-run scope.
+
+## 2026-06-23 — Iteration 16: tdrrecherche prototype contact/legal readiness audit
+
+- Tested `/opt/data/worktrees/tdrrecherche/feat-complete-wordpress-design-samples` in read-only mode; target feature worktree stayed clean.
+- Agenda/access check: no Todoist CLI found in cron environment, so the prompt-supplied DevBoss agenda remained the task source. `gh` is authenticated as `tiddeman83`, but `bloonbladmaker`, `tdrrecherche`, and `Schoolanalyse` still do not resolve through `gh repo view`.
+- Target state: feature branch `feat/complete-wordpress-design-samples` at `bde99b7`; main clone remains `main` at `f45b2c9`; target `.end-to-end-loop/` memory not present.
+- Scenario: static prototype contact/legal readiness audit focused on whether the design sampler can be treated as production-ready input for WordPress conversion.
+- Evidence: HTMLParser over main sampler plus variants A-E found no duplicate IDs, no broken internal anchors, and no missing local image assets; `node --check wordpress-theme/tdr-recherche/assets/js/theme.js` passed; local HTTP smoke returned 200 for `/`, variants A/E, `theme.css`, and `theme.js`; refined credential scan returned 0 hits.
+- Blockers/follow-ups: all six sampled pages still have placeholder forms (`action="#"` or empty action); WordPress `template-parts/contact.php` is placeholder text only; PHP lint remains blocked because `php` is absent; target GitHub PR/run/remote reads remain blocked by repo resolution/404/403.
+- End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-16-tdrrecherche-prototype-contact-legal-readiness.json`, updated `memory.md` with the durable placeholder-form readiness blocker.
+- Copilot path: `gh copilot --help` is available, but no Copilot findings were generated because target repo API access is blocked and full Copilot invocation may auto-download the CLI; kept out of dry-run scope.
