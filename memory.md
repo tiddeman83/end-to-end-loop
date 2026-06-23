@@ -118,6 +118,14 @@ iterations do not re-litigate settled points.
 - 2026-06-23: `tdrrecherche` GitHub API/remote reads can fail from cron with
   repo not resolved or HTTP 403 despite local clone and `gh auth`; use local refs
   as evidence and report remote-access blocker.
+- 2026-06-23: With `gh` authenticated as `tiddeman83`, exact slugs
+  `bloonbladmaker`, `tdrrecherche`, and `Schoolanalyse` may still fail `gh repo view`;
+  treat as slug/access discovery blocker and avoid old per-repo keys unless explicitly
+  approved.
+- 2026-06-23: Safe TDR-style read-only eval pattern: local repo/worktree state,
+  HTML/asset parser, `node --check`, local `python3 -m http.server` smoke, refined
+  credential scan, PHP/WordPress runtime availability probe, and explicit no-deploy
+  readiness blockers.
 - A portable delivery loop should distinguish "deliverable prepared" from "live
   deployment executed" and require explicit approval for high-impact side effects.
 - Hermes supports Agent Skills, `~/.hermes/skills/`, external skill directories,

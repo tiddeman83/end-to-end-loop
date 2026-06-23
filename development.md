@@ -621,3 +621,15 @@ Verification:
 - Blockers/follow-ups: all six sampled pages still have placeholder forms (`action="#"` or empty action); WordPress `template-parts/contact.php` is placeholder text only; PHP lint remains blocked because `php` is absent; target GitHub PR/run/remote reads remain blocked by repo resolution/404/403.
 - End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-16-tdrrecherche-prototype-contact-legal-readiness.json`, updated `memory.md` with the durable placeholder-form readiness blocker.
 - Copilot path: `gh copilot --help` is available, but no Copilot findings were generated because target repo API access is blocked and full Copilot invocation may auto-download the CLI; kept out of dry-run scope.
+
+## 2026-06-23 — Iteration 17: agenda-first GH admin + tdrrecherche local eval
+
+- Polled active Todoist via Composio and used DevBoss cards as tasking source; high-priority cards included GH CLI access checks for `bloonbladmaker`/`Schoolanalyse` and first local cross-repo eval on `tdrrecherche`.
+- Access check: `gh api user` is authenticated as `tiddeman83`, but `gh repo view` still cannot resolve `tiddeman83/bloonbladmaker`, `tiddeman83/tdrrecherche`, or `tiddeman83/Schoolanalyse`; no old per-repo key fallback used.
+- Local availability: `tdrrecherche` clone/worktree exists; `bloonbladmaker` and `Schoolanalyse` local repo dirs missing.
+- Target state: `/opt/data/worktrees/tdrrecherche/feat-complete-wordpress-design-samples` clean at `bde99b7` on `feat/complete-wordpress-design-samples`; no target `.end-to-end-loop/` memory present.
+- Scenario: safe local production-readiness/eval rerun for TDR static sampler + WordPress scaffold, measuring whether end-to-end-loop produces evidence without unsafe writes.
+- Evidence: parser audit over sampler plus variants A-E found no duplicate IDs and no missing relative assets; `node --check` passed for theme JS and extracted inline scripts; local `python3 -m http.server` smoke returned 200 for `/`, variants A/E, and theme JS; refined credential scan returned 0 hits.
+- Blockers/follow-ups: PHP unavailable, target repo unresolved through `gh`, static forms remain prototype-only (`action` empty/`#`), and WordPress contact/mail/nonce path is absent; result is partial, not production-ready.
+- End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-17-tdrrecherche-gh-admin-local-eval.json`, updated `memory.md` with GH slug/access and safe TDR eval learnings.
+- Copilot path: `gh copilot --help` returns rc 0; no Copilot code review was run because this was read-only with no target diff and deeper invocation may install/download tooling.

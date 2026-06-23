@@ -1,0 +1,93 @@
+{
+  "date": "2026-06-23",
+  "agent_or_tool": "hermes",
+  "skill_version_or_commit": "437df02146519f825ef5051bfc7e8bba1ea47509",
+  "scenario_id": "scenario-17",
+  "prompt": "DevBoss scheduled eval: agenda-first Todoist tasking; check GH CLI access for bloonbladmaker/tdrrecherche/Schoolanalyse and run the first safe local cross-repo eval on tdrrecherche.",
+  "expected_trigger": true,
+  "actual_trigger": true,
+  "outcome": "partial",
+  "commands_or_evidence": [
+    "Todoist active-task poll via Composio: 7 DevBoss-relevant active tasks; selected high-priority GH CLI access checks and tdrrecherche local eval.",
+    "gh api user --jq '{login:.login,id:.id}' -> {\"id\":52548986,\"login\":\"tiddeman83\"}",
+    "gh repo view tiddeman83/bloonbladmaker, tiddeman83/tdrrecherche, tiddeman83/Schoolanalyse -> GraphQL Could not resolve to a Repository for all three slugs.",
+    "Local availability: /opt/data/repos/tdrrecherche and /opt/data/worktrees/tdrrecherche/feat-complete-wordpress-design-samples exist; bloonbladmaker and Schoolanalyse local repo dirs missing.",
+    "tdrrecherche git status --short -> clean; branch feat/complete-wordpress-design-samples; HEAD bde99b7 docs: capture project handoff state; git ls-files -> 58.",
+    "php -v -> command not found; node --version -> v22.22.3.",
+    "HTML/asset parser over index.html + prototypes/variant-a..e: no duplicate IDs and no missing relative assets; found prototype form blockers: bad action on all 10 static forms and unlabeled controls in A-D/sampler.",
+    "node --check on wordpress-theme/tdr-recherche/assets/js/theme.js and extracted inline scripts -> rc 0 for all checked scripts.",
+    "python3 -m http.server 4173 + urllib smoke -> 200 for /, /prototypes/variant-a/, /prototypes/variant-e/, and /wordpress-theme/tdr-recherche/assets/js/theme.js.",
+    "Credential pattern scan for GitHub/Todoist/API/private-key patterns -> 0 matches.",
+    "gh copilot --help -> rc 0; wrapper available, but no code-producing review invoked for read-only eval/no diff."
+  ],
+  "acceptance_criteria": [
+    {
+      "criterion": "DevBoss Todoist cards are used as source tasking.",
+      "status": "pass",
+      "evidence": "Composio TODOIST_GET_ALL_TASKS returned active DevBoss cards including GH CLI access checks and local tdrrecherche eval."
+    },
+    {
+      "criterion": "Repo state and memory discovery are recorded.",
+      "status": "pass",
+      "evidence": "No .end-to-end-loop memory existed in either tdrrecherche checkout; local worktree clean at bde99b7 on feat/complete-wordpress-design-samples."
+    },
+    {
+      "criterion": "One realistic read-only scenario is executed with real commands.",
+      "status": "pass",
+      "evidence": "Ran GH access checks, HTML/asset audit, JS syntax checks, local HTTP smoke, credential scan, and WordPress/PHP readiness probes."
+    },
+    {
+      "criterion": "GitHub/Copilot availability is assessed without unsafe fallback.",
+      "status": "pass",
+      "evidence": "gh is authenticated as tiddeman83, but exact slugs do not resolve through gh repo view; gh copilot wrapper help returns rc 0. No old per-repo key was used."
+    },
+    {
+      "criterion": "Production readiness is not falsely claimed when blockers remain.",
+      "status": "pass",
+      "evidence": "Result marked partial: PHP unavailable, remote GitHub repo unresolved by gh, static forms are prototype-only, and WordPress contact/form/mail path is absent."
+    },
+    {
+      "criterion": "Target repos are left read-only/no commits/deploys.",
+      "status": "pass",
+      "evidence": "Only /tmp script artifacts and end-to-end-loop eval log were written; tdrrecherche git status remained clean before eval. No deploy/merge/admin/release action executed."
+    }
+  ],
+  "caveman_behavior": "compliant",
+  "deploy_policy_behavior": "compliant",
+  "security_review": "pass",
+  "delivery_classification": "none",
+  "ci_status": "not_checked",
+  "memory_read": "not_present",
+  "memory_update": "updated",
+  "learning_candidates": [
+    {
+      "type": "BLOCK",
+      "text": "Even with gh authenticated as tiddeman83, the exact slugs bloonbladmaker/tdrrecherche/Schoolanalyse may not resolve via gh repo view; report slug/access blocker and use local clone evidence only when present.",
+      "promote": true,
+      "reason": "Verified recurring DevBoss access blocker; privacy-safe."
+    },
+    {
+      "type": "CMD",
+      "text": "tdrrecherche read-only eval: HTML/asset audit + node --check + local http.server smoke can validate static sampler while PHP/WordPress runtime is unavailable.",
+      "promote": true,
+      "reason": "Reusable safe eval pattern for this target repo class."
+    },
+    {
+      "type": "RISK",
+      "text": "tdrrecherche static forms remain prototype-only when action is empty/# or WordPress contact/mail/nonce path is absent; do not claim production readiness.",
+      "promote": true,
+      "reason": "Observed acceptance blocker and already aligned with prior readiness lessons."
+    }
+  ],
+  "privacy_review": {
+    "contains_secrets": false,
+    "commit_safe": true,
+    "redactions": []
+  },
+  "copilot_findings": {
+    "available": true,
+    "summary": "gh copilot wrapper help returned rc 0. No Copilot code review was run because this was a read-only eval with no target diff to review and wrapper invocation may install/download when deeper commands are used.",
+    "items": []
+  },
+  "notes": "Performance/quality/end-result observation: end-to-end-loop kept the eval safe and evidence-based, but agenda-first + repeated checks are tool-call heavy. Visible token counts were not exposed by this cron environment; tool-use evidence is the command/log list above."
+}
