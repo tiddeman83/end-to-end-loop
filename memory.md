@@ -88,6 +88,11 @@ iterations do not re-litigate settled points.
 - 2026-06-23: Static-site dry-run evals can exercise the loop safely with Python
   HTMLParser checks for parseability, duplicate IDs, anchor targets, forms,
   scripts, external links, and embedded assets before any implementation/deploy.
+- 2026-06-23: WordPress scaffold dry-runs without PHP/WordPress access should
+  combine JS syntax checks, HTML/asset integrity, local HTTP smoke, refined
+  credential scans, and explicit PHP-lint blocker reporting.
+- 2026-06-23: Broad secret scans can flag safe documentation references to tokens;
+  refine credential-like patterns before classifying findings as real secrets.
 - A portable delivery loop should distinguish "deliverable prepared" from "live
   deployment executed" and require explicit approval for high-impact side effects.
 - Hermes supports Agent Skills, `~/.hermes/skills/`, external skill directories,

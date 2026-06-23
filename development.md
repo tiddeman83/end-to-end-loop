@@ -557,3 +557,14 @@ Verification:
 - End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-10-tdrrecherche-dry-run.json`, updated `memory.md` with the durable static-site dry-run check pattern.
 - Verification: temp copy named `end-to-end-loop` passed `python3 scripts/validate_skill.py`; `git diff --check` passed in both repos.
 - Copilot review path remains unavailable because `gh` is not authenticated in cron.
+
+## 2026-06-23 — Iteration 11: tdrrecherche WordPress feature-worktree dry-run
+
+- Tested `/opt/data/worktrees/tdrrecherche/feat-complete-wordpress-design-samples` in read-only mode per DevBoss 5-hour sprint scope.
+- Target state: branch `feat/complete-wordpress-design-samples` at `bde99b7`, clean status, no `.end-to-end-loop/` memory present; `PROJECT_STATE.md` and `README.md` used as handoff context.
+- Scenario: WordPress scaffold and prototype readiness dry-run without target repo edits, deploy, PHP install, or WordPress environment access.
+- Evidence: node v22.22.3 available; `node --check wordpress-theme/tdr-recherche/assets/js/theme.js` passed; 6 HTML / 10 PHP / 1 JS / 2 CSS files discovered; HTML/asset integrity passed for sampler plus five prototypes; local HTTP smoke returned 200 for `/`, variant A, variant E, and generated image asset.
+- Blocker: `php` is not installed, so PHP syntax lint is still not locally verified; do not claim WordPress theme syntax green until `php -l` or CI covers it.
+- Safety/security: broad secret scan produced false-positive documentation references in `PROJECT_STATE.md`; refined credential-like scan returned 0 hits; `git diff --check` passed; target status remained clean.
+- End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-11-tdrrecherche-wordpress-dry-run.json`, updated `memory.md` with durable WordPress dry-run and refined secret-scan patterns.
+- Copilot path: `gh` is authenticated, but `gh copilot -p ...` returned `! Copilot CLI not installed`, so no Copilot review findings were available.
