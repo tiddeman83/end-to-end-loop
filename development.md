@@ -546,3 +546,14 @@ Verification:
 - Added traction/pre-release plan in `research/traction-plan.md` with Tijmen review gate before public alpha.
 - Added TinTin cockpit end-to-end-loop facts page in Firebase TinTin source for oversight visibility.
 - Copilot review path checked: no `copilot`/`gh-copilot` command available and `gh` is not authenticated, so findings are documented as unavailable.
+
+## 2026-06-23 — Iteration 10: tdrrecherche dry-run repo eval
+
+- Tested `/opt/data/repos/tdrrecherche` in read-only mode per DevBoss 5-hour sprint scope.
+- Target state: branch `main` at `f45b2c9`, clean status, no `.end-to-end-loop/` memory present.
+- Scenario: static homepage quality/safety discovery for large inline `index.html` with five design variants.
+- Evidence: Python HTMLParser parse passed; 17 unique IDs/no duplicates; 0 missing anchor targets; 75 anchors with 65 placeholder `#`; 1 script; 5 forms; 9 data images; no external links; Google Fonts referenced.
+- Safety/security: secret-pattern search returned no matches; no target repo writes, commits, deploys, or destructive operations.
+- End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-10-tdrrecherche-dry-run.json`, updated `memory.md` with the durable static-site dry-run check pattern.
+- Verification: temp copy named `end-to-end-loop` passed `python3 scripts/validate_skill.py`; `git diff --check` passed in both repos.
+- Copilot review path remains unavailable because `gh` is not authenticated in cron.

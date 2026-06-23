@@ -85,6 +85,9 @@ iterations do not re-litigate settled points.
 - Research on SKILL.md attacks and AGENTS.md smells supports a conservative design:
   avoid context bloat, conflicting instructions, broad triggers, manipulative
   trust/security claims, and unsafe state-changing behavior.
+- 2026-06-23: Static-site dry-run evals can exercise the loop safely with Python
+  HTMLParser checks for parseability, duplicate IDs, anchor targets, forms,
+  scripts, external links, and embedded assets before any implementation/deploy.
 - A portable delivery loop should distinguish "deliverable prepared" from "live
   deployment executed" and require explicit approval for high-impact side effects.
 - Hermes supports Agent Skills, `~/.hermes/skills/`, external skill directories,
