@@ -90,7 +90,11 @@ iterations do not re-litigate settled points.
   scripts, external links, and embedded assets before any implementation/deploy.
 - 2026-06-23: WordPress scaffold dry-runs without PHP/WordPress access should
   combine JS syntax checks, HTML/asset integrity, local HTTP smoke, refined
-  credential scans, and explicit PHP-lint blocker reporting.
+  credential scans, required theme-file checks, and explicit PHP-lint blocker
+  reporting.
+- 2026-06-23: WordPress production readiness requires `index.php` or another valid
+  fallback template, verified PHP syntax/runtime, and real contact-form handling;
+  prototype `action="#"` forms are blockers, not green smoke evidence.
 - 2026-06-23: Broad secret scans can flag safe documentation references to tokens;
   refine credential-like patterns before classifying findings as real secrets.
 - A portable delivery loop should distinguish "deliverable prepared" from "live

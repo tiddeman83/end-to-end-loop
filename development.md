@@ -568,3 +568,14 @@ Verification:
 - Safety/security: broad secret scan produced false-positive documentation references in `PROJECT_STATE.md`; refined credential-like scan returned 0 hits; `git diff --check` passed; target status remained clean.
 - End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-11-tdrrecherche-wordpress-dry-run.json`, updated `memory.md` with durable WordPress dry-run and refined secret-scan patterns.
 - Copilot path: `gh` is authenticated, but `gh copilot -p ...` returned `! Copilot CLI not installed`, so no Copilot review findings were available.
+
+## 2026-06-23 — Iteration 12: tdrrecherche WordPress scaffold security/readiness audit
+
+- Tested `/opt/data/worktrees/tdrrecherche/feat-complete-wordpress-design-samples` in read-only mode; target remained clean after an accidental misplaced eval-log write was immediately removed before validation.
+- Target state: branch `feat/complete-wordpress-design-samples` at `bde99b7`; main worktree remains `main` at `f45b2c9`; no target `.end-to-end-loop/` memory present.
+- Scenario: WordPress scaffold security/readiness audit focused on required theme files, WP hooks, unsafe PHP patterns, prototype forms, and deploy blockers.
+- Evidence: theme has 10 PHP / 1 JS / 2 CSS files; style.css theme headers present; `after_setup_theme`, `wp_enqueue_scripts`, `wp_head`, `wp_footer`, `wp_body_open`, skip link, and nav fallback=false present; unsafe PHP pattern scans returned 0 raw superglobals, 0 eval/exec/shell calls, 0 direct `$wpdb` query calls, 0 admin/ajax handlers, 0 `wp_mail`, 0 `wp_remote`.
+- Blockers: `wordpress-theme/tdr-recherche/index.php` is missing, `php` is not installed for `php -l`, and prototype forms still post to `action="#"` with no verified WordPress nonce/spam/SMTP/contact flow.
+- Verification: `node --check wordpress-theme/tdr-recherche/assets/js/theme.js` passed; `git diff --check` passed in target; target status clean; end-to-end-loop validation commands recorded in final report.
+- End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-12-tdrrecherche-wordpress-scaffold-audit.json`, updated `memory.md` with required WordPress theme-file/contact-form readiness gate.
+- Copilot path: `gh` is authenticated, but `gh copilot -p ...` again returned `! Copilot CLI not installed`, so no Copilot review findings were available.
