@@ -599,3 +599,14 @@ Verification:
 - Blockers/follow-ups: no mailto/tel/external contact links, no privacy href, no cookie mention, images lack explicit width/height and `loading="lazy"`, PHP lint remains blocked because `php` is not installed, and real WordPress contact handling remains unresolved from prior runs.
 - End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-14-tdrrecherche-production-handoff-dry-run.json`, updated `memory.md` with static WordPress handoff dry-run gates.
 - Copilot path: `gh` is authenticated and `gh copilot --help` is available, but no Copilot findings were generated because invoking it may auto-download the Copilot CLI, outside dry-run scope.
+
+## 2026-06-23 — Iteration 15: tdrrecherche WordPress theme readiness audit
+
+- Tested `/opt/data/worktrees/tdrrecherche/feat-complete-wordpress-design-samples` in read-only mode; target feature worktree stayed clean.
+- Agenda/access check: no Todoist CLI found in cron environment; user-provided DevBoss agenda used. `bloonbladmaker` and `Schoolanalyse` still have no local clones and `git ls-remote` returns HTTP 403.
+- Target state: feature branch `feat/complete-wordpress-design-samples` at `bde99b7`; main clone remains `main` at `f45b2c9`; target `.end-to-end-loop/` memory not present.
+- Scenario: WordPress theme readiness audit focused on scaffold completeness, hooks/escaping/theme support, contact security path, external asset/privacy cue, CI/GitHub access, and local smoke.
+- Evidence: 10 PHP / 2 CSS / 1 JS files; required theme files present except `index.php` and `screenshot.png`; all `front-page.php` template parts exist; no duplicate template IDs; WP hooks/theme support/nav/escaping basics present; unsafe PHP pattern scan found 0 raw superglobals/eval/shell/direct `$wpdb` query hits; refined credential scan found 0 hits; local HTTP smoke returned 200 for `/`, `style.css`, `theme.css`, and `theme.js`; `node --check` passed.
+- Blockers/follow-ups: no verified contact nonce/admin-post/ajax/mail/sanitization path; Google Fonts enqueue remains external runtime dependency needing privacy/performance decision; `php` absent so PHP lint blocked; `.github/workflows` missing; GitHub repo/API/read access blocked despite `gh auth` (`gh repo view` repo unresolved, `git ls-remote` HTTP 403).
+- End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-15-tdrrecherche-wordpress-theme-readiness-audit.json`, updated `memory.md` with durable WordPress theme readiness/access-check learnings.
+- Copilot path: `gh copilot --help` is available, but no Copilot findings were generated because invoking it may auto-download the Copilot CLI; kept out of dry-run scope.
