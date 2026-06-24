@@ -39,10 +39,11 @@ The repository includes trigger cases, outcome scenarios, a result-log schema, a
 - stop unsafe deploys and produce readiness reports;
 - report evidence and blockers honestly.
 
-## Optional helper-agent track
+## Mission Mode optional helper-agent track
 
-Product-facing helper agents may improve adoption if kept functional and bounded:
+Product-facing helper agents may improve adoption if kept functional and bounded. The candidate product name is **Mission Mode**: a scoped agent team around the delivery loop where each helper gets the right reasoning depth for the job and high-impact actions stay behind human approval.
 
+- `mission-planner` drafts mission scope, acceptance criteria, agent assignments, reasoning-level choices, verification plan, and approval gates.
 - `loop-verifier` checks whether a run followed the loop.
 - `loop-reporter` structures evidence into a final report.
 - `adapter-builder` drafts tool-specific adapter guidance.
@@ -50,4 +51,4 @@ Product-facing helper agents may improve adoption if kept functional and bounded
 - `loop-eval-runner` coordinates trigger/outcome evals.
 - `deploy-readiness-checker` prepares deploy-readiness reports.
 
-These helpers should not become an internal office simulation or a release-approval authority.
+Mission Mode should classify work by reasoning level: Level 0 mechanical/cheap checks, Level 1 standard implementation support, Level 2 deep review/safety/architecture, and Level 3 human approval for merge/release/deploy/admin/secrets/public claims. These helpers should not become an internal office simulation or a release-approval authority.

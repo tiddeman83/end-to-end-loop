@@ -18,7 +18,7 @@ Changes:
 
 - Rewrote repository context docs with generic maintainer/product language.
 - Removed internal governance, dashboard, and private task-routing instructions from product docs.
-- Added a product-facing helper-agent strategy in `research/product-helper-agents.md`.
+- Added a product-facing Mission Mode helper-agent strategy in `research/product-helper-agents.md`, including reasoning levels and approval gates.
 - Replaced private historical eval examples with sanitized product examples.
 - Updated validator expectations so outcome scenarios use generic hosting/custom-domain language rather than private site specifics.
 
@@ -27,3 +27,7 @@ Validation plan:
 - `python3 scripts/validate_skill.py .` from a temporary folder named `end-to-end-loop`.
 - `git diff --check`.
 - JSON parse validation through the skill validator.
+
+Follow-up product decision:
+
+- Decide whether Mission Mode should remain a research note or become a packaged optional helper-agent layer with `mission-planner`, `loop-verifier`, `loop-reporter`, `adapter-builder`, `loop-reviewer`, `loop-eval-runner`, and `deploy-readiness-checker`.

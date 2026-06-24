@@ -15,7 +15,7 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 - FACT `scripts/validate_skill.py .` is the local validator, but the checkout folder must be named `end-to-end-loop` for the frontmatter/folder-name gate.
 - FACT `references/adapters.md` is the home for tool-specific invocation and installation details.
 - FACT `references/self-learning.md` defines compact memory and result-log rules.
-- FACT Optional public helper agents, if added, should use functional names and narrow scopes.
+- FACT Optional public helper agents, if added, should live under the Mission Mode product layer with functional names, narrow scopes, explicit reasoning levels, and human approval gates for merge/release/deploy/admin/secrets/public claims.
 
 ## Risks / avoid
 
@@ -25,4 +25,4 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 
 ## Next
 
-- NEXT Decide whether to implement optional public helper agents: loop-verifier, loop-reporter, adapter-builder, loop-reviewer, loop-eval-runner, deploy-readiness-checker.
+- NEXT Decide whether to implement Mission Mode as packaged optional public helper agents: mission-planner, loop-verifier, loop-reporter, adapter-builder, loop-reviewer, loop-eval-runner, deploy-readiness-checker.
