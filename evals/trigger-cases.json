@@ -5,7 +5,7 @@
     "reason": "Coding task with verification and repo delivery."
   },
   {
-    "query": "Build the Firebase landing page and deploy it after CI passes.",
+    "query": "Build the hosted landing page and deploy it after CI passes.",
     "should_trigger": true,
     "reason": "Build plus conditional deploy request."
   },

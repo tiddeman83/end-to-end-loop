@@ -33,7 +33,7 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 SKILL.md                         # production skill core
 references/phase-checklists.md   # phase gates and summaries
 references/test-and-security.md  # smoke/security/side-effect gates
-references/deploy-readiness.md   # deploy-readiness rubric and Firebase addendum
+references/deploy-readiness.md   # deploy-readiness rubric and hosting/custom-domain gates
 references/adapters.md           # Codex/Hermes/Claude/Cursor/AGENTS adapters
 references/evaluation.md         # trigger/release/eval guidance
 references/self-learning.md      # per-repo compact memory/result-log rules
@@ -41,12 +41,11 @@ references/report-template.md    # delivery report template
 scripts/validate_skill.py        # dependency-free repo validator
 .github/workflows/validate.yml   # CI validation
 AGENTS.md                        # general coding-agent project instructions
-.hermes.md                       # Hermes-specific operating context
-handoff/                         # DevBoss/Hermes handoff prompts
+.hermes.md                       # minimal Hermes adapter context for this product repo
 research/                        # improvement/research plans
 evals/                           # trigger, outcome, and result-log eval artifacts
 paper.md                         # shareable rationale/research draft
-memory.md                        # settled decisions
+memory.md                        # product decisions and sanitized learnings
 ```
 
 ## Validate locally
@@ -68,17 +67,16 @@ For a local Hermes profile, copy this repository or the skill folder under:
 
 Then start a fresh Hermes session or reload skills. In this project, the repo itself is the source of truth; installed local copies should be refreshed from GitHub after validation.
 
-## DevBoss maintenance model
+## Maintenance model
 
-This repository is maintained through a virtual office called **DevBoss**:
+This repository is maintained as a public-facing product/tool repository:
 
-- Tijmen is Supervisory Board chair and approves releases.
-- Board/release decisions route through Todoist and Telegram where possible.
-- Repo work uses worktrees, branches, commits, validation, and CI.
-- Firebase website work is support/marketing infrastructure, not the core skill.
-- The repo remains private until the skill is sufficiently justified by docs, metrics, evals, and release readiness.
+- repo work uses worktrees, branches, commits, validation, and CI;
+- release decisions require explicit maintainer/repository-owner approval;
+- website or hosting work is support/marketing infrastructure, not the core skill;
+- the repo remains private until the skill is sufficiently justified by docs, metrics, evals, install examples, and release readiness.
 
-See `handoff/hermes-devboss-brief.md` for the full operating model.
+Private operational automation, office workflows, dashboard coordination, and task-routing runbooks belong outside this product package.
 
 ## Why this matters
 
@@ -116,9 +114,9 @@ Release readiness depends on more than local validation. The next release train 
 Current branch baseline:
 
 - `evals/trigger-cases.json` contains 20 seed trigger cases.
-- `evals/outcome-scenarios.md` defines eight manual outcome scenarios covering bugfix, feature, release, deploy, CAVEMAN, planning-only, and DevBoss cron paths.
+- `evals/outcome-scenarios.md` defines eight manual outcome scenarios covering bugfix, feature, release, deploy, CAVEMAN, planning-only, and scheduled unattended maintenance paths.
 - `evals/result-log-template.json` provides a structured template for recording scenario results with evidence, acceptance criteria, delivery classification, CI, security, CAVEMAN, and deploy-policy status.
-- `evals/results/` contains filled scenario-result logs; the first seed log records a DevBoss cron-maintenance run against Scenario 8.
+- `evals/results/` contains filled scenario-result logs and sanitized examples for release-readiness evaluation.
 - `references/evaluation.md` defines the scoring rubric and result-log schema.
 - `references/self-learning.md` defines per-repo compact memory, result logs, privacy controls, and learning promotion rules.
 - `research/traction-plan.md` defines the pre-release traction strategy, benchmark assets, launch sequence, and Tijmen review gate.
@@ -134,8 +132,8 @@ Private development. Public release later, after:
 - evaluation metrics;
 - market/research findings;
 - website support material;
-- board-approved release plan;
-- Tijmen's explicit repo review and approval before any first public pre-release tag.
+- maintainer-approved release plan;
+- explicit repository-owner review and approval before any first public pre-release tag.
 
 ## Deploy-readiness discipline
 
@@ -143,5 +141,4 @@ Live deploys are treated as a separate readiness decision, not as the natural en
 of every repo task. Use `references/deploy-readiness.md` to classify the delivery
 target, confirm explicit deploy opt-in, check environment maturity, verify CI/local
 validation, review smoke/security evidence, and produce a readiness report when a
-deploy is blocked or deferred. For `dev-boss.nl`, the custom domain must be checked
-directly after any Firebase Hosting deployment.
+deploy is blocked or deferred. For hosted docs or marketing sites, the approved custom domain must be checked directly after any hosting deployment.

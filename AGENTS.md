@@ -20,8 +20,8 @@ This repo develops the `end-to-end-loop` Agent Skill. The production skill entry
   green CI, rollback, credentials approval, and smoke/security checks.
 - Without those conditions, produce a deployment readiness report instead.
 
-## Hermes Handoff
+## Product Boundary
 
-- Hermes-specific operations are documented in `.hermes.md` and `handoff/`.
-- DevBoss office instructions live in `handoff/hermes-devboss-brief.md`.
-- Market research prompt lives in `handoff/hermes-market-research-prompt.md`.
+- This repo documents and validates the public `end-to-end-loop` tool/skill.
+- Private office automation, status dashboards, task routing, and internal governance belong outside this product repo.
+- Keep examples generic and avoid private repo names, private access details, or internal personas in public-facing docs.

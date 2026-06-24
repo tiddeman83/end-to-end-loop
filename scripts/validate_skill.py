@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-REF_RE = re.compile(r"`?(references/[A-Za-z0-9_.\-/]+|handoff/[A-Za-z0-9_.\-/]+|scripts/[A-Za-z0-9_.\-/]+)`?")
+REF_RE = re.compile(r"`?(references/[A-Za-z0-9_.\-/]+|scripts/[A-Za-z0-9_.\-/]+)`?")
 
 
 def fail(message: str) -> None:
@@ -69,8 +69,6 @@ def check_required_files(root: Path) -> None:
         "references/self-learning.md",
         "references/report-template.md",
         "scripts/validate_skill.py",
-        "handoff/hermes-devboss-brief.md",
-        "handoff/hermes-market-research-prompt.md",
         "AGENTS.md",
         ".hermes.md",
         ".github/workflows/validate.yml",
@@ -207,7 +205,7 @@ def check_outcome_scenarios(root: Path) -> None:
         "live-deploy": "live-deploy policy coverage",
         "repo-only": "repo-only delivery coverage",
         "prep-only": "prep-only delivery coverage",
-        "dev-boss.nl": "DevBoss/Firebase site coverage",
+        "approved custom domain": "generic hosting/custom-domain coverage",
         "git diff --check": "diff hygiene verification coverage",
         "JSON validation": "structured-data validation coverage",
     }

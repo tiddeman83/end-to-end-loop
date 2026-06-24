@@ -1,14 +1,10 @@
 # Improvement Research Plan
 
-This plan follows the first production-ready preparation pass. It defines the next
-research and improvement program for the skill.
+This plan defines the next research and improvement program for the public-facing `end-to-end-loop` skill.
 
 ## Current product thesis
 
-`end-to-end-loop` should become the portable delivery discipline for coding agents:
-it keeps agents from skipping discovery, tests, safety checks, CI, deployment
-approval, and reporting. Its differentiator is strict CAVEMAN execution plus a
-deploy policy that blocks unsafe live changes.
+`end-to-end-loop` should become a portable delivery discipline for coding agents: it keeps agents from skipping discovery, tests, safety checks, CI, deployment approval, and reporting. Its differentiator is strict CAVEMAN execution plus a deploy policy that blocks unsafe live changes.
 
 ## Improvement tracks
 
@@ -17,18 +13,19 @@ deploy policy that blocks unsafe live changes.
 Goal: ensure the skill activates for delivery work and stays quiet for pure Q&A.
 
 Work:
-- Add `evals/trigger-cases.json`.
-- Include near-miss negatives: "explain CI", "write a commit message only",
-  "summarize this code", "brainstorm deployment options".
-- Run three passes per query where the tool supports invocation logs.
+
+- Maintain `evals/trigger-cases.json` with near-miss negatives.
+- Include prompts for explanation-only, commit-message-only, summary-only, planning-only, coding, PR, and deploy-gated work.
+- Run repeated passes where the tool supports invocation logs.
 
 ### Track 2: CAVEMAN adapter maturity
 
 Goal: make CAVEMAN enforcement usable across tools.
 
 Work:
+
 - Define exact CAVEMAN adapters for Codex, Hermes, Claude Code, and Cursor.
-- Decide whether "CAVEMAN exception" should fail CI/release readiness.
+- Decide whether a "CAVEMAN exception" should fail release readiness.
 - Add examples of compliant and non-compliant execution reports.
 
 ### Track 3: Deploy-readiness scoring
@@ -36,40 +33,37 @@ Work:
 Goal: make the deploy gate objective.
 
 Work:
-- Create a readiness rubric: target env, CI, tests, rollback, secrets, owner,
-  monitoring, user approval.
-- Add `references/deploy-readiness.md` if the rubric grows beyond
-  `test-and-security.md`.
-- Add scenario evals for deploy requested/no CI, deploy not requested, and deploy
-  approved/CI green.
 
-### Track 4: Hermes DevBoss operations
+- Keep the readiness rubric focused on target environment, CI, tests, rollback, secrets, owner, monitoring, and user approval.
+- Add scenario evals for deploy requested/no CI, deploy not requested, and deploy approved/CI green.
+- Keep provider-specific hosting details generic unless an adapter file owns them.
 
-Goal: make Hermes capable of maintaining the repo with minimal ambiguity.
+### Track 4: Product helper agents
 
-Work:
-- Test the handoff prompt in Hermes.
-- Verify `skills.write_approval` and external skill directory setup.
-- Confirm Todoist routing through the user's AI Assistant.
-- Define board decision log location if Todoist IDs need repo persistence.
+Goal: decide whether optional public helper agents add value beyond `SKILL.md`.
+
+Candidate agents:
+
+- `loop-verifier`
+- `loop-reporter`
+- `adapter-builder`
+- `loop-reviewer`
+- `loop-eval-runner`
+- `deploy-readiness-checker`
+
+Guardrail: these are functional public helpers, not internal office agents.
 
 ### Track 5: Website and market positioning
 
-Goal: prepare a Firebase-hosted website after user environment setup.
+Goal: prepare public product messaging after an approved hosting target exists.
 
 Work:
+
 - Market scan adjacent skills and rule systems.
 - Draft landing page, install pages, safety page, research page, and changelog.
-- Decide whether website source belongs in this repo or a separate Firebase repo.
+- Decide whether website source belongs in this repo or a separate site repo.
 
 ## Proposed next release milestones
-
-### v0.2.0 - Production candidate
-
-- Universal core and adapter references.
-- CI validation.
-- Hermes DevBoss handoff.
-- Research prompt.
 
 ### v0.3.0 - Eval-backed release
 
@@ -77,23 +71,22 @@ Work:
 - Outcome scenario evals.
 - Deploy-readiness rubric.
 - CAVEMAN compliance examples.
+- Sanitized product result logs.
 
-### v0.4.0 - Hermes-managed operating model
+### v0.4.0 - Helper-agent MVP
 
-- DevBoss office running.
-- Todoist routing confirmed.
-- Website plan approved.
-- First Firebase implementation branch prepared.
+- Optional helper-agent specs.
+- Agent output schemas.
+- Helper-agent eval coverage.
 
 ### v1.0.0 - Public/shareable release
 
 - Evals pass.
 - Paper polished.
 - Website live if approved.
-- Installation instructions tested for Codex, Hermes, Claude Code, Cursor, and
-  AGENTS.md-only agents.
+- Installation instructions tested for Codex, Hermes, Claude Code, Cursor, and AGENTS.md-only agents.
 
-## Research questions for Hermes
+## Research questions
 
 1. Which public skills or rules already solve parts of this loop?
 2. Where do users complain most about coding-agent reliability?
@@ -101,33 +94,21 @@ Work:
 4. What security claims can be made responsibly, and what must remain caveated?
 5. What website messaging makes this useful without overpromising?
 
-## Overnight priority order
+## Not safe without explicit approval
 
-1. README landing page — high impact, low risk.
-2. Evaluation rubric and result schema — high impact, low risk.
-3. Paper cleanup and validation-status note — medium/high impact, low risk.
-4. Hermes first-day/overnight research mode — medium impact, low risk.
-5. CAVEMAN compliance examples — medium impact, low risk.
-6. Deploy-readiness rubric — complete as `references/deploy-readiness.md`; next pass should add scenario eval results against it.
-
-## Not overnight-safe without explicit approval
-
-- Live Firebase deploys.
+- Live deploys.
 - Public release or marketplace publication.
 - Broad skill package restructuring.
 - Validator behavior changes that weaken release checks.
-- Auth, token, Firebase rules, or production data changes.
+- Auth, token, provider rules, or production data changes.
 - Code-producing repo changes without a CAVEMAN lane or approved exception.
 
-## Research-backed additions for v0.3.0
+## Research-backed additions
 
-The next version should borrow from ReAct, Reflexion, Self-Refine, SWE-agent,
-SWE-bench, SLSA, OpenSSF Scorecard, and NIST SSDF without overclaiming. Practical
-translation for this repo:
+The next version should borrow from ReAct, Reflexion, Self-Refine, SWE-agent, SWE-bench, SLSA, OpenSSF Scorecard, and NIST SSDF without overclaiming. Practical translation for this repo:
 
 - make inspect/reproduce/plan/implement/verify/reflect/finalize explicit;
 - record fail-to-pass and pass-to-pass behavior where tests exist;
 - track wall time, tool calls, files touched, diff size, and human interventions;
-- separate author, reviewer, CI, security, and release governance roles in DevBoss;
 - require source links and uncertainty notes for research conclusions;
 - keep live deploy blocked unless the release gate is explicitly satisfied.

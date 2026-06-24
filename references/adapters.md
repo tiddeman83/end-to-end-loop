@@ -23,8 +23,8 @@ end-to-end-loop/
     └── openai.yaml
 ```
 
-Development and handoff files (`development.md`, `memory.md`, `paper.md`,
-`handoff/`, `.github/`, `.hermes.md`, `AGENTS.md`) belong in the repo, not
+Development files (`development.md`, `memory.md`, `paper.md`, `.github/`,
+`.hermes.md`, `AGENTS.md`) belong in the repo, not
 necessarily in a minimal installed skill package.
 
 ## Codex
@@ -63,8 +63,9 @@ Notes:
   conditions. Do not require those fields in the universal core.
 - For this repo, give Hermes project context through `.hermes.md` and `AGENTS.md`.
 - Turn on `skills.write_approval` before allowing Hermes to modify this skill.
-- Use the DevBoss handoff files under `handoff/` to run private repo-maintenance,
-  research cadence, Todoist routing, and site readiness workflows.
+- Keep Hermes-specific product context in `.hermes.md` and generic project
+  instructions in `AGENTS.md`; private operations workflows should live outside
+  this public-facing product package.
 - Hermes persistent memory may complement repo memory, but repo memory should stay
   explicit, reviewable, compact, and privacy-safe. Prefer
   `.end-to-end-loop/memory.md` for sanitized repo facts and
@@ -122,7 +123,7 @@ different names. Acceptable mappings:
 
 | Required role | Preferred name | Adapter examples |
 | --- | --- | --- |
-| Execution orchestration | CAVEMAN ULTRA | caveman-ultra, cavecrew-builder, configured Hermes DevBoss engineering agent |
+| Execution orchestration | CAVEMAN ULTRA | caveman-ultra, cavecrew-builder, configured Hermes engineering agent |
 | Code modification | CAVEMAN CODE | caveman-code, code-focused CAVEMAN agent, configured Hermes implementation agent |
 | Review compression | CAVEMAN REVIEW | caveman-review, code-review with caveman output style |
 
