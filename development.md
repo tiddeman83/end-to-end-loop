@@ -645,3 +645,14 @@ Verification:
 - Blockers/follow-ups: `git ls-remote` against the target HTTPS remote returned HTTP 403 despite `gh auth`; PHP lint remains blocked because `php` is not installed; forms are still prototype-only; no CI workflow exists; target remains not production-ready.
 - End-to-end-loop artifacts: added `evals/results/2026-06-24-scenario-18-tdrrecherche-admin-gh-readiness-repeat.json`, updated `memory.md` with Todoist-tooling, GH-access, and latest TDR sampler readiness learnings.
 - Copilot path: `gh copilot --help` returns rc 0 and `gh extension list` is empty; no Copilot review was run because this was read-only/no-diff and deeper invocation may install/download tooling.
+
+## 2026-06-24 — Iteration 19: scheduled TDR form-a11y regression repeat
+
+- Ran the scheduled DevBoss office loop again in read-only/dry-run mode; no Todoist CLI was present, so the prompt-injected DevBoss agenda remained source tasking.
+- Access check: `gh` is authenticated as `tiddeman83`, but exact `gh repo view` calls for `tiddeman83/bloonbladmaker`, `tiddeman83/tdrrecherche`, and `tiddeman83/Schoolanalyse` still cannot resolve; `tdrrecherche` HTTPS remote reads still return HTTP 403. No old per-repo key fallback used.
+- Local availability/state: `/opt/data/worktrees/tdrrecherche/feat-complete-wordpress-design-samples` exists, is clean, branch `feat/complete-wordpress-design-samples`, HEAD `bde99b7`; no target `.end-to-end-loop/` memory present.
+- Scenario: form/accessibility regression repeat for static sampler + WordPress scaffold, focused on whether the prior broad no-false-green checks catch field-level issues.
+- Evidence: `node --check` passed for theme JS and extracted inline scripts from `index.html` plus variants A-E; HTML parser audit found 0 missing relative assets, 0 missing anchors, 0 duplicate IDs, and 10 prototype `action="#"` forms; focused control audit found optional phone controls in variants A-D are placeholder-only with no `name`, label, or ARIA; local HTTP smoke returned 200 for `/`, variant A, variant D, theme JS, and theme CSS; credential-like scan returned 0 hits.
+- Blockers/follow-ups: PHP lint remains blocked because `php` is absent; WordPress contact handling remains placeholder-only; target GitHub access/CI checks remain blocked; result is partial, not production-ready.
+- End-to-end-loop artifacts: added `evals/results/2026-06-24-scenario-19-tdrrecherche-form-a11y-regression-repeat.json`, updated `memory.md` with corrected TDR form-a11y readiness learning.
+- Copilot path: `gh extension list` shows no installed extensions; no Copilot review was run because this was read-only/no-diff and no safe review path was exposed.

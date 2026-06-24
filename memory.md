@@ -132,9 +132,10 @@ iterations do not re-litigate settled points.
   HTML/asset parser, `node --check`, local `python3 -m http.server` smoke, refined
   credential scan, PHP/WordPress runtime availability probe, and explicit no-deploy
   readiness blockers.
-- 2026-06-24: Latest TDR static sampler eval observed 0 missing assets/anchors,
-  duplicate IDs, or unlabeled controls, but all 10 forms still use prototype actions
-  and PHP lint remains blocked by missing `php`.
+- 2026-06-24: Latest TDR static sampler eval observed 0 missing assets/anchors or
+  duplicate IDs, but all 10 forms still use prototype actions, variants A-D have
+  placeholder-only phone controls without name/label/ARIA, and PHP lint remains
+  blocked by missing `php`.
 - A portable delivery loop should distinguish "deliverable prepared" from "live
   deployment executed" and require explicit approval for high-impact side effects.
 - Hermes supports Agent Skills, `~/.hermes/skills/`, external skill directories,
