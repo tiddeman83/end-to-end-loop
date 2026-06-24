@@ -633,3 +633,15 @@ Verification:
 - Blockers/follow-ups: PHP unavailable, target repo unresolved through `gh`, static forms remain prototype-only (`action` empty/`#`), and WordPress contact/mail/nonce path is absent; result is partial, not production-ready.
 - End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-17-tdrrecherche-gh-admin-local-eval.json`, updated `memory.md` with GH slug/access and safe TDR eval learnings.
 - Copilot path: `gh copilot --help` returns rc 0; no Copilot code review was run because this was read-only with no target diff and deeper invocation may install/download tooling.
+
+## 2026-06-24 — Iteration 18: scheduled DevBoss admin-GH readiness repeat
+
+- Ran the scheduled DevBoss office loop in read-only/dry-run mode after Tijmen completed Todoist items; no Todoist CLI was present in the cron shell, so the prompt-injected DevBoss agenda was used as source tasking and the tooling gap was reported.
+- Access check: `gh` is authenticated as `tiddeman83`, but `gh repo view` still cannot resolve `tiddeman83/bloonbladmaker`, `tiddeman83/tdrrecherche`, or `tiddeman83/Schoolanalyse`; `gh repo list tiddeman83` lists 17 repos but not those target slugs.
+- Local availability: only `tdrrecherche` exists locally (`/opt/data/repos/tdrrecherche` plus feature worktree); `bloonbladmaker` and `Schoolanalyse` local repo/worktree paths are missing.
+- Target state: `/opt/data/worktrees/tdrrecherche/feat-complete-wordpress-design-samples` clean at `bde99b75d3d46b045842d841511c7fb5e7f496e7` on `feat/complete-wordpress-design-samples`; no target `.end-to-end-loop/` memory present; no `.github/workflows` directory.
+- Scenario: safe local readiness/eval rerun for TDR static sampler + WordPress scaffold, measuring whether end-to-end-loop remains evidence-based without unsafe writes or old-key fallback.
+- Evidence: HTMLParser audit over `index.html` and variants A-E found 6 HTML files, 10 forms, 10 bad prototype form actions, 0 unlabeled controls, 0 missing relative assets, 0 missing anchors, 0 duplicate IDs, and 0 privacy/mailto/tel links; `node --check` passed for theme JS and all extracted inline scripts; local HTTP smoke returned 200 for `/`, all five variants, theme JS, and theme CSS; refined credential scan returned 0 hits.
+- Blockers/follow-ups: `git ls-remote` against the target HTTPS remote returned HTTP 403 despite `gh auth`; PHP lint remains blocked because `php` is not installed; forms are still prototype-only; no CI workflow exists; target remains not production-ready.
+- End-to-end-loop artifacts: added `evals/results/2026-06-24-scenario-18-tdrrecherche-admin-gh-readiness-repeat.json`, updated `memory.md` with Todoist-tooling, GH-access, and latest TDR sampler readiness learnings.
+- Copilot path: `gh copilot --help` returns rc 0 and `gh extension list` is empty; no Copilot review was run because this was read-only/no-diff and deeper invocation may install/download tooling.

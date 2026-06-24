@@ -122,10 +122,19 @@ iterations do not re-litigate settled points.
   `bloonbladmaker`, `tdrrecherche`, and `Schoolanalyse` may still fail `gh repo view`;
   treat as slug/access discovery blocker and avoid old per-repo keys unless explicitly
   approved.
+- 2026-06-24: Todoist CLI may be unavailable in scheduled cron shells; when DevBoss
+  tasking is injected into the scheduled prompt, treat it as agenda source and report
+  the Todoist tooling gap.
+- 2026-06-24: `tdrrecherche` HTTPS remote reads may return `403 Write access to
+  repository not granted` even when `gh auth status` shows `tiddeman83`; do not use old
+  per-repo keys unless explicitly approved.
 - 2026-06-23: Safe TDR-style read-only eval pattern: local repo/worktree state,
   HTML/asset parser, `node --check`, local `python3 -m http.server` smoke, refined
   credential scan, PHP/WordPress runtime availability probe, and explicit no-deploy
   readiness blockers.
+- 2026-06-24: Latest TDR static sampler eval observed 0 missing assets/anchors,
+  duplicate IDs, or unlabeled controls, but all 10 forms still use prototype actions
+  and PHP lint remains blocked by missing `php`.
 - A portable delivery loop should distinguish "deliverable prepared" from "live
   deployment executed" and require explicit approval for high-impact side effects.
 - Hermes supports Agent Skills, `~/.hermes/skills/`, external skill directories,
