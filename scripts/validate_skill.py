@@ -68,6 +68,7 @@ def check_required_files(root: Path) -> None:
         "references/evaluation.md",
         "references/self-learning.md",
         "references/report-template.md",
+        "references/mission-mode.md",
         "scripts/validate_skill.py",
         "AGENTS.md",
         ".hermes.md",
@@ -93,7 +94,8 @@ def check_policy_terms(root: Path) -> None:
     phase = (root / "references/phase-checklists.md").read_text(encoding="utf-8")
     adapters = (root / "references/adapters.md").read_text(encoding="utf-8")
     self_learning = (root / "references/self-learning.md").read_text(encoding="utf-8")
-    combined = "\n".join([skill, safety, phase, adapters, self_learning])
+    mission_mode = (root / "references/mission-mode.md").read_text(encoding="utf-8")
+    combined = "\n".join([skill, safety, phase, adapters, self_learning, mission_mode])
     required_terms = [
         "CAVEMAN",
         "live deploy",
@@ -106,6 +108,12 @@ def check_policy_terms(root: Path) -> None:
         "memory",
         "privacy",
         "result log",
+        "install",
+        "update",
+        "freshness",
+        "token",
+        "cheap/fast",
+        "Mission Mode",
     ]
     for term in required_terms:
         if term not in combined:
@@ -142,6 +150,11 @@ def check_trigger_cases(root: Path) -> None:
     near_miss_negatives = 0
     deploy_cases = 0
     caveman_cases = 0
+    optimization_cases = 0
+    model_routing_cases = 0
+    helper_agent_cases = 0
+    install_update_cases = 0
+    repo_update_cases = 0
 
     for idx, case in enumerate(cases, start=1):
         if not isinstance(case, dict):
@@ -177,6 +190,17 @@ def check_trigger_cases(root: Path) -> None:
             deploy_cases += 1
         if "caveman" in text:
             caveman_cases += 1
+        if should_trigger:
+            if any(term in text for term in ("token", "tokens", "minimize", "optimization", "speed", "fast")):
+                optimization_cases += 1
+            if any(term in text for term in ("model routing", "cheaper", "cheap", "expensive model", "reasoning level")):
+                model_routing_cases += 1
+            if any(term in text for term in ("helper agent", "helper-agent", "mission mode", "more agents")):
+                helper_agent_cases += 1
+            if any(term in text for term in ("install", "update instructions", "installed copy")):
+                install_update_cases += 1
+            if any(term in text for term in ("repo update", "upstream", "stale", "freshness")):
+                repo_update_cases += 1
 
     if positives < 8:
         fail(f"Trigger evals need at least 8 should-trigger positives; found {positives}")
@@ -188,6 +212,16 @@ def check_trigger_cases(root: Path) -> None:
         fail(f"Trigger evals need at least 3 deploy-policy cases; found {deploy_cases}")
     if caveman_cases < 2:
         fail(f"Trigger evals need at least 2 CAVEMAN cases; found {caveman_cases}")
+    if optimization_cases < 2:
+        fail(f"Trigger evals need at least 2 optimization/token/speed cases; found {optimization_cases}")
+    if model_routing_cases < 2:
+        fail(f"Trigger evals need at least 2 model-routing/cheap-model cases; found {model_routing_cases}")
+    if helper_agent_cases < 1:
+        fail(f"Trigger evals need at least 1 helper-agent/Mission Mode case; found {helper_agent_cases}")
+    if install_update_cases < 1:
+        fail(f"Trigger evals need at least 1 install/update case; found {install_update_cases}")
+    if repo_update_cases < 1:
+        fail(f"Trigger evals need at least 1 repo update/freshness case; found {repo_update_cases}")
 
 
 def check_outcome_scenarios(root: Path) -> None:
@@ -208,6 +242,12 @@ def check_outcome_scenarios(root: Path) -> None:
         "approved custom domain": "generic hosting/custom-domain coverage",
         "git diff --check": "diff hygiene verification coverage",
         "JSON validation": "structured-data validation coverage",
+        "token minimization": "token minimization coverage",
+        "cheap/fast": "cheap/fast model-routing coverage",
+        "reasoning level": "reasoning-level routing coverage",
+        "repo update check": "repo update/freshness coverage",
+        "install/update": "CAVEMAN install/update coverage",
+        "Mission Mode": "helper-agent/Mission Mode coverage",
     }
     for term, label in required_terms.items():
         if term not in text:
@@ -248,6 +288,7 @@ def check_eval_result_template(root: Path) -> None:
         "learning_candidates",
         "privacy_review",
         "copilot_findings",
+        "optimization_metrics",
         "notes",
     }
     missing = sorted(required_keys - set(template))
@@ -288,6 +329,7 @@ EVAL_RESULT_REQUIRED_KEYS = {
     "learning_candidates",
     "privacy_review",
     "copilot_findings",
+    "optimization_metrics",
     "notes",
 }
 
@@ -405,6 +447,54 @@ def check_eval_result_logs(root: Path) -> None:
             fail(f"{path.relative_to(root)} copilot_findings must include available, summary, and items")
         if not isinstance(copilot["available"], bool) or not isinstance(copilot["items"], list):
             fail(f"{path.relative_to(root)} copilot_findings has invalid types")
+
+        optimization = result.get("optimization_metrics")
+        if not isinstance(optimization, dict):
+            fail(f"{path.relative_to(root)} optimization_metrics must be an object")
+        required_optimization_keys = {
+            "token_budget_policy",
+            "estimated_or_measured_tokens",
+            "wall_time_seconds",
+            "tool_call_count",
+            "model_routing_decisions",
+            "helper_agents_used",
+            "repo_update_check",
+            "install_update_check",
+        }
+        missing_optimization = sorted(required_optimization_keys - set(optimization))
+        if missing_optimization:
+            fail(f"{path.relative_to(root)} optimization_metrics missing keys: {missing_optimization}")
+        for key in (
+            "token_budget_policy",
+            "estimated_or_measured_tokens",
+            "wall_time_seconds",
+            "tool_call_count",
+            "repo_update_check",
+            "install_update_check",
+        ):
+            if not isinstance(optimization[key], str) or not optimization[key].strip():
+                fail(f"{path.relative_to(root)} optimization_metrics.{key} must be a non-empty string")
+        if optimization["repo_update_check"] not in {"checked_current", "stale", "not_checked", "not_applicable"}:
+            fail(f"{path.relative_to(root)} optimization_metrics.repo_update_check has invalid value")
+        if optimization["install_update_check"] not in {"checked", "not_checked", "not_applicable"}:
+            fail(f"{path.relative_to(root)} optimization_metrics.install_update_check has invalid value")
+        routing = optimization["model_routing_decisions"]
+        if not isinstance(routing, list):
+            fail(f"{path.relative_to(root)} optimization_metrics.model_routing_decisions must be a list")
+        allowed_reasoning_levels = {"level_0", "level_1", "level_2", "level_3", "not_applicable"}
+        allowed_model_classes = {"script", "cheap_fast", "standard", "high_reasoning", "human", "not_applicable"}
+        for idx, item in enumerate(routing, start=1):
+            if not isinstance(item, dict):
+                fail(f"{path.relative_to(root)} model routing decision {idx} must be an object")
+            for key in ("task", "reasoning_level", "model_class", "rationale"):
+                if key not in item:
+                    fail(f"{path.relative_to(root)} model routing decision {idx} missing {key!r}")
+            if item["reasoning_level"] not in allowed_reasoning_levels:
+                fail(f"{path.relative_to(root)} model routing decision {idx} has invalid reasoning_level")
+            if item["model_class"] not in allowed_model_classes:
+                fail(f"{path.relative_to(root)} model routing decision {idx} has invalid model_class")
+        if not isinstance(optimization["helper_agents_used"], list):
+            fail(f"{path.relative_to(root)} optimization_metrics.helper_agents_used must be a list")
 
 
 def check_line_hygiene(root: Path) -> None:

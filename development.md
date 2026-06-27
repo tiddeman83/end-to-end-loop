@@ -31,3 +31,21 @@ Validation plan:
 Follow-up product decision:
 
 - Decide whether Mission Mode should remain a research note or become a packaged optional helper-agent layer with `mission-planner`, `loop-verifier`, `loop-reporter`, `adapter-builder`, `loop-reviewer`, `loop-eval-runner`, and `deploy-readiness-checker`.
+
+## 2026-06-27 — Token, speed, model-routing, and update preflight
+
+Goal: optimize the loop for lower token use, faster development, cheaper model use, more effective helper-agent use, and safer skill freshness.
+
+Decisions:
+
+- Add lean/standard/deep operating modes and level_0..level_3 complexity routing.
+- Prefer deterministic scripts or cheap/fast models for mechanical work; escalate to standard/high-reasoning/human routes only when complexity, risk, or approval gates require it.
+- Always consider helper agents, but use them only when parallelism, specialization, or context compression beats coordination cost.
+- CAVEMAN companion skills are mandatory prerequisites for code-producing phases and must be installed/update-checked when supported before blocking or proceeding.
+- `end-to-end-loop` should check its own source/repo freshness where feasible before maintained repo work.
+
+Validation plan:
+
+- Validate from a temporary folder named `end-to-end-loop`.
+- Run JSON validation through `scripts/validate_skill.py`.
+- Run `git diff --check`.

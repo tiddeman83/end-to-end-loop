@@ -125,3 +125,7 @@ Use this matrix during DISCOVER and PLAN.
 | Use credentials/secrets | Require explicit approval; never print or commit secrets |
 | Delete data/files or run destructive commands | Require explicit approval and rollback/backup |
 | Change skill/rules/memory for future agents | Record decision; prefer review gate |
+| Skill update check / network fetch | Read-only freshness checks are allowed when network is authorized; report if blocked |
+| Install/update agent skills | Requires explicit profile-scoped approval; never cross profiles unless directed |
+| Modify installed skill directories | Validate source first, then sync; report reload/fresh-session needs |
+| Reload/restart agent session | User-visible handoff; do not claim new instructions are active before reload |

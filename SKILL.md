@@ -1,6 +1,6 @@
 ---
 name: end-to-end-loop
-description: "Run software and coding work through a disciplined delivery loop: discover, plan, execute, verify, iterate, test, optionally deploy, and report. Use when building, fixing, refactoring, debugging, testing, reviewing, shipping, or preparing a production-ready feature, script, service, tool, repo change, or release. CAVEMAN execution is mandatory for code-producing phases; if no CAVEMAN lane exists, stop before code changes and ask for an explicit exception. Live deploy only runs when the user opted in, the project is mature enough, and an applicable CI pipeline is green."
+description: "Use for building, fixing, refactoring, debugging, testing, reviewing, shipping, release prep, scripts, services, tools, repo changes, and production-ready coding delivery that needs plan -> execute -> verify -> test -> deliver/report. Requires CAVEMAN, lean token use, model routing by complexity, helper-agent consideration, and opt-in gated live deploy."
 ---
 
 # End-to-End Loop
@@ -32,6 +32,33 @@ scope, then report clearly.
    `references/adapters.md`, not in the universal core.
 7. Use per-repo memory only for compact, durable, sanitized learnings. Do not
    store secrets, private user data, bulky transcripts, or unverified guesses.
+8. Minimize token, time, and model cost without weakening evidence, CAVEMAN,
+   security, deploy, or approval gates. Use the cheapest adequate model or
+   deterministic script for each phase and escalate only when complexity demands it.
+9. Before code-producing work, check that required CAVEMAN companion skills are
+   installed and update-checked when the tool supports it. Treat skill install,
+   skill update, and repo freshness checks as explicit side effects.
+
+## Operating Modes and Complexity Routing
+
+Choose the lightest mode that can still produce observed evidence:
+
+| Mode | Use for | Token/speed policy |
+|---|---|---|
+| `lean` | tiny docs, one-file fixes, deterministic checks, low risk | compact DISCOVER/PLAN, no bulk context, targeted verify, compact report |
+| `standard` | normal multi-step coding or repo work | full phase gates, targeted references, staged tests |
+| `deep` | architecture, security, deploy, auth, data, broad refactor, repeated failure | high-reasoning review, more helper agents, full reference and eval coverage |
+
+During PLAN classify each workstream:
+
+- `level_0`: mechanical/read-only/deterministic -> script, tool, or cheap/fast model.
+- `level_1`: bounded implementation -> standard coding model plus CAVEMAN.
+- `level_2`: ambiguous architecture, safety, deploy, security -> high-reasoning model or specialist reviewer.
+- `level_3`: merge, release, deploy, admin, secrets, destructive/public claims -> human approval gate.
+
+Always consider helper agents for independent discovery, implementation, tests,
+security review, diff review, or eval/report compression. Spawn them only when
+parallelism or specialized review beats the context/coordination cost.
 
 ## CAVEMAN Hard Gate
 
@@ -39,16 +66,22 @@ CAVEMAN is mandatory for code-producing phases.
 
 Before EXECUTE or ITERATE:
 
-1. Resolve the available CAVEMAN lane:
+1. Run the CAVEMAN install/update preflight from `references/adapters.md` when the
+   tool supports skill discovery, install, or update checks:
    - Preferred: CAVEMAN ULTRA for execution orchestration.
    - Preferred: CAVEMAN CODE for code edits.
+   - Preferred: CAVEMAN REVIEW or a configured reviewer for review-only lanes.
    - If the tool exposes different CAVEMAN names, use the configured adapter.
-2. Pass the current phase, plan, acceptance criteria, constraints, and verification
-   hooks into that lane.
-3. If no CAVEMAN execution lane exists, stop before writing code or changing repo
-   files and ask the user for an explicit exception. Mark the run as
-   "CAVEMAN exception" in the report if the user approves.
-4. Do not silently replace CAVEMAN with a generic agent, normal chat, or ad hoc
+2. If a required CAVEMAN companion skill is missing or outdated, install/update it
+   when permissions and approval allow. If that is blocked, report the exact
+   blocker before any code-producing work.
+3. Pass a compact payload into that lane: phase, mode, complexity level, plan,
+   acceptance criteria, files, constraints, and verification hooks. Do not resend
+   full transcripts or unrelated files.
+4. If no CAVEMAN execution lane exists after install/update discovery, stop before
+   writing code or changing repo files and ask the user for an explicit exception.
+   Mark the run as "CAVEMAN exception" in the report if the user approves.
+5. Do not silently replace CAVEMAN with a generic agent, normal chat, or ad hoc
    execution.
 
 Non-code discovery, planning, research, reporting, and documentation can run
@@ -105,10 +138,14 @@ Do:
 - Identify inputs, files, permissions, credentials, environments, target users,
   dependencies, and constraints.
 - Identify side effects: filesystem writes, network calls, external services,
-  installs, secrets, CI, deploy, data changes, destructive operations.
+  installs, skill installs/updates, repo freshness checks, secrets, CI, deploy,
+  data changes, destructive operations.
 - Ask only material questions that cannot be safely inferred. Prefer one grouped
   question set over drip-fed clarification.
 - Record assumptions and risks.
+- Identify the active `end-to-end-loop` source/version/commit. If an upstream repo
+  or source package is configured and network access is allowed, check freshness
+  before relying on stale installed instructions.
 - If present, read `.end-to-end-loop/memory.md` and
   `.end-to-end-loop/memory.local.md` for repo-specific facts, commands,
   blockers, preferences, prior outcomes, and failed approaches. Treat memory as
@@ -124,6 +161,15 @@ Goal: produce a concrete, verifiable path.
 
 Do:
 
+- Choose operating mode (`lean`, `standard`, `deep`) and classify complexity
+  (`level_0`..`level_3`) for each workstream.
+- Route work to the cheapest adequate execution path: deterministic tools/scripts
+  for mechanical checks, cheap/fast models for low-risk summaries or scans,
+  standard coding models for bounded implementation, and high-reasoning models or
+  humans for architecture, security, deploy, auth, or irreversible decisions.
+- Consider helper agents for parallelizable discovery, implementation, review,
+  testing, security, or reporting; skip them when coordination/context cost is
+  higher than the expected speed or quality gain.
 - Break work into small steps with verification hooks.
 - Define acceptance criteria as pass/fail statements.
 - Choose the delivery target: `none`, `repo-only`, `prep-only`, or `live-deploy`.
@@ -131,6 +177,8 @@ Do:
 - Define test strategy: unit checks, integration checks, smoke path, security
   review, and CI expectations.
 - Identify rollback or recovery for risky operations.
+- Plan skill install/update and repo freshness side effects explicitly, including
+  approval requirements, reload/fresh-session needs, and blocked fallbacks.
 
 Exit: written plan, acceptance criteria, deploy classification, and test strategy.
 
@@ -140,7 +188,8 @@ Goal: implement the plan through the required execution lane.
 
 Do:
 
-- Pass implementation work through CAVEMAN as defined above.
+- Pass implementation work through CAVEMAN as defined above, using compact
+  workstream payloads and the selected model/agent route.
 - Work step by step and keep progress visible.
 - Keep changes scoped to the plan and repo conventions.
 - Preserve user or teammate changes. Never revert unrelated work.
@@ -158,7 +207,9 @@ Do:
 - Check each acceptance criterion: pass, fail, or blocked with evidence.
 - Inspect the diff or artifact for correctness, edge cases, maintainability,
   portability, and instruction conflicts.
-- Run the changed thing or the closest realistic verification command.
+- Run the fastest targeted verification first, then broaden only when change
+  scope, risk, or failing evidence warrants it. Parallelize independent checks
+  when the tool supports it.
 - Record findings and fixes. Do not move to TEST with must-fix issues open.
 
 Exit: acceptance criteria pass and no must-fix review issues remain.
@@ -183,7 +234,8 @@ Goal: harden the result beyond the immediate acceptance criteria.
 Do:
 
 - Run applicable automated tests, type checks, lint checks, or CI-local
-  equivalents.
+  equivalents. Start with targeted cheap checks, then expand to full suites for
+  broad, risky, release, or deploy-bound changes.
 - Run smoke tests for critical end-to-end paths.
 - Run security review for secrets, injection, unsafe shell use, auth, data
   exposure, dependency risk, destructive operations, and unsafe defaults.
@@ -234,14 +286,24 @@ Report:
 - Acceptance criteria and evidence.
 - Tests, smoke checks, security review, and CI status.
 - Delivery/deploy classification and result.
-- CAVEMAN lane used or approved exception.
-- Known limitations, follow-ups, and rollback/recovery notes.
+- CAVEMAN lane used, install/update status, or approved exception.
+- `end-to-end-loop` source/version and repo freshness/self-update status.
+- Operating mode, model-routing decisions, helper agents considered/used, and any
+  token/time/cost measurements or stated measurement limits.
+- Known limitations, follow-ups, reload/fresh-session needs, and rollback/recovery notes.
 - Learning update: result-log path, memory update status, durable learning
   candidates, and privacy/commit-safety decision.
 
-Use `references/report-template.md` for larger tasks.
+Use a compact report by default: outcome, changed files, evidence, tests/CI/security,
+CAVEMAN/update status, routing decisions, blockers/next. Use
+`references/report-template.md` only for larger, high-risk, or audited tasks.
 
 ## Reference Routing
+
+Reference budget: start with `SKILL.md` only, then load the smallest needed
+reference for the active trigger. Do not load all references by default. When a
+reference is loaded, compress its operational impact to <=5 bullets before
+continuing.
 
 - Read `references/phase-checklists.md` for concrete phase checklists.
 - Read `references/test-and-security.md` for side-effect, CI, smoke, and security
@@ -249,13 +311,17 @@ Use `references/report-template.md` for larger tasks.
 - Read `references/deploy-readiness.md` when a task requests live deploy,
   release readiness, hosting work, or custom-domain verification.
 - Read `references/adapters.md` when installing or adapting the skill for Codex,
-  Hermes, Claude Code, Cursor, or AGENTS.md-only agents.
+  Hermes, Claude Code, Cursor, or AGENTS.md-only agents, including CAVEMAN
+  companion install/update and `end-to-end-loop` freshness checks.
 - Read `references/evaluation.md` when evaluating trigger quality, output quality,
   or release readiness.
 - Read `references/self-learning.md` when maintaining per-repo memory, writing
   result logs, evaluating memory quality, or improving the skill's self-learning
   behavior.
 - Read `references/report-template.md` for formal delivery reports.
+- Read `references/mission-mode.md` when a task is parallelizable, repeatedly
+  failing, broad enough for specialized review/evals, or explicitly asks for
+  faster/more-agent execution.
 
 ## Maintenance Rule
 
@@ -265,5 +331,7 @@ When improving this skill itself, update:
 - `memory.md` for durable user preferences and settled decisions.
 - `references/self-learning.md`, result-log templates, and validators when memory
   behavior changes.
-- Product adapter references when tool-specific installation or invocation
-  behavior changes.
+- Product adapter references when tool-specific installation, invocation,
+  CAVEMAN install/update, model routing, or repo freshness behavior changes.
+- `README.md`, evals, and validators when install/update, optimization, helper
+  agent, or self-update behavior changes.

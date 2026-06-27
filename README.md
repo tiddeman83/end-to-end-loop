@@ -14,7 +14,9 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 
 - discover the real goal and side effects before acting;
 - plan with pass/fail acceptance criteria;
-- execute code-producing work only through a CAVEMAN-compatible lane;
+- execute code-producing work only through a CAVEMAN-compatible lane that is installed and update-checked;
+- route work by complexity to cheaper/faster models or scripts where safe;
+- consider helper agents for parallelizable discovery, build, review, tests, and reporting;
 - verify with observed evidence, not confidence;
 - run smoke tests and security review;
 - deliver or deploy only inside the approved scope;
@@ -26,6 +28,7 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 - **No live deploy by default.** Live deploy requires explicit user opt-in, project maturity, applicable green CI, rollback, credentials approval, smoke tests, and security review.
 - **Observed evidence required.** No “green” claims without command output, test results, diff review, manual verification, CI status, or documented approval.
 - **Portable core.** Tool-specific behavior lives in `references/adapters.md`.
+- **Lean by default.** Minimize context, tool calls, wall time, and model cost without weakening gates.
 
 ## Repository layout
 
@@ -38,6 +41,7 @@ references/adapters.md           # Codex/Hermes/Claude/Cursor/AGENTS adapters
 references/evaluation.md         # trigger/release/eval guidance
 references/self-learning.md      # per-repo compact memory/result-log rules
 references/report-template.md    # delivery report template
+references/mission-mode.md       # optional helper-agent/model-routing layer
 scripts/validate_skill.py        # dependency-free repo validator
 .github/workflows/validate.yml   # CI validation
 AGENTS.md                        # general coding-agent project instructions
@@ -51,9 +55,13 @@ memory.md                        # product decisions and sanitized learnings
 ## Validate locally
 
 ```bash
+git fetch origin --prune          # when a remote/upstream is configured
 python3 scripts/validate_skill.py .
 git diff --check
 ```
+
+If validating from a worktree whose directory name differs from `end-to-end-loop`,
+copy or archive the tree into a temporary folder named `end-to-end-loop` first.
 
 CI runs the same validator through `.github/workflows/validate.yml`.
 
@@ -65,7 +73,28 @@ For a local Hermes profile, copy this repository or the skill folder under:
 ~/.hermes/skills/software-development/end-to-end-loop/
 ```
 
-Then start a fresh Hermes session or reload skills. In this project, the repo itself is the source of truth; installed local copies should be refreshed from GitHub after validation.
+Install/update the companion CAVEMAN skills in the same active profile before use:
+
+- `caveman-ultra`
+- `caveman-code`
+- a reviewer/delegation lane such as `cavecrew` or configured equivalent
+
+For repo-backed installs, fetch and compare against the upstream branch, validate
+from a folder named `end-to-end-loop`, then sync the installed copy:
+
+```bash
+git fetch origin --prune
+tmp=$(mktemp -d)
+cp -a /path/to/end-to-end-loop "$tmp/end-to-end-loop"
+rm -rf "$tmp/end-to-end-loop/.git"
+python3 "$tmp/end-to-end-loop/scripts/validate_skill.py" "$tmp/end-to-end-loop"
+```
+
+After validation, copy/sync into the active Hermes profile only, then start a
+fresh Hermes session or reload skills. Use `skills_list()`/`skill_view()` to
+verify `end-to-end-loop`, `caveman-ultra`, `caveman-code`, and `cavecrew` or a
+configured reviewer lane. In this project, the repo itself is the source of truth;
+installed local copies should be refreshed from GitHub after validation.
 
 ## Maintenance model
 

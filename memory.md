@@ -5,7 +5,7 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 ## Preferences
 
 - PREF Keep the production skill portable across Codex, Hermes, Claude Code, Cursor, and AGENTS.md-compatible agents.
-- PREF CAVEMAN remains mandatory for code-producing execution and iteration phases.
+- PREF CAVEMAN remains mandatory for code-producing execution and iteration phases, and companion skills should be installed/update-checked before use.
 - PREF Live deploy is opt-in per task; otherwise stop at prepared delivery or deploy-readiness reporting.
 - PREF Keep private operations, office workflows, dashboard coordination, task-routing, and internal personas outside this product repo.
 
@@ -15,7 +15,9 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 - FACT `scripts/validate_skill.py .` is the local validator, but the checkout folder must be named `end-to-end-loop` for the frontmatter/folder-name gate.
 - FACT `references/adapters.md` is the home for tool-specific invocation and installation details.
 - FACT `references/self-learning.md` defines compact memory and result-log rules.
-- FACT Optional public helper agents, if added, should live under the Mission Mode product layer with functional names, narrow scopes, explicit reasoning levels, and human approval gates for merge/release/deploy/admin/secrets/public claims.
+- FACT Optional public helper agents, if added, should live under the Mission Mode product layer with functional names, narrow scopes, explicit reasoning levels, cheaper/standard/high-reasoning routing, and human approval gates for merge/release/deploy/admin/secrets/public claims.
+- FACT The loop uses lean/standard/deep operating modes and level_0..level_3 complexity routing to minimize tokens, wall time, and model cost without weakening evidence or approval gates.
+- FACT Repo-backed skill copies should check source freshness/self-update status before maintained repo work when feasible.
 
 ## Risks / avoid
 

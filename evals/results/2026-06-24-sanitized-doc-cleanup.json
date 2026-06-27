@@ -54,5 +54,15 @@
     "summary": "Not used for sanitized documentation example.",
     "items": []
   },
-  "notes": "Sanitized example log for public product evaluation. It intentionally avoids private repo names, dashboards, task-routing systems, raw chats, secrets, and environment values."
+  "notes": "Sanitized example log for public product evaluation. It intentionally avoids private repo names, dashboards, task-routing systems, raw chats, secrets, and environment values.",
+  "optimization_metrics": {
+    "token_budget_policy": "not_applicable",
+    "estimated_or_measured_tokens": "not_applicable",
+    "wall_time_seconds": "not_applicable",
+    "tool_call_count": "not_applicable",
+    "model_routing_decisions": [],
+    "helper_agents_used": [],
+    "repo_update_check": "not_applicable",
+    "install_update_check": "not_applicable"
+  }
 }
