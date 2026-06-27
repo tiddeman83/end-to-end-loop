@@ -56,9 +56,28 @@ python3 scripts/validate_skill.py .
 git diff --check
 ```
 
-CI runs the same validator through `.github/workflows/validate.yml`.
+CI runs the same validator through `.github/workflows/validate.yml`. When
+running from a worktree with a generated name, use a temp copy:
 
-## Install in Hermes
+```bash
+cp -r . /tmp/end-to-end-loop && python3 /tmp/end-to-end-loop/scripts/validate_skill.py /tmp/end-to-end-loop
+```
+
+## Install
+
+### GitHub Copilot CLI
+
+Skills are loaded from `~/.agents/skills/`. Run the install script from the
+repo root to copy the full package (SKILL.md + references + agents):
+
+```bash
+bash scripts/install.sh
+```
+
+Then reload your Copilot CLI session. Run the script again after pulling
+updates to keep the installed copy in sync.
+
+### Hermes
 
 For a local Hermes profile, copy this repository or the skill folder under:
 

@@ -102,6 +102,33 @@ If an agent does not support Agent Skills:
 5. If `.end-to-end-loop/memory.md` exists, read it before planning and update it
    only when the task scope allows documentation writes.
 
+## GitHub Copilot CLI
+
+The Copilot CLI loads skills from `~/.agents/skills/<skill-name>/`. Install
+the full package (SKILL.md + references + agents) so the agent can follow
+reference routing without broken paths:
+
+```bash
+# From the end-to-end-loop repo root
+bash scripts/install.sh
+```
+
+Or manually:
+
+```bash
+SKILL_DIR=~/.agents/skills/end-to-end-loop
+mkdir -p "$SKILL_DIR/references" "$SKILL_DIR/agents"
+cp SKILL.md "$SKILL_DIR/"
+cp references/*.md "$SKILL_DIR/references/"
+cp agents/openai.yaml "$SKILL_DIR/agents/"
+```
+
+After installing, restart or reload your Copilot CLI session. The skill appears
+as `end-to-end-loop` in the available skills list.
+
+Re-run `bash scripts/install.sh` after pulling updates from GitHub to keep the
+installed copy in sync with the repo.
+
 ## GitHub Copilot / PR review
 
 When pushing to GitHub, include Copilot findings when possible:
