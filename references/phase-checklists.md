@@ -214,9 +214,8 @@ Checklist:
 - [ ] Operating mode/options, complexity/model routing, and CAVEMAN ULTRA packet
       status recorded.
 - [ ] Backlog dependency/interference/order output reported when BACKLOG ran.
-- [ ] Copilot status/findings/blocker/waiver reported when `github-copilot` applied.
 - [ ] If `review-improve` applies, reviewed surfaces, ranked findings, applied
-      improvements, and deferred follow-ups reported.
+      improvements, deferred follow-ups, and validation evidence reported.
 - [ ] CAVEMAN lane or approved exception recorded.
 - [ ] Test, CI, security results, delivery target, limitations, usage/rollback included.
 
