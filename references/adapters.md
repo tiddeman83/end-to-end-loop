@@ -5,7 +5,9 @@ installation and behavior notes.
 
 ## Common package
 
-Recommended scalable layout:
+Recommended scalable layout. `scripts/validate_skill.py` (`check_required_files`)
+is the authoritative list of files an installed package must contain; keep this
+tree in sync with it.
 
 ```text
 end-to-end-loop/
@@ -13,12 +15,20 @@ end-to-end-loop/
 ├── references/
 │   ├── phase-checklists.md
 │   ├── test-and-security.md
+│   ├── deploy-readiness.md
 │   ├── adapters.md
 │   ├── evaluation.md
 │   ├── self-learning.md
-│   └── report-template.md
+│   ├── report-template.md
+│   ├── mission-mode.md
+│   ├── backlog-and-copilot.md
+│   └── local-telemetry.md
 ├── scripts/
-│   └── validate_skill.py
+│   ├── validate_skill.py
+│   ├── install.sh
+│   ├── telemetry_record.py
+│   ├── telemetry_aggregate.py
+│   └── test_telemetry_privacy.py
 └── agents/
     └── openai.yaml
 ```

@@ -439,6 +439,10 @@ Use `references/report-template.md` for larger tasks.
   Copilot availability metrics, or telemetry research is in scope. Telemetry is
   local-first and opt-in; default operation must not create network writes or
   commit raw logs.
+- Read `references/mission-mode.md` when deciding whether to spawn helper agents,
+  parallelize independent workstreams, or choose the model/reasoning route
+  (`level_0`..`level_3`) for a workstream. Mission Mode is optional and must not
+  weaken CAVEMAN, deploy, security, or approval gates.
 - Read `references/phase-checklists.md` for concrete phase checklists.
 - Read `references/test-and-security.md` for side-effect, CI, smoke, and security
   gates.

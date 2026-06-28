@@ -33,26 +33,33 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 ## Repository layout
 
 ```text
-SKILL.md                         # production skill core
-VERSION                          # package/run version to present at start/report
-references/phase-checklists.md   # phase gates and summaries
-references/test-and-security.md  # smoke/security/side-effect gates
-references/deploy-readiness.md   # deploy-readiness rubric and hosting/custom-domain gates
-references/adapters.md           # Codex/Hermes/Claude/Cursor/AGENTS adapters
-references/evaluation.md         # trigger/release/eval guidance
-references/self-learning.md      # per-repo compact memory/result-log rules
-references/report-template.md    # delivery report template
-references/mission-mode.md       # optional helper-agent/model-routing layer
+SKILL.md                          # production skill core
+VERSION                           # package/run version to present at start/report
+references/phase-checklists.md    # phase gates and summaries
+references/test-and-security.md   # smoke/security/side-effect gates
+references/deploy-readiness.md    # deploy-readiness rubric and hosting/custom-domain gates
+references/adapters.md            # Codex/Hermes/Claude/Cursor/AGENTS adapters
+references/evaluation.md          # trigger/release/eval guidance
+references/self-learning.md       # per-repo compact memory/result-log rules
+references/report-template.md     # delivery report template
+references/mission-mode.md        # optional helper-agent/model-routing layer
+references/backlog-and-copilot.md # backlog sequencing + GitHub Copilot feedback
+references/local-telemetry.md     # opt-in local-first telemetry schema and privacy contract
 skills/grilling/SKILL.md          # packaged subskill for one-question-at-a-time plan grilling
 skills/handoff/SKILL.md           # packaged subskill for redacted temp-dir continuation handoffs
-scripts/validate_skill.py        # dependency-free repo validator
-.github/workflows/validate.yml   # CI validation
-AGENTS.md                        # general coding-agent project instructions
-.hermes.md                       # minimal Hermes adapter context for this product repo
-research/                        # improvement/research plans
-evals/                           # trigger, outcome, and result-log eval artifacts
-paper.md                         # shareable rationale/research draft
-memory.md                        # product decisions and sanitized learnings
+scripts/validate_skill.py         # dependency-free repo validator
+scripts/install.sh                # install full package, subskills, evals, and helper scripts
+scripts/telemetry_record.py       # opt-in local telemetry recorder
+scripts/telemetry_aggregate.py    # local-first telemetry aggregator
+scripts/test_telemetry_privacy.py # telemetry privacy self-test
+agents/openai.yaml                # Codex/OpenAI UI metadata
+.github/workflows/validate.yml    # CI validation
+AGENTS.md                         # general coding-agent project instructions
+.hermes.md                        # minimal Hermes adapter context for this product repo
+research/                         # improvement/research plans
+evals/                            # trigger, outcome, and result-log eval artifacts
+paper.md                          # shareable rationale/research draft
+memory.md                         # product decisions and sanitized learnings
 ```
 
 ## Validate locally
@@ -76,7 +83,7 @@ For generic Agent Skills-compatible tools, install the full package with:
 bash scripts/install.sh
 ```
 
-The script installs `SKILL.md`, `VERSION`, `references/*.md`, `agents/openai.yaml`, helper scripts, and packaged subskills such as `skills/grilling/SKILL.md` and `skills/handoff/SKILL.md` under `~/.agents/skills/end-to-end-loop/`.
+The script installs `SKILL.md`, `VERSION`, `references/*.md`, `agents/openai.yaml`, helper scripts (`validate_skill.py`, `telemetry_record.py`, `telemetry_aggregate.py`, `test_telemetry_privacy.py`), eval artifacts, and packaged subskills such as `skills/grilling/SKILL.md` and `skills/handoff/SKILL.md` under `~/.agents/skills/end-to-end-loop/`.
 
 For a local Hermes profile, copy this repository or the skill folder under:
 
