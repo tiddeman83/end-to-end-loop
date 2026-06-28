@@ -14,7 +14,7 @@ Checklist:
 - [ ] Side effects identified: writes, network, installs, external services, data,
       credentials, destructive actions, deploy, GitHub/Copilot reads.
 - [ ] Operating options selected: `lean` / `standard` / `deep`, plus `backlog` and/or
-      `github-copilot` when applicable.
+      `github-copilot` and/or `review-improve` when applicable.
 - [ ] CAVEMAN ULTRA state packet initialized for compact phase handoffs.
 - [ ] Assumptions and risks listed.
 - [ ] Ambiguities resolved or explicitly deferred with user consent.
@@ -62,6 +62,34 @@ BLOCKERS: <unknown deps / approval needs>
 
 Exit: dependencies/interference/order/complexity/model routing are explicit and the
 first safe execution batch is known.
+
+---
+
+## REVIEW-IMPROVE (optional, before or inside PLAN)
+
+Use when `review-improve` is selected.
+
+Checklist:
+- [ ] Review surfaces inventoried: production skill, references, subskills, README,
+      evals, validators, install scripts, release notes, memory/research docs as applicable.
+- [ ] Cross-document claims compared for naming, version/status, packaged files,
+      trigger conditions, CAVEMAN, deploy, security, telemetry, and self-learning behavior.
+- [ ] Maintenance risks checked: stale claims, duplication, unsupported aspirations,
+      private/internal details, weak examples, and validator/documentation mismatch.
+- [ ] Findings ranked by blocker/high/medium/low/follow-up with evidence.
+- [ ] Accepted improvements converted into scoped changes with verification hooks.
+
+REVIEW-IMPROVE summary template:
+```
+REVIEWED: <files/commands/surfaces>
+FINDINGS: <ranked evidence-backed list>
+CHANGES_PLANNED: <small scoped edits>
+DEFERRED: <follow-ups and why>
+VERIFY: <commands/checks>
+```
+
+Exit: findings are evidence-backed, ranked, and either implemented, deferred, or
+reported.
 
 ---
 
@@ -186,7 +214,8 @@ Checklist:
 - [ ] Operating mode/options, complexity/model routing, and CAVEMAN ULTRA packet
       status recorded.
 - [ ] Backlog dependency/interference/order output reported when BACKLOG ran.
-- [ ] Copilot status/findings/blocker/waiver reported when `github-copilot` applied.
+- [ ] If `review-improve` applies, reviewed surfaces, ranked findings, applied
+      improvements, deferred follow-ups, and validation evidence reported.
 - [ ] CAVEMAN lane or approved exception recorded.
 - [ ] Test, CI, security results, delivery target, limitations, usage/rollback included.
 

@@ -30,6 +30,8 @@ The skill gives an agent a disciplined delivery contract:
 - **Discover** the real goal, inputs, and side effects before acting.
 - **Plan** small slices with explicit pass/fail acceptance criteria and named
   verification layers (unit, integration, smoke, security, CI).
+- **Review and improve** skills/docs with an evidence-backed audit path when the
+  requested outcome is a deep review rather than a predetermined patch.
 - **Execute** code changes through a defined execution lane (see *CAVEMAN* below).
 - **Verify** every criterion with observed evidence, then **iterate** until green.
 - **Test**: smoke-test critical paths and run a security review proportional to risk.

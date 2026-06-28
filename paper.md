@@ -12,7 +12,7 @@ The skill turns delivery into a lightweight gate sequence:
 
 1. Discover the requested outcome, inputs, side effects, and risks.
 2. Plan concrete acceptance criteria and a delivery/deploy classification.
-3. Execute code-producing work through a CAVEMAN/Cavekit lane.
+3. Execute code-producing work through a CAVEMAN lane.
 4. Verify each criterion with observed evidence.
 5. Iterate on failures.
 6. Run broader tests, smoke checks, and security review.
@@ -57,3 +57,8 @@ Mission Mode should classify work by reasoning level: Level 0 mechanical/cheap c
 ## Local telemetry research track
 
 The telemetry feature supports release-readiness evidence by measuring local runs without turning raw logs into memory. The current design keeps raw JSONL local by default and shares only aggregate summaries with explicit privacy review fields. This enables timing, validation-pass, CAVEMAN-compliance, and Copilot-availability evidence while avoiding full prompts, stdout/stderr, env vars, private paths, machine identity, and public overclaims from small samples. A local stdlib privacy smoke test now checks both the happy-path aggregation fixture and rejection of forbidden raw/private keys so telemetry can mature through evidence rather than documentation alone.
+
+
+## Review-improve research track
+
+Deep review work needs its own lightweight option because it is neither pure planning nor ordinary implementation. The review-improve path treats documentation and skill changes as evidence-backed maintenance: inventory the surfaces, compare cross-document claims, rank findings by risk/value, make scoped edits, and report deferred follow-ups. This keeps broad audit requests from becoming subjective rewrites while still allowing the loop to improve itself.
