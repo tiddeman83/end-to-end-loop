@@ -134,3 +134,5 @@ iterations do not re-litigate settled points.
 - 2026-06-28: Backlog is a first-class end-to-end-loop option: before implementation, the skill must analyze current-feature fit, dependencies, feature interference, execution order, complexity, and model/tool routing.
 - 2026-06-28: GitHub Copilot feedback is a first-class CI/CD and PR-readiness option: when available/authenticated, findings must be processed before green delivery; unavailable Copilot must be reported with exact blockers, not invented.
 - 2026-06-28: CAVEMAN ULTRA must remain active across every phase and prompt evolution as the compact orchestration/context layer, not only during code-producing work.
+- 2026-06-28: Telemetry feature policy is local-first and opt-in: raw JSONL stays local, `.end-to-end-loop/telemetry.local.jsonl` is gitignored, OpenTelemetry/OTLP is optional only, and public claims require approval.
+- 2026-06-28: Telemetry validator coverage requires `references/local-telemetry.md`, JSONL fixture parsing, shareable summary validation, and no raw prompt/stdout/stderr/env/private identity fields in fixtures.
