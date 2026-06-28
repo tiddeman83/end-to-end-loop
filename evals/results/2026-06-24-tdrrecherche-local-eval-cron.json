@@ -1,0 +1,74 @@
+{
+  "date": "2026-06-24",
+  "agent_or_tool": "hermes",
+  "skill_version_or_commit": "e01443e",
+  "scenario_id": "scenario-10",
+  "prompt": "Run first local cross-repo eval on tdrrecherche",
+  "expected_trigger": true,
+  "actual_trigger": true,
+  "outcome": "partial",
+  "commands_or_evidence": [
+    "Repo inspected at /opt/data/repos/tdrrecherche and worktree /opt/data/worktrees/tdrrecherche/feat-complete-wordpress-design-samples.",
+    "git status --short -> clean; branch feat/complete-wordpress-design-samples; HEAD bde99b7 docs: capture project handoff state.",
+    "HTMLParser audit for index.html plus five prototype exports: duplicate IDs 0, missing local assets 0, missing hash targets 0.",
+    "node --check passed for all 6 inline scripts extracted from the sampler and prototypes.",
+    "Local HTTP smoke returned 200 for /, /prototypes/variant-a/, /prototypes/variant-e/, and /assets/generated/inline-image-1-8435fb501ca6.png.",
+    "WordPress scaffold required-file check: style.css, functions.php, front-page.php, header.php, footer.php present; index.php missing.",
+    "php command is not installed in the cron environment, so PHP syntax/runtime checks were not run."
+  ],
+  "acceptance_criteria": [
+    {
+      "criterion": "Run safe read-only/build/test discovery on local tdrrecherche worktree",
+      "status": "pass",
+      "evidence": "Clean worktree inspected; HTML, asset/hash, JS syntax, and local HTTP smoke checks ran without repo or deployment writes."
+    },
+    {
+      "criterion": "Record blockers and readiness findings",
+      "status": "pass",
+      "evidence": "Production blockers recorded: prototype form actions remain empty/#, labels not present as label elements, WordPress index.php missing, PHP/WordPress runtime unavailable."
+    },
+    {
+      "criterion": "Confirm production readiness",
+      "status": "fail",
+      "evidence": "Static sampler is smoke-testable, but WordPress production readiness is blocked by missing index.php fallback, no verified PHP lint/runtime, and no real contact form integration."
+    }
+  ],
+  "caveman_behavior": "not_applicable",
+  "deploy_policy_behavior": "compliant",
+  "security_review": "pass",
+  "delivery_classification": "none",
+  "ci_status": "not_checked",
+  "memory_read": "not_present",
+  "memory_update": "none",
+  "learning_candidates": [
+    {
+      "type": "FACT",
+      "text": "tdrrecherche local eval worktree is clean at bde99b7 on feat/complete-wordpress-design-samples.",
+      "promote": false,
+      "reason": "Run-specific evidence, not durable skill memory."
+    },
+    {
+      "type": "BLOCK",
+      "text": "tdrrecherche WordPress readiness remains blocked without PHP runtime checks, index.php fallback, and real contact-form integration.",
+      "promote": true,
+      "reason": "Repeated cross-repo readiness blocker useful for future evals."
+    },
+    {
+      "type": "CMD",
+      "text": "For static sampler dry-runs, combine HTMLParser asset/hash/form audit, node --check on inline scripts, and local python3 http.server smoke.",
+      "promote": true,
+      "reason": "Reusable safe eval pattern without deploy side effects."
+    }
+  ],
+  "privacy_review": {
+    "contains_secrets": false,
+    "commit_safe": true,
+    "redactions": []
+  },
+  "copilot_findings": {
+    "available": false,
+    "summary": "Copilot review was not invoked; this cron task was a local read-only eval and no push/PR was attempted.",
+    "items": []
+  },
+  "notes": "No deploy, PR, or external write was attempted. This log records local eval evidence only."
+}

@@ -1,0 +1,76 @@
+{
+  "date": "2026-06-28",
+  "agent_or_tool": "hermes",
+  "skill_version_or_commit": "telemetry-aggregation-slice",
+  "scenario_id": "scenario-19",
+  "prompt": "Maintainer sprint: implement local telemetry aggregation slice for end-to-end-loop with backlog and GitHub Copilot feedback gates.",
+  "expected_trigger": true,
+  "actual_trigger": true,
+  "outcome": "passed",
+  "commands_or_evidence": [
+    "Added scripts/telemetry_aggregate.py as stdlib-only local JSONL to telemetry-summary-v0 aggregation helper.",
+    "GitHub Copilot PR review comments inspected via gh API; fixed validator forbidden-key gap and install helper packaging gap.",
+    "Telemetry fixture now includes caveman-compliance quality gate and example summary remains fixture-only with raw_logs_included=false.",
+    "Verification commands recorded in final sprint report."
+  ],
+  "acceptance_criteria": [
+    {
+      "criterion": "Aggregation is local-first and privacy-safe.",
+      "status": "pass",
+      "evidence": "Aggregator reads explicit JSONL input, emits aggregate JSON only, refuses forbidden raw/private keys, and has no network path."
+    },
+    {
+      "criterion": "Fixture aggregation is deterministic and scoped.",
+      "status": "pass",
+      "evidence": "Example summary has source=fixture, runs=1, median_duration_ms=300000, caveman_compliance_rate=1.0, copilot_available_rate=0.0, claim_scope=fixture-only."
+    },
+    {
+      "criterion": "Copilot must-fix/should-fix findings are processed before PR readiness claims.",
+      "status": "pass",
+      "evidence": "Two Copilot comments were collected and addressed locally: fixture validator now rejects command/args, install script copies documented helper scripts."
+    }
+  ],
+  "caveman_behavior": "compliant",
+  "deploy_policy_behavior": "not_applicable",
+  "security_review": "pass",
+  "delivery_classification": "repo-only",
+  "ci_status": "not_checked",
+  "memory_read": "not_present",
+  "memory_update": "updated",
+  "learning_candidates": [
+    {
+      "type": "FACT",
+      "text": "Telemetry aggregation emits only summary fields and keeps raw local JSONL out of shareable artifacts; public claims need human approval.",
+      "promote": true,
+      "reason": "Durable feature behavior."
+    },
+    {
+      "type": "FIX",
+      "text": "Validator must reject telemetry fixture keys command/args as forbidden raw command material, matching recorder privacy contract.",
+      "promote": true,
+      "reason": "Copilot-found privacy gap fixed."
+    }
+  ],
+  "privacy_review": {
+    "contains_secrets": false,
+    "commit_safe": true,
+    "redactions": []
+  },
+  "copilot_findings": {
+    "available": true,
+    "summary": "PR #5 Copilot reviewer had 2 comments; both were addressed in local changes before final verification.",
+    "items": [
+      {
+        "severity": "should-fix",
+        "summary": "Validator telemetry fixture privacy check did not forbid command/args.",
+        "action": "fixed"
+      },
+      {
+        "severity": "should-fix",
+        "summary": "Install script omitted documented scripts used by local telemetry docs.",
+        "action": "fixed"
+      }
+    ]
+  },
+  "notes": "Aggregation slice completed locally; CI status is checked after push."
+}

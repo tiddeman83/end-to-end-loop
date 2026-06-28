@@ -5,7 +5,7 @@
     "reason": "Coding task with verification and repo delivery."
   },
   {
-    "query": "Build the Firebase landing page and deploy it after CI passes.",
+    "query": "Build the hosted landing page and deploy it after CI passes.",
     "should_trigger": true,
     "reason": "Build plus conditional deploy request."
   },
@@ -123,5 +123,55 @@
     "query": "After CI passes, check gh copilot or GitHub Copilot review comments and process any must-fix feedback before delivery.",
     "should_trigger": true,
     "reason": "Copilot CI/CD feedback processing is an explicit delivery gate."
+  },
+  {
+    "query": "Add local telemetry so end-to-end-loop can measure phase timings, command durations, resource usage, and CAVEMAN compliance without uploading data.",
+    "should_trigger": true,
+    "reason": "Telemetry and performance measurement are new feature work requiring privacy-safe implementation and verification."
+  },
+  {
+    "query": "Explain what telemetry means in software observability, with no repo changes.",
+    "should_trigger": false,
+    "reason": "Explanation-only telemetry request should not trigger code-producing delivery workflow."
+  },
+  {
+    "query": "Build the hosted landing page and deploy it after CI passes.",
+    "should_trigger": true,
+    "reason": "Build plus conditional deploy request."
+  },
+  {
+    "query": "Update this skill so agents minimize tokens, route simple checks to cheaper models, and validate the changes.",
+    "should_trigger": true,
+    "reason": "Repository change request covering optimization behavior and validation."
+  },
+  {
+    "query": "Explain what model routing means for coding agents, no code or docs changes.",
+    "should_trigger": false,
+    "reason": "Explanation-only optimization discussion; no delivery loop needed."
+  },
+  {
+    "query": "Add Mission Mode helper-agent specs for planner, verifier, reporter, and eval runner, then run validation.",
+    "should_trigger": true,
+    "reason": "Repository documentation/spec change for more agents with validation."
+  },
+  {
+    "query": "Compare cheap versus expensive models for helper agents, but do not edit files.",
+    "should_trigger": false,
+    "reason": "Analysis-only near miss; should not enter code-producing loop."
+  },
+  {
+    "query": "Improve the CAVEMAN install and update instructions for Codex and Hermes, then validate the skill package.",
+    "should_trigger": true,
+    "reason": "Installation/update documentation change with validation requirement."
+  },
+  {
+    "query": "Check whether this skill repo is stale against its upstream and update the docs if needed.",
+    "should_trigger": true,
+    "reason": "Repo freshness check plus conditional repository changes."
+  },
+  {
+    "query": "Add cheap/fast model routing guidance for helper agents and update the evals.",
+    "should_trigger": true,
+    "reason": "Repository documentation and eval change for model-routing behavior."
   }
 ]

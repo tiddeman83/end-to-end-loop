@@ -23,9 +23,11 @@ end-to-end-loop/
     └── openai.yaml
 ```
 
-Development and handoff files (`development.md`, `memory.md`, `paper.md`,
-`handoff/`, `.github/`, `.hermes.md`, `AGENTS.md`) belong in the repo, not
-necessarily in a minimal installed skill package.
+Development files (`development.md`, `memory.md`, `paper.md`, `.github/`,
+`.hermes.md`, `AGENTS.md`) belong in the repo, not
+necessarily in a minimal installed skill package. Installed copies should record
+or preserve their source repo and commit when possible so agents can run a
+freshness check before relying on stale instructions.
 
 ## Codex
 
@@ -34,9 +36,12 @@ necessarily in a minimal installed skill package.
 - Keep only `name` and `description` in `SKILL.md` frontmatter for maximum
   compatibility.
 - Use `agents/openai.yaml` for Codex UI metadata.
+- Before code-producing work, run a repo freshness check when a remote exists:
+  `git fetch origin --prune` then compare `HEAD` with the intended upstream.
 - Run `python3 scripts/validate_skill.py .` before committing changes.
-- If CAVEMAN ULTRA/CODE skills are installed, use them for EXECUTE and ITERATE.
-  If not installed, stop before code changes and ask for a user-approved exception.
+- Install or update CAVEMAN ULTRA/CODE/REVIEW companion skills before EXECUTE and
+  ITERATE when Codex skill install/update is available. If install/update is
+  blocked, stop before code changes and ask for a user-approved exception.
 
 ## Hermes Agent
 
@@ -63,8 +68,20 @@ Notes:
   conditions. Do not require those fields in the universal core.
 - For this repo, give Hermes project context through `.hermes.md` and `AGENTS.md`.
 - Turn on `skills.write_approval` before allowing Hermes to modify this skill.
-- Use the DevBoss handoff files under `handoff/` to run private repo-maintenance,
-  research cadence, Todoist routing, and site readiness workflows.
+- Install/update `end-to-end-loop` and companion CAVEMAN skills under the active
+  profile only, normally `~/.hermes/skills/software-development/`. Do not edit
+  another profile's skills unless explicitly directed.
+- Before use, load `end-to-end-loop`, `caveman-ultra`, `caveman-code`, and a
+  reviewer/Cavecrew skill when available. If missing, use Hermes skill management
+  or the configured source repo to install/update them; otherwise report
+  `missing-blocked` before code changes.
+- For repo-backed installs, check freshness with `git fetch origin --prune` and a
+  compare against the configured upstream branch. Validate in a temporary folder
+  named exactly `end-to-end-loop`, sync the installed copy only after validation,
+  then start a fresh session or reload skills.
+- Keep Hermes-specific product context in `.hermes.md` and generic project
+  instructions in `AGENTS.md`; private operations workflows should live outside
+  this public-facing product package.
 - Hermes persistent memory may complement repo memory, but repo memory should stay
   explicit, reviewable, compact, and privacy-safe. Prefer
   `.end-to-end-loop/memory.md` for sanitized repo facts and
@@ -115,6 +132,74 @@ When pushing to GitHub, include Copilot findings when possible:
   `unsupported for local branch`, or `permission denied`) instead of inventing a
   review.
 
+## Concrete install/update preflight
+
+Use these templates when the tool/profile supports local skill files. Adapt paths to
+the active profile only.
+
+### Repo freshness check
+
+```bash
+git fetch origin --prune
+git rev-parse --short HEAD
+git rev-parse --short @{u} 2>/dev/null || true
+git status --short --branch
+```
+
+If `@{u}` is unavailable, compare against the configured source branch explicitly,
+for example `origin/main`. Treat network/auth failure as `not_checked` or
+`outdated-blocked`, not as proof that the skill is current.
+
+### Validate before sync
+
+```bash
+tmp=$(mktemp -d)
+cp -a /path/to/end-to-end-loop "$tmp/end-to-end-loop"
+rm -rf "$tmp/end-to-end-loop/.git"
+python3 "$tmp/end-to-end-loop/scripts/validate_skill.py" "$tmp/end-to-end-loop"
+```
+
+### Hermes active-profile sync
+
+```bash
+install_root="$HOME/.hermes/skills/software-development"
+mkdir -p "$install_root"
+# after validation only:
+rsync -a --delete --exclude .git /path/to/end-to-end-loop/ "$install_root/end-to-end-loop/"
+```
+
+If `rsync` is missing, use a small Python `shutil.copytree(..., dirs_exist_ok=True)`
+after deleting the old installed copy. Then start a fresh Hermes session or reload
+skills. Use `skills_list()`/`skill_view()` to verify `end-to-end-loop`,
+`caveman-ultra`, `caveman-code`, and `cavecrew` or a configured reviewer lane.
+
+### CAVEMAN companion check
+
+Required names or equivalents before code-producing phases:
+
+- `caveman-ultra` for orchestration/compression.
+- `caveman-code` for code edits.
+- `cavecrew`, `caveman-review`, or configured reviewer for review/delegation.
+
+If a companion is missing and no approved source/install mechanism is available,
+record `missing-blocked` and stop before repo writes unless the user approves a
+CAVEMAN exception.
+
+## Skill freshness and install/update statuses
+
+Use these status labels in reports:
+
+- `installed-current`: required skill is present and source/upstream is current.
+- `installed-updated`: missing/outdated skill was installed or updated and reloaded.
+- `missing-installed`: missing skill was installed successfully.
+- `missing-blocked`: missing skill could not be installed because permissions,
+  network, approval, or source configuration was unavailable.
+- `outdated-blocked`: update was available but blocked.
+- `exception-approved`: user approved proceeding without a current CAVEMAN lane.
+
+Skill lifecycle actions are side effects. Network fetches, local skill writes,
+and reload/restart steps must be planned and reported.
+
 ## CAVEMAN adapters
 
 CAVEMAN is a required execution lane, but different tools may expose it under
@@ -122,7 +207,7 @@ different names. Acceptable mappings:
 
 | Required role | Preferred name | Adapter examples |
 | --- | --- | --- |
-| Execution orchestration | CAVEMAN ULTRA | caveman-ultra, cavecrew-builder, configured Hermes DevBoss engineering agent |
+| Execution orchestration | CAVEMAN ULTRA | caveman-ultra, cavecrew-builder, configured Hermes engineering agent |
 | Code modification | CAVEMAN CODE | caveman-code, code-focused CAVEMAN agent, configured Hermes implementation agent |
 | Review compression | CAVEMAN REVIEW | caveman-review, code-review with caveman output style |
 

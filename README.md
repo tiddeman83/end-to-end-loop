@@ -14,7 +14,9 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 
 - discover the real goal and side effects before acting;
 - plan with pass/fail acceptance criteria;
-- execute code-producing work only through a CAVEMAN-compatible lane;
+- execute code-producing work only through a CAVEMAN-compatible lane that is installed and update-checked;
+- route work by complexity to cheaper/faster models or scripts where safe;
+- consider helper agents for parallelizable discovery, build, review, tests, and reporting;
 - verify with observed evidence, not confidence;
 - run smoke tests and security review;
 - deliver or deploy only inside the approved scope;
@@ -26,6 +28,7 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 - **No live deploy by default.** Live deploy requires explicit user opt-in, project maturity, applicable green CI, rollback, credentials approval, smoke tests, and security review.
 - **Observed evidence required.** No “green” claims without command output, test results, diff review, manual verification, CI status, or documented approval.
 - **Portable core.** Tool-specific behavior lives in `references/adapters.md`.
+- **Lean by default.** Minimize context, tool calls, wall time, and model cost without weakening gates.
 
 ## Repository layout
 
@@ -33,32 +36,44 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 SKILL.md                         # production skill core
 references/phase-checklists.md   # phase gates and summaries
 references/test-and-security.md  # smoke/security/side-effect gates
-references/deploy-readiness.md   # deploy-readiness rubric and Firebase addendum
+references/deploy-readiness.md   # deploy-readiness rubric and hosting/custom-domain gates
 references/adapters.md           # Codex/Hermes/Claude/Cursor/AGENTS adapters
 references/evaluation.md         # trigger/release/eval guidance
 references/self-learning.md      # per-repo compact memory/result-log rules
 references/report-template.md    # delivery report template
+references/mission-mode.md       # optional helper-agent/model-routing layer
 scripts/validate_skill.py        # dependency-free repo validator
 .github/workflows/validate.yml   # CI validation
 AGENTS.md                        # general coding-agent project instructions
-.hermes.md                       # Hermes-specific operating context
-handoff/                         # DevBoss/Hermes handoff prompts
+.hermes.md                       # minimal Hermes adapter context for this product repo
 research/                        # improvement/research plans
 evals/                           # trigger, outcome, and result-log eval artifacts
 paper.md                         # shareable rationale/research draft
-memory.md                        # settled decisions
+memory.md                        # product decisions and sanitized learnings
 ```
 
 ## Validate locally
 
 ```bash
+git fetch origin --prune          # when a remote/upstream is configured
 python3 scripts/validate_skill.py .
 git diff --check
 ```
 
+If validating from a worktree whose directory name differs from `end-to-end-loop`,
+copy or archive the tree into a temporary folder named `end-to-end-loop` first.
+
 CI runs the same validator through `.github/workflows/validate.yml`.
 
-## Install in Hermes
+## Install
+
+For generic Agent Skills-compatible tools, install the full package with:
+
+```bash
+bash scripts/install.sh
+```
+
+The script installs `SKILL.md`, `references/*.md`, and `agents/openai.yaml` under `~/.agents/skills/end-to-end-loop/`.
 
 For a local Hermes profile, copy this repository or the skill folder under:
 
@@ -66,19 +81,39 @@ For a local Hermes profile, copy this repository or the skill folder under:
 ~/.hermes/skills/software-development/end-to-end-loop/
 ```
 
-Then start a fresh Hermes session or reload skills. In this project, the repo itself is the source of truth; installed local copies should be refreshed from GitHub after validation.
+Install/update the companion CAVEMAN skills in the same active profile before use:
 
-## DevBoss maintenance model
+- `caveman-ultra`
+- `caveman-code`
+- a reviewer/delegation lane such as `cavecrew` or configured equivalent
 
-This repository is maintained through a virtual office called **DevBoss**:
+For repo-backed installs, fetch and compare against the upstream branch, validate
+from a folder named `end-to-end-loop`, then sync the installed copy:
 
-- Tijmen is Supervisory Board chair and approves releases.
-- Board/release decisions route through Todoist and Telegram where possible.
-- Repo work uses worktrees, branches, commits, validation, and CI.
-- Firebase website work is support/marketing infrastructure, not the core skill.
-- The repo remains private until the skill is sufficiently justified by docs, metrics, evals, and release readiness.
+```bash
+git fetch origin --prune
+tmp=$(mktemp -d)
+cp -a /path/to/end-to-end-loop "$tmp/end-to-end-loop"
+rm -rf "$tmp/end-to-end-loop/.git"
+python3 "$tmp/end-to-end-loop/scripts/validate_skill.py" "$tmp/end-to-end-loop"
+```
 
-See `handoff/hermes-devboss-brief.md` for the full operating model.
+After validation, copy/sync into the active Hermes profile only, then start a
+fresh Hermes session or reload skills. Use `skills_list()`/`skill_view()` to
+verify `end-to-end-loop`, `caveman-ultra`, `caveman-code`, and `cavecrew` or a
+configured reviewer lane. In this project, the repo itself is the source of truth;
+installed local copies should be refreshed from GitHub after validation.
+
+## Maintenance model
+
+This repository is maintained as a public-facing product/tool repository:
+
+- repo work uses worktrees, branches, commits, validation, and CI;
+- release decisions require explicit maintainer/repository-owner approval;
+- website or hosting work is support/marketing infrastructure, not the core skill;
+- the repo remains private until the skill is sufficiently justified by docs, metrics, evals, install examples, and release readiness.
+
+Private operational automation, office workflows, dashboard coordination, and task-routing runbooks belong outside this product package.
 
 ## Why this matters
 
@@ -116,26 +151,33 @@ Release readiness depends on more than local validation. The next release train 
 Current branch baseline:
 
 - `evals/trigger-cases.json` contains 20 seed trigger cases.
-- `evals/outcome-scenarios.md` defines eight manual outcome scenarios covering bugfix, feature, release, deploy, CAVEMAN, planning-only, and DevBoss cron paths.
+- `evals/outcome-scenarios.md` defines eight manual outcome scenarios covering bugfix, feature, release, deploy, CAVEMAN, planning-only, and scheduled unattended maintenance paths.
 - `evals/result-log-template.json` provides a structured template for recording scenario results with evidence, acceptance criteria, delivery classification, CI, security, CAVEMAN, and deploy-policy status.
-- `evals/results/` contains filled scenario-result logs; the first seed log records a DevBoss cron-maintenance run against Scenario 8.
+- `evals/results/` contains filled scenario-result logs and sanitized examples for release-readiness evaluation.
 - `references/evaluation.md` defines the scoring rubric and result-log schema.
 - `references/self-learning.md` defines per-repo compact memory, result logs, privacy controls, and learning promotion rules.
 - `research/traction-plan.md` defines the pre-release traction strategy, benchmark assets, launch sequence, and Tijmen review gate.
-- `scripts/validate_skill.py` now enforces baseline eval quality: trigger case count/balance/coverage, outcome scenario count/coverage, result-log template shape, and at least one non-placeholder filled result log.
+- `scripts/validate_skill.py` now enforces baseline eval quality: trigger case count/balance/coverage, outcome scenario count/coverage, result-log template shape, telemetry artifacts, Mission Mode coverage, install assets, and at least one non-placeholder filled result log.
 - Local validation passes when the repository is checked out or copied under a folder named exactly `end-to-end-loop`.
-- Public release is still blocked on running the evals, recording results, and polishing install docs/examples.
+- `v0.1.0-alpha.1` release readiness is gated on the release-candidate branch being merged to `main`, exact-SHA CI success, no existing tag/release, and prerelease notes that call out remaining beta gaps.
 
 ## Current release posture
 
-Private development. Public release later, after:
+Alpha/private prerelease readiness. First prerelease requires:
+
+- exact-SHA validator and CI success on `main`;
+- release notes that distinguish included alpha capabilities from unmerged future work;
+- no unresolved secret/privacy findings;
+- Tijmen's explicit release approval before any public-facing or externally distributed tag.
+
+Public/stable release remains later, after:
 
 - stronger README/docs;
 - evaluation metrics;
 - market/research findings;
 - website support material;
-- board-approved release plan;
-- Tijmen's explicit repo review and approval before any first public pre-release tag.
+- maintainer-approved release plan;
+- explicit repository-owner review and approval before any first public pre-release tag.
 
 ## Deploy-readiness discipline
 
@@ -143,5 +185,4 @@ Live deploys are treated as a separate readiness decision, not as the natural en
 of every repo task. Use `references/deploy-readiness.md` to classify the delivery
 target, confirm explicit deploy opt-in, check environment maturity, verify CI/local
 validation, review smoke/security evidence, and produce a readiness report when a
-deploy is blocked or deferred. For `dev-boss.nl`, the custom domain must be checked
-directly after any Firebase Hosting deployment.
+deploy is blocked or deferred. For hosted docs or marketing sites, the approved custom domain must be checked directly after any hosting deployment.

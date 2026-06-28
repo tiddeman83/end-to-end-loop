@@ -1,0 +1,68 @@
+{
+  "date": "2026-06-28",
+  "agent_or_tool": "hermes",
+  "skill_version_or_commit": "local-recorder-slice",
+  "scenario_id": "scenario-18",
+  "prompt": "Maintainer sprint: implement local telemetry recorder slice for end-to-end-loop after local/privacy-safe telemetry spec.",
+  "expected_trigger": true,
+  "actual_trigger": true,
+  "outcome": "passed",
+  "commands_or_evidence": [
+    "Added scripts/telemetry_record.py as stdlib-only opt-in local JSONL recorder.",
+    "python3 -m py_compile scripts/validate_skill.py scripts/telemetry_record.py -> pass",
+    "python3 -m json.tool evals/telemetry-summary.example.json -> pass",
+    "JSONL fixture parse -> jsonl ok: 6 lines",
+    "Recorder smoke into /tmp/e2e-loop-telemetry-test.jsonl -> telemetry recorder smoke ok: 4 events",
+    "python3 scripts/validate_skill.py /tmp/end-to-end-loop-validate/end-to-end-loop -> end-to-end-loop skill validation passed",
+    "git diff --check -> pass"
+  ],
+  "acceptance_criteria": [
+    {
+      "criterion": "Recorder is opt-in and local-only by default.",
+      "status": "pass",
+      "evidence": "scripts/telemetry_record.py only runs when invoked and defaults to .end-to-end-loop/telemetry.local.jsonl or explicit E2E_LOOP_TELEMETRY_PATH/--telemetry-path."
+    },
+    {
+      "criterion": "Recorder captures command duration and exit code without raw command/stdout/stderr.",
+      "status": "pass",
+      "evidence": "wrap smoke produced command/resource events; forbidden-key check rejected prompt/stdout/stderr/env/cwd/command/args/identity fields."
+    },
+    {
+      "criterion": "Repo validator recognizes and checks telemetry recorder requirements.",
+      "status": "pass",
+      "evidence": "scripts/validate_skill.py now requires scripts/telemetry_record.py and checks recorder privacy/recording terms; temp basename validator passed."
+    }
+  ],
+  "caveman_behavior": "compliant",
+  "deploy_policy_behavior": "not_applicable",
+  "security_review": "pass",
+  "delivery_classification": "repo-only",
+  "ci_status": "not_checked",
+  "memory_read": "not_present",
+  "memory_update": "updated",
+  "learning_candidates": [
+    {
+      "type": "FACT",
+      "text": "Telemetry recorder is opt-in stdlib local JSONL; wrap records class/duration/exit/resource only, not raw output or command text.",
+      "promote": true,
+      "reason": "Durable feature behavior and privacy rule."
+    },
+    {
+      "type": "CMD",
+      "text": "Smoke telemetry recorder with --telemetry-path /tmp/... run-start, wrap --cmd-class validator -- <safe command>, run-end, then parse JSONL.",
+      "promote": true,
+      "reason": "Reusable verification pattern."
+    }
+  ],
+  "privacy_review": {
+    "contains_secrets": false,
+    "commit_safe": true,
+    "redactions": []
+  },
+  "copilot_findings": {
+    "available": false,
+    "summary": "gh authenticated; no PR/code-review surface for this branch before push and no new Copilot tooling installation approved, so no Copilot findings were collected.",
+    "items": []
+  },
+  "notes": "Recorder slice completed locally; branch CI expected only after push/PR."
+}
