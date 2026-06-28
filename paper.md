@@ -219,3 +219,18 @@ The current repository state is a v0.2.0-style production candidate:
 
 It is not yet a v1.0 public release because trigger/outcome evals have not been run
 across independent agent contexts and the Firebase website has not been built.
+### Finding 7: Release-scale prompts need backlog and feedback gates
+
+Long coding-agent prompts often evolve from a single feature request into a backlog,
+model-routing problem, and CI/CD readiness workflow. Without an explicit backlog
+phase, agents can start implementing before dependencies and cross-feature
+interference are understood. Without a feedback gate, automated review systems such
+as GitHub Copilot can become decorative instead of operational evidence.
+
+Implication: the skill treats backlog planning and Copilot feedback as first-class
+options. Backlog mode produces dependency/interference/order/complexity/model-routing
+evidence before implementation. Copilot mode requires available findings to be
+classified and processed before CI/CD or PR readiness is claimed, while unavailable
+Copilot access must be reported as a blocker rather than fabricated. CAVEMAN ULTRA
+remains the compact state layer so prompt growth does not create uncontrolled token
+drift.

@@ -17,7 +17,11 @@ with a word on why. This closes the loop back to DISCOVER/PLAN.>
 <The handful of choices that shaped the result — tech, approach, trade-offs — and why.>
 
 ## Testing
-- CAVEMAN lane: <used lane / approved exception / not applicable>
+- CAVEMAN lane: <CAVEMAN ULTRA packet maintained + CAVEMAN CODE/review lane / approved exception / not applicable>
+- Mode/options: <lean|standard|deep + backlog? + github-copilot?>
+- Complexity/model routing: <level_0..level_3 per workstream and chosen route>
+- Backlog: <dependency/interference/order summary if used, or not selected>
+- Copilot feedback: <collected + processed / unavailable + blocker / waived; include must-fix status>
 - Smoke tests: <what was exercised, result - pass/fail>
 - CI: <workflow/check/local equivalent, result, or why not applicable>
 - Security review: <what was checked, result - clean / fixed items / open follow-ups>

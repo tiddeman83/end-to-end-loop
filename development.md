@@ -621,3 +621,17 @@ Verification:
 - Blockers/follow-ups: all six sampled pages still have placeholder forms (`action="#"` or empty action); WordPress `template-parts/contact.php` is placeholder text only; PHP lint remains blocked because `php` is absent; target GitHub PR/run/remote reads remain blocked by repo resolution/404/403.
 - End-to-end-loop artifacts: added `evals/results/2026-06-23-scenario-16-tdrrecherche-prototype-contact-legal-readiness.json`, updated `memory.md` with the durable placeholder-form readiness blocker.
 - Copilot path: `gh copilot --help` is available, but no Copilot findings were generated because target repo API access is blocked and full Copilot invocation may auto-download the CLI; kept out of dry-run scope.
+## 2026-06-28 — Iteration 17: backlog, Copilot, and CAVEMAN ULTRA routing
+
+- Added `backlog` as a first-class operating option before PLAN: intake, current-feature fit, dependency round, interference round, slicing, ordering, complexity, and model/tool routing must be explicit before implementation.
+- Added `github-copilot` as a CI/CD and PR-readiness option: collect authenticated/available Copilot feedback, classify findings, route must-fix items through ITERATE, and report exact blockers when unavailable.
+- Strengthened CAVEMAN ULTRA as the mandatory compression/orchestration layer across all phases and prompt evolution, not only code-producing phases.
+- Added `references/backlog-and-copilot.md`, expanded phase/report templates, extended trigger evals, and tightened validator coverage for backlog/Copilot/model-routing terms.
+- Scheduled the DevBoss release sprint office from 14:00 Europe/Amsterdam for the coming days with backlog + Copilot + CAVEMAN ULTRA release-readiness rules.
+
+Verification target:
+
+- `python3 <tmp>/end-to-end-loop/scripts/validate_skill.py <tmp>/end-to-end-loop`.
+- `python3 -m json.tool evals/trigger-cases.json`.
+- `python3 -m py_compile scripts/validate_skill.py`.
+- `git diff --check`.

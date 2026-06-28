@@ -131,3 +131,6 @@ iterations do not re-litigate settled points.
 - Agent names can use Silicon Valley characters, Apple-related codenames, Anthropic
   and AI researcher-inspired codenames, but must be treated as codenames/personas.
 - Agents must not impersonate real people or claim affiliation with their companies.
+- 2026-06-28: Backlog is a first-class end-to-end-loop option: before implementation, the skill must analyze current-feature fit, dependencies, feature interference, execution order, complexity, and model/tool routing.
+- 2026-06-28: GitHub Copilot feedback is a first-class CI/CD and PR-readiness option: when available/authenticated, findings must be processed before green delivery; unavailable Copilot must be reported with exact blockers, not invented.
+- 2026-06-28: CAVEMAN ULTRA must remain active across every phase and prompt evolution as the compact orchestration/context layer, not only during code-producing work.

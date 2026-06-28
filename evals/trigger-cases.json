@@ -98,5 +98,30 @@
     "query": "Create a release-readiness report for this branch, no code changes.",
     "should_trigger": false,
     "reason": "Reporting-only request should use readiness checklist without code-producing execution."
+  },
+  {
+    "query": "I want to fill a feature backlog first; analyze dependencies, feature interference, implementation order, complexity, and model choice before coding.",
+    "should_trigger": true,
+    "reason": "Backlog option should trigger because it prepares multi-feature implementation planning before execution."
+  },
+  {
+    "query": "For this GitHub repo, include Copilot feedback in the CI/CD readiness loop before opening the PR.",
+    "should_trigger": true,
+    "reason": "GitHub Copilot plus CI/CD feedback must trigger the loop and route findings through verify/test/iterate."
+  },
+  {
+    "query": "Make the prompt longer with extra constraints, but keep using Caveman Ultra compression at every phase.",
+    "should_trigger": true,
+    "reason": "Prompt evolution with required Caveman Ultra discipline affects the end-to-end delivery workflow."
+  },
+  {
+    "query": "Show me a generic example of a product backlog without touching this repo.",
+    "should_trigger": false,
+    "reason": "Explanation-only backlog example, no repo delivery workflow or implementation queue."
+  },
+  {
+    "query": "After CI passes, check gh copilot or GitHub Copilot review comments and process any must-fix feedback before delivery.",
+    "should_trigger": true,
+    "reason": "Copilot CI/CD feedback processing is an explicit delivery gate."
   }
 ]

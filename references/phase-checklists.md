@@ -12,7 +12,10 @@ Checklist:
 - [ ] Inputs, files, access, credentials, target environment identified.
 - [ ] Constraints captured (language, framework, perf, deadline, platform).
 - [ ] Side effects identified: writes, network, installs, external services, data,
-      credentials, destructive actions, deploy.
+      credentials, destructive actions, deploy, GitHub/Copilot reads.
+- [ ] Operating options selected: `lean` / `standard` / `deep`, plus `backlog` and/or
+      `github-copilot` when applicable.
+- [ ] CAVEMAN ULTRA state packet initialized for compact phase handoffs.
 - [ ] Assumptions and risks listed.
 - [ ] Ambiguities resolved or explicitly deferred with user consent.
 
@@ -30,9 +33,46 @@ Exit: goal unambiguous, needs known, side effects classified, questions handled.
 
 ---
 
+## BACKLOG (optional, before PLAN)
+
+Use when `backlog` is selected.
+
+Checklist:
+- [ ] Backlog items normalized into outcomes, constraints, and done signals.
+- [ ] Current features/architecture/tests/CI/repo memory inspected for context fit.
+- [ ] Dependencies mapped: prerequisites, shared files, data/API/schema, auth,
+      migrations, feature flags, CI/deploy, and required decisions.
+- [ ] Interference mapped: cross-item conflicts, overlap, sequencing hazards,
+      performance/security risks, and UX inconsistencies.
+- [ ] Large items split into independently verifiable slices.
+- [ ] Each slice assigned order, complexity (`level_0`..`level_3`), model/tool route,
+      verification hook, and human approval gate if applicable.
+- [ ] CAVEMAN ULTRA state packet updated before PLAN.
+
+BACKLOG summary template:
+```
+BACKLOG_OPTION: selected
+DEPENDENCIES: <ordered map/list>
+INTERFERENCE: <conflict matrix/notes>
+ORDERED_SLICES: <slice -> reason>
+COMPLEXITY/MODEL: <slice -> level + route>
+FIRST_BATCH: <what starts first and why>
+BLOCKERS: <unknown deps / approval needs>
+```
+
+Exit: dependencies/interference/order/complexity/model routing are explicit and the
+first safe execution batch is known.
+
+---
+
 ## PLAN
 
 Checklist:
+- [ ] Operating mode/options and complexity level chosen per workstream or backlog
+      slice.
+- [ ] Model/tool route selected per slice using cheapest adequate route, with
+      escalation rationale for high-reasoning or human-gated work.
+- [ ] If BACKLOG ran, first execution batch follows the dependency/interference order.
 - [ ] Ordered steps, each small enough to execute and verify.
 - [ ] Each step has a verification hook ("how I'll know it worked").
 - [ ] Acceptance criteria for the whole task written (these drive VERIFY).
@@ -71,6 +111,10 @@ Exit: all planned steps implemented (or plan renegotiated with user).
 
 Checklist:
 - [ ] Each acceptance criterion checked: pass/fail.
+- [ ] If BACKLOG ran, dependency/interference assumptions still hold or backlog was
+      updated with changed ordering rationale.
+- [ ] If `github-copilot` applies, Copilot feedback collected/classified or exact
+      blocker recorded.
 - [ ] Technical review done: correctness, edge cases, error handling, quality.
 - [ ] Code/the thing actually run — results observed, not assumed.
 - [ ] Improvements listed with proposed fixes; plan updated.
@@ -98,6 +142,8 @@ Checklist:
 - [ ] Smoke tests cover critical end-to-end paths (see test-and-security.md).
 - [ ] Security review done (see test-and-security.md); use `security-review` skill if available.
 - [ ] CI status checked when a CI pipeline is applicable.
+- [ ] If `github-copilot` applies, Copilot feedback is processed, unavailable with
+      exact blocker, or explicitly waived; unresolved must-fix findings route to ITERATE.
 - [ ] All issues collected; must-fix items routed back into the loop (planned, not patched).
 
 Exit: smoke tests pass, security review clean, and applicable CI is green or
@@ -137,6 +183,10 @@ deliver readiness report instead.
 Checklist:
 - [ ] Report written from report-template.md.
 - [ ] Maps result back to the original goal and acceptance criteria.
+- [ ] Operating mode/options, complexity/model routing, and CAVEMAN ULTRA packet
+      status recorded.
+- [ ] Backlog dependency/interference/order output reported when BACKLOG ran.
+- [ ] Copilot status/findings/blocker/waiver reported when `github-copilot` applied.
 - [ ] CAVEMAN lane or approved exception recorded.
 - [ ] Test, CI, security results, delivery target, limitations, usage/rollback included.
 

@@ -32,27 +32,128 @@ scope, then report clearly.
    `references/adapters.md`, not in the universal core.
 7. Use per-repo memory only for compact, durable, sanitized learnings. Do not
    store secrets, private user data, bulky transcripts, or unverified guesses.
+8. Minimize token, time, and model cost without weakening evidence, CAVEMAN,
+   security, deploy, or approval gates. Use deterministic scripts or the cheapest
+   adequate model per phase, and escalate only when complexity, ambiguity, risk,
+   repeated failure, or approval gates demand it.
+9. Keep CAVEMAN ULTRA active as the compression and discipline layer throughout the
+   whole run, not only during implementation. If the user's prompt evolves, grows,
+   or adds new options mid-run, re-compress the working context into CAVEMAN ULTRA
+   form before continuing so token use does not silently drift upward.
+10. Before code-producing work, check that required CAVEMAN companion skills are
+   installed and update-checked when the tool supports it. Treat skill install,
+   skill update, and repo freshness checks as explicit side effects.
 
 ## CAVEMAN Hard Gate
 
-CAVEMAN is mandatory for code-producing phases.
+CAVEMAN is mandatory for the full run. CAVEMAN ULTRA is the default orchestration
+and compression layer for DISCOVER, BACKLOG, PLAN, VERIFY, TEST, REPORT, and any
+prompt-evolution handoff. CAVEMAN CODE or an adapter-equivalent lane is mandatory
+for phases that produce code or repository changes.
 
-Before EXECUTE or ITERATE:
+Before each phase transition, and whenever the user adds scope mid-run:
 
 1. Resolve the available CAVEMAN lane:
-   - Preferred: CAVEMAN ULTRA for execution orchestration.
+   - Preferred: CAVEMAN ULTRA for orchestration, context compression, dependency
+     mapping, backlog analysis, model routing, and phase handoffs.
    - Preferred: CAVEMAN CODE for code edits.
+   - Preferred: CAVEMAN REVIEW or a configured reviewer for review-only lanes.
    - If the tool exposes different CAVEMAN names, use the configured adapter.
-2. Pass the current phase, plan, acceptance criteria, constraints, and verification
-   hooks into that lane.
-3. If no CAVEMAN execution lane exists, stop before writing code or changing repo
+2. Compress the working state into a compact payload: phase, mode/options,
+   complexity level, plan, acceptance criteria, files, dependencies, constraints,
+   verification hooks, open blockers, and token/cost budget.
+3. If the prompt has grown, summarize the delta and discard irrelevant transcript
+   detail before continuing. Do not let long prompts bypass CAVEMAN discipline.
+4. If no CAVEMAN execution lane exists, stop before writing code or changing repo
    files and ask the user for an explicit exception. Mark the run as
    "CAVEMAN exception" in the report if the user approves.
-4. Do not silently replace CAVEMAN with a generic agent, normal chat, or ad hoc
+5. Do not silently replace CAVEMAN with a generic agent, normal chat, or ad hoc
    execution.
 
-Non-code discovery, planning, research, reporting, and documentation can run
-outside CAVEMAN when no code or repository changes are being produced.
+Non-code discovery, backlog analysis, planning, research, reporting, and
+documentation can run outside CAVEMAN CODE, but not outside CAVEMAN ULTRA-style
+compression and phase discipline.
+
+## Operating Options and Complexity Routing
+
+Choose the lightest mode and options that can still produce observed evidence.
+Options are additive: a task can run `backlog + github-copilot + standard`, for
+example.
+
+| Option / mode | Use for | Required behavior |
+|---|---|---|
+| `lean` | tiny docs, one-file fixes, deterministic checks, low risk | compact CAVEMAN ULTRA summaries, no bulk context, targeted verify |
+| `standard` | normal multi-step coding or repo work | full phase gates, targeted references, staged tests |
+| `deep` | architecture, security, deploy, auth, data, broad refactor, repeated failure | high-reasoning review, more helper agents, full reference/eval coverage |
+| `backlog` | user supplies or asks to build a backlog before implementation | run BACKLOG before PLAN; do not start implementation until dependencies, feature interactions, ordering, complexity, model routing, and acceptance slices are explicit |
+| `github-copilot` | GitHub repo work with CI/CD, PRs, or user-requested Copilot feedback | collect Copilot feedback where authenticated/available and feed it into VERIFY/TEST/ITERATE before claiming CI/CD or PR readiness |
+
+During BACKLOG or PLAN classify each workstream:
+
+- `level_0`: mechanical/read-only/deterministic -> script, tool, or cheap/fast model.
+- `level_1`: bounded implementation -> standard coding model plus CAVEMAN CODE.
+- `level_2`: ambiguous architecture, safety, deploy, security, integration
+  interference, or non-obvious dependency planning -> high-reasoning model or
+  specialist reviewer.
+- `level_3`: merge, release, deploy, admin, secrets, destructive/public claims, or
+  acceptance of unresolved Copilot/security findings -> human approval gate.
+
+Model routing must be written into the plan per backlog item or workstream. Use the
+cheapest adequate model/tool, but escalate when dependency coupling, interference,
+security, repeated failure, or Copilot/CI findings indicate higher reasoning is
+needed. Always keep CAVEMAN ULTRA as the compact state layer across model handoffs.
+
+## Backlog Option
+
+Use `backlog` when the user wants to fill, triage, or sequence multiple features
+before implementation.
+
+Backlog flow:
+
+1. Intake: normalize each backlog item into outcome, user value, rough scope,
+   constraints, and done signal.
+2. Feature/context fit: inspect current features, architecture, tests, CI, open
+   plans, and relevant repo memory before judging implementation order.
+3. Dependency round: identify prerequisites, shared files, data/API/schema changes,
+   migration needs, feature flags, auth/permission impacts, and test/deploy
+   dependencies.
+4. Interference round: map conflicts between backlog items, including overlapping
+   UI, data models, API contracts, sequencing hazards, performance impact, security
+   risk, and user-experience inconsistency.
+5. Slice and order: split large items into independently verifiable slices and order
+   them by dependency, risk burn-down, value, and reversibility.
+6. Complexity/model routing: assign `level_0`..`level_3` plus the recommended
+   tool/model lane for each slice; mark human approval gates separately.
+7. Plan gate: only then enter PLAN for the first selected slice or batch. Do not
+   collapse backlog analysis into immediate implementation.
+
+Backlog outputs:
+
+- dependency graph or ordered dependency list;
+- interference/conflict matrix or notes;
+- ordered execution backlog with acceptance criteria per slice;
+- complexity level and model/tool route per slice;
+- explicit first batch and why it is safe to start.
+
+## GitHub Copilot Option
+
+Use `github-copilot` when GitHub CI/CD, PR readiness, or explicit Copilot review is
+in scope.
+
+Rules:
+
+1. Check availability without installing new Copilot tooling unless installation is
+   explicitly in scope. Acceptable sources include PR review comments, GitHub code
+   review surfaces, `gh copilot` or `gh-copilot` when already installed, CI bot
+   annotations, and authenticated GitHub API/CLI reads.
+2. Treat Copilot feedback as evidence, not decoration. Categorize findings as
+   must-fix, should-fix, false-positive, or blocked/unavailable, with rationale.
+3. Feed must-fix Copilot findings back into ITERATE before reporting CI/CD green or
+   PR-ready. Do not ignore unresolved Copilot findings because tests passed.
+4. If Copilot feedback is unavailable, report the exact blocker and use normal
+   review/security gates as fallback. Do not fabricate Copilot findings.
+5. In CI/CD pipelines controlled by this skill, require a Copilot-feedback step or
+   explicit unavailable/waived status in the pipeline report before delivery.
 
 ## Deploy Policy
 
@@ -81,18 +182,22 @@ instead.
 ## Loop
 
 ```text
-DISCOVER -> PLAN -> EXECUTE -> VERIFY -> ITERATE
-                         ^             |
-                         |-------------|
-                         |
-                         v
-                       TEST -> ITERATE
-                         ^        |
-                         |--------|
-                         |
-                         v
-                DELIVER / DEPLOY -> REPORT
+DISCOVER -> optional BACKLOG -> PLAN -> EXECUTE -> VERIFY -> ITERATE
+                                      ^             |
+                                      |-------------|
+                                      |
+                                      v
+                                    TEST -> ITERATE
+                                      ^        |
+                                      |--------|
+                                      |
+                                      v
+                             DELIVER / DEPLOY -> REPORT
 ```
+
+`BACKLOG` is a first-class optional phase: when selected, it must complete before
+PLAN and produces dependency, interference, ordering, complexity, and model-routing
+evidence.
 
 ## Phase 1: DISCOVER
 
@@ -105,7 +210,10 @@ Do:
 - Identify inputs, files, permissions, credentials, environments, target users,
   dependencies, and constraints.
 - Identify side effects: filesystem writes, network calls, external services,
-  installs, secrets, CI, deploy, data changes, destructive operations.
+  installs, skill installs/updates, repo freshness checks, Copilot/GitHub API
+  reads, secrets, CI, deploy, data changes, destructive operations.
+- Decide whether operating options apply: `backlog`, `github-copilot`, `lean`,
+  `standard`, or `deep`.
 - Ask only material questions that cannot be safely inferred. Prefer one grouped
   question set over drip-fed clarification.
 - Record assumptions and risks.
@@ -115,8 +223,33 @@ Do:
   context, not proof; re-verify safety or correctness facts before relying on
   them.
 
-Exit: the goal, scope, risks, side effects, and needed context are known or
-explicitly deferred.
+Exit: the goal, scope, risks, side effects, options, and needed context are known
+or explicitly deferred.
+
+## Optional Phase 1.5: BACKLOG
+
+Goal: turn a feature backlog into a safe implementation queue before planning any
+single feature.
+
+Do when `backlog` is selected:
+
+- Normalize backlog items into outcomes, current-feature fit, constraints, and done
+  signals.
+- Inspect current features, architecture, tests, CI, repo memory, and active plans
+  that could affect the backlog.
+- Run a dependency round: prerequisites, shared files, data/API/schema changes,
+  migrations, feature flags, auth/permissions, CI/deploy needs, and required
+  decisions.
+- Run an interference round: conflicts between backlog items, overlapping UI/data
+  changes, sequencing hazards, performance/security risks, and inconsistent UX.
+- Split items into independently verifiable slices when needed.
+- Assign each slice an execution order, complexity level (`level_0`..`level_3`),
+  recommended tool/model route, verification hook, and human approval gate if any.
+- Keep the BACKLOG payload CAVEMAN ULTRA compact before moving into PLAN.
+
+Exit: dependency map, interference notes, ordered backlog, complexity/model routing,
+and first safe batch are written. If dependencies are unknown, stop and resolve them
+before implementation.
 
 ## Phase 2: PLAN
 
@@ -124,6 +257,18 @@ Goal: produce a concrete, verifiable path.
 
 Do:
 
+- Choose operating mode/options (`lean`, `standard`, `deep`, `backlog`,
+  `github-copilot`) and classify complexity (`level_0`..`level_3`) for each
+  workstream or backlog slice.
+- Route work to the cheapest adequate execution path: deterministic tools/scripts
+  for mechanical checks, cheap/fast models for low-risk summaries or scans,
+  standard coding models for bounded implementation, and high-reasoning models or
+  humans for architecture, security, deploy, auth, backlog interference, Copilot
+  must-fix triage, or irreversible decisions.
+- If `backlog` ran, convert its ordered slices into the first execution batch; do
+  not re-order without explaining dependency or interference changes.
+- If `github-copilot` applies, plan where Copilot feedback is collected and how
+  must-fix findings re-enter ITERATE.
 - Break work into small steps with verification hooks.
 - Define acceptance criteria as pass/fail statements.
 - Choose the delivery target: `none`, `repo-only`, `prep-only`, or `live-deploy`.
@@ -156,6 +301,10 @@ Goal: prove the result satisfies the plan.
 Do:
 
 - Check each acceptance criterion: pass, fail, or blocked with evidence.
+- If `backlog` ran, verify the implemented slice still respects the dependency and
+  interference plan; update the backlog if reality changed.
+- If `github-copilot` applies, collect available Copilot feedback and classify each
+  item before leaving VERIFY.
 - Inspect the diff or artifact for correctness, edge cases, maintainability,
   portability, and instruction conflicts.
 - Run the changed thing or the closest realistic verification command.
@@ -187,6 +336,11 @@ Do:
 - Run smoke tests for critical end-to-end paths.
 - Run security review for secrets, injection, unsafe shell use, auth, data
   exposure, dependency risk, destructive operations, and unsafe defaults.
+- If `github-copilot` applies, ensure CI/CD or PR readiness includes Copilot
+  feedback status: collected and processed, unavailable with exact blocker, or
+  explicitly waived by the user.
+- Treat unresolved must-fix Copilot findings like failing tests and route them back
+  through ITERATE.
 - Read `references/test-and-security.md` when the task has meaningful risk,
   external integrations, deploy, auth, data handling, or broad code changes.
 
@@ -234,6 +388,12 @@ Report:
 - Acceptance criteria and evidence.
 - Tests, smoke checks, security review, and CI status.
 - Delivery/deploy classification and result.
+- Operating mode/options, complexity/model routing decisions, and CAVEMAN ULTRA
+  compression status after prompt evolution.
+- Backlog output when used: dependency map, interference findings, ordered slices,
+  first batch, and changed ordering rationale.
+- Copilot feedback status when `github-copilot` applies: source, findings processed,
+  false positives, blockers/unavailability, or user waiver.
 - CAVEMAN lane used or approved exception.
 - Known limitations, follow-ups, and rollback/recovery notes.
 - Learning update: result-log path, memory update status, durable learning
@@ -243,6 +403,9 @@ Use `references/report-template.md` for larger tasks.
 
 ## Reference Routing
 
+- Read `references/backlog-and-copilot.md` when `backlog` or `github-copilot`
+  options are selected, when CI/CD feedback must include Copilot findings, or when
+  long prompts need CAVEMAN ULTRA context compression.
 - Read `references/phase-checklists.md` for concrete phase checklists.
 - Read `references/test-and-security.md` for side-effect, CI, smoke, and security
   gates.
@@ -268,3 +431,6 @@ When improving this skill itself, update:
   change.
 - `references/self-learning.md`, result-log templates, and validators when memory
   behavior changes.
+- `references/backlog-and-copilot.md`, trigger evals, and report/checklist templates
+  when backlog sequencing, Copilot feedback, CAVEMAN ULTRA compression, or model
+  routing behavior changes.

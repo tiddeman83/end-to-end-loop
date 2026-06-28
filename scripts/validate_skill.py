@@ -108,6 +108,9 @@ def check_policy_terms(root: Path) -> None:
         "memory",
         "privacy",
         "result log",
+        "backlog",
+        "Copilot",
+        "model routing",
     ]
     for term in required_terms:
         if term not in combined:
@@ -144,6 +147,8 @@ def check_trigger_cases(root: Path) -> None:
     near_miss_negatives = 0
     deploy_cases = 0
     caveman_cases = 0
+    backlog_cases = 0
+    copilot_cases = 0
 
     for idx, case in enumerate(cases, start=1):
         if not isinstance(case, dict):
@@ -179,6 +184,10 @@ def check_trigger_cases(root: Path) -> None:
             deploy_cases += 1
         if "caveman" in text:
             caveman_cases += 1
+        if "backlog" in text:
+            backlog_cases += 1
+        if "copilot" in text:
+            copilot_cases += 1
 
     if positives < 8:
         fail(f"Trigger evals need at least 8 should-trigger positives; found {positives}")
@@ -190,6 +199,10 @@ def check_trigger_cases(root: Path) -> None:
         fail(f"Trigger evals need at least 3 deploy-policy cases; found {deploy_cases}")
     if caveman_cases < 2:
         fail(f"Trigger evals need at least 2 CAVEMAN cases; found {caveman_cases}")
+    if backlog_cases < 2:
+        fail(f"Trigger evals need at least 2 backlog-option cases; found {backlog_cases}")
+    if copilot_cases < 2:
+        fail(f"Trigger evals need at least 2 Copilot-option cases; found {copilot_cases}")
 
 
 def check_outcome_scenarios(root: Path) -> None:
