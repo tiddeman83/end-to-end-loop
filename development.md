@@ -85,3 +85,72 @@ Validation plan:
 - `python3 scripts/test_telemetry_privacy.py`.
 - Validate from a temporary folder named `end-to-end-loop`.
 - `git diff --check`.
+
+## 2026-06-28 — Grilling subskill slice
+
+Goal: package a pre-build plan/design stress-test mode as a subskill of the end-to-end loop.
+
+Changes:
+
+- Added `skills/grilling/SKILL.md` with one-question-at-a-time interviewing, recommended answers, and codebase-first exploration rules.
+- Wired the root skill, README, install script, trigger evals, and validator to recognize packaged subskills.
+- Kept grilling as pre-execution shared-understanding work, not a replacement for CAVEMAN execution or validation gates.
+
+Validation plan:
+
+- Validate from a temporary folder named `end-to-end-loop`.
+- Run telemetry privacy smoke test.
+- Run `git diff --check`.
+
+## 2026-06-28 — Agile verification and Codex reviewer policy
+
+Goal: make the end-to-end loop stricter at the feature/user-story level, with grilling used to define tight goals and precise verification before build.
+
+Changes:
+
+- Elevated grilling from explicit trigger only to the default refinement path when feature scope, user story, dependencies, or verification layers are unclear.
+- Added root-skill requirements for explicit skill settings/goals and layered verification planning.
+- Added Claude adapter guidance: when a Codex connector is installed and promptable, include a Codex agentic reviewer in VERIFY/TEST for code-producing work.
+
+Validation plan:
+
+- Validate from a temporary folder named `end-to-end-loop`.
+- Run telemetry privacy smoke test.
+- Run install smoke test against a temporary home.
+- Run `git diff --check`.
+
+## 2026-06-28 — First-run environment and version policy
+
+Goal: make every loop run auditable from startup by reporting the skill version and confirming the target environments before first implementation.
+
+Changes:
+
+- Added `VERSION` and required the loop to present it at run start and in reports.
+- Added first-run discovery of production runtime and local development environment.
+- Required first-run user confirmation of that environment model through grilling before implementation.
+- Extended validator/install/evals to package and enforce the version/environment policy.
+
+Validation plan:
+
+- Validate from a temporary folder named `end-to-end-loop`.
+- Run telemetry privacy smoke test.
+- Run install smoke test against a temporary home.
+- Run `git diff --check`.
+
+## 2026-06-28 — Handoff subskill slice
+
+Goal: package a compact continuation handoff mode as a subskill of the end-to-end loop.
+
+Changes:
+
+- Added `skills/handoff/SKILL.md` with user-provided frontmatter and behavior.
+- Handoff writes a redacted document to the OS temporary directory, not the workspace.
+- Handoff suggests skills for the next agent and references existing artifacts instead of duplicating PRDs, plans, ADRs, issues, commits, or diffs.
+- Validator now accepts supported subskill frontmatter fields such as `argument-hint` and `disable-model-invocation`.
+
+Validation plan:
+
+- Validate from a temporary folder named `end-to-end-loop`.
+- Run telemetry privacy smoke test.
+- Run install smoke test against a temporary home.
+- Run `git diff --check`.

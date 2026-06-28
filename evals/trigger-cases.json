@@ -173,5 +173,45 @@
     "query": "Add cheap/fast model routing guidance for helper agents and update the evals.",
     "should_trigger": true,
     "reason": "Repository documentation and eval change for model-routing behavior."
+  },
+  {
+    "query": "Grill this architecture plan before we build it; ask me one hard question at a time and recommend an answer.",
+    "should_trigger": true,
+    "reason": "Grilling request should invoke the packaged subskill before implementation planning."
+  },
+  {
+    "query": "Explain what grilling means in cooking, no repo or plan review.",
+    "should_trigger": false,
+    "reason": "Cooking explanation is a near-miss and should not invoke the plan-grilling subskill."
+  },
+  {
+    "query": "Before coding this user story, grill the scope until the goal and verification layers are precise.",
+    "should_trigger": true,
+    "reason": "Agile user-story grilling must trigger because vague scope and verification need one-question-at-a-time refinement."
+  },
+  {
+    "query": "On Claude, use the Codex connector as an agentic reviewer after implementation and include its must-fix findings in verification.",
+    "should_trigger": true,
+    "reason": "Claude plus Codex connector reviewer is a code-producing verification gate."
+  },
+  {
+    "query": "First run with end-to-end-loop in this repo: discover production runtime and local dev environment, then grill me to confirm before coding.",
+    "should_trigger": true,
+    "reason": "First-run environment discovery and grilling confirmation are required before implementation."
+  },
+  {
+    "query": "Use the end-to-end-loop and show me the skill version before you start.",
+    "should_trigger": true,
+    "reason": "Every end-to-end-loop run must present the active skill version."
+  },
+  {
+    "query": "Create a handoff for the next agent so it can resume this branch without rereading the whole chat.",
+    "should_trigger": true,
+    "reason": "Handoff request should invoke the handoff subskill and create a redacted temp-dir continuation document."
+  },
+  {
+    "query": "Explain what a project handoff is, no files or continuation document needed.",
+    "should_trigger": false,
+    "reason": "Explanation-only near miss should not create a handoff document."
   }
 ]

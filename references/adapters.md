@@ -5,7 +5,9 @@ installation and behavior notes.
 
 ## Common package
 
-Recommended scalable layout:
+Recommended scalable layout. `scripts/validate_skill.py` (`check_required_files`)
+is the authoritative list of files an installed package must contain; keep this
+tree in sync with it.
 
 ```text
 end-to-end-loop/
@@ -13,12 +15,20 @@ end-to-end-loop/
 ├── references/
 │   ├── phase-checklists.md
 │   ├── test-and-security.md
+│   ├── deploy-readiness.md
 │   ├── adapters.md
 │   ├── evaluation.md
 │   ├── self-learning.md
-│   └── report-template.md
+│   ├── report-template.md
+│   ├── mission-mode.md
+│   ├── backlog-and-copilot.md
+│   └── local-telemetry.md
 ├── scripts/
-│   └── validate_skill.py
+│   ├── validate_skill.py
+│   ├── install.sh
+│   ├── telemetry_record.py
+│   ├── telemetry_aggregate.py
+│   └── test_telemetry_privacy.py
 └── agents/
     └── openai.yaml
 ```
@@ -97,6 +107,7 @@ Notes:
 - For high-risk repo changes, use permission rules to ask/deny tools rather than
   embedding broad autonomy in the skill.
 - Evaluate in fresh sessions and compare with-skill versus without-skill behavior.
+- When a Claude session has a Codex connector installed and prompting Codex is possible, add a Codex agentic reviewer for code-producing work. Route it through VERIFY/TEST as reviewer evidence: provide the scoped goal, relevant diff/files, acceptance criteria, verification layers, and ask for must-fix/should-fix/false-positive findings.
 
 ## Cursor
 

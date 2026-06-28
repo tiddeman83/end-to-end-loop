@@ -20,6 +20,12 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 - FACT Repo-backed skill copies should check source freshness/self-update status before maintained repo work when feasible.
 - FACT Local telemetry is opt-in local JSONL plus sanitized aggregation; recorder/aggregator must not store prompts, raw output, env, cwd, host/user/home identity, raw commands, or raw args by default.
 - FACT `scripts/test_telemetry_privacy.py` is the local smoke test for telemetry helper privacy: fixture aggregation plus forbidden raw/private key rejection.
+- FACT `skills/grilling/SKILL.md` is a packaged subskill for pre-build plan/design stress-testing, especially at agile feature/user-story level: ask one question at a time, provide a recommended answer, define precise verification layers, and inspect codebase instead of asking when repo evidence can answer.
+- FACT When using Claude with a promptable Codex connector installed, code-producing work should include a Codex agentic reviewer as part of VERIFY/TEST evidence.
+
+- FACT Every end-to-end-loop run should present the active skill version from `VERSION`; first target-project runs should discover production runtime and local development environments, then confirm them through grilling before build.
+
+- FACT `skills/handoff/SKILL.md` is a packaged subskill for redacted continuation handoffs: write the handoff document to the OS temp directory, include suggested skills, and reference existing artifacts instead of duplicating them.
 
 ## Risks / avoid
 

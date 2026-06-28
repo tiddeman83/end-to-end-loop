@@ -13,11 +13,11 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 `end-to-end-loop` gives agents a disciplined delivery contract:
 
 - discover the real goal and side effects before acting;
-- plan with pass/fail acceptance criteria;
+- plan agile feature/user-story slices with pass/fail acceptance criteria and explicit verification layers;
 - execute code-producing work only through a CAVEMAN-compatible lane that is installed and update-checked;
 - route work by complexity to cheaper/faster models or scripts where safe;
 - consider helper agents for parallelizable discovery, build, review, tests, and reporting;
-- verify with observed evidence, not confidence;
+- verify with observed evidence, not confidence; verification is the most important layer of the loop;
 - run smoke tests and security review;
 - deliver or deploy only inside the approved scope;
 - report outcome, evidence, CI/test state, limitations, and rollback notes.
@@ -33,23 +33,33 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 ## Repository layout
 
 ```text
-SKILL.md                         # production skill core
-references/phase-checklists.md   # phase gates and summaries
-references/test-and-security.md  # smoke/security/side-effect gates
-references/deploy-readiness.md   # deploy-readiness rubric and hosting/custom-domain gates
-references/adapters.md           # Codex/Hermes/Claude/Cursor/AGENTS adapters
-references/evaluation.md         # trigger/release/eval guidance
-references/self-learning.md      # per-repo compact memory/result-log rules
-references/report-template.md    # delivery report template
-references/mission-mode.md       # optional helper-agent/model-routing layer
-scripts/validate_skill.py        # dependency-free repo validator
-.github/workflows/validate.yml   # CI validation
-AGENTS.md                        # general coding-agent project instructions
-.hermes.md                       # minimal Hermes adapter context for this product repo
-research/                        # improvement/research plans
-evals/                           # trigger, outcome, and result-log eval artifacts
-paper.md                         # shareable rationale/research draft
-memory.md                        # product decisions and sanitized learnings
+SKILL.md                          # production skill core
+VERSION                           # package/run version to present at start/report
+references/phase-checklists.md    # phase gates and summaries
+references/test-and-security.md   # smoke/security/side-effect gates
+references/deploy-readiness.md    # deploy-readiness rubric and hosting/custom-domain gates
+references/adapters.md            # Codex/Hermes/Claude/Cursor/AGENTS adapters
+references/evaluation.md          # trigger/release/eval guidance
+references/self-learning.md       # per-repo compact memory/result-log rules
+references/report-template.md     # delivery report template
+references/mission-mode.md        # optional helper-agent/model-routing layer
+references/backlog-and-copilot.md # backlog sequencing + GitHub Copilot feedback
+references/local-telemetry.md     # opt-in local-first telemetry schema and privacy contract
+skills/grilling/SKILL.md          # packaged subskill for one-question-at-a-time plan grilling
+skills/handoff/SKILL.md           # packaged subskill for redacted temp-dir continuation handoffs
+scripts/validate_skill.py         # dependency-free repo validator
+scripts/install.sh                # install full package, subskills, evals, and helper scripts
+scripts/telemetry_record.py       # opt-in local telemetry recorder
+scripts/telemetry_aggregate.py    # local-first telemetry aggregator
+scripts/test_telemetry_privacy.py # telemetry privacy self-test
+agents/openai.yaml                # Codex/OpenAI UI metadata
+.github/workflows/validate.yml    # CI validation
+AGENTS.md                         # general coding-agent project instructions
+.hermes.md                        # minimal Hermes adapter context for this product repo
+research/                         # improvement/research plans
+evals/                            # trigger, outcome, and result-log eval artifacts
+paper.md                          # shareable rationale/research draft
+memory.md                         # product decisions and sanitized learnings
 ```
 
 ## Validate locally
@@ -73,7 +83,7 @@ For generic Agent Skills-compatible tools, install the full package with:
 bash scripts/install.sh
 ```
 
-The script installs `SKILL.md`, `references/*.md`, and `agents/openai.yaml` under `~/.agents/skills/end-to-end-loop/`.
+The script installs `SKILL.md`, `VERSION`, `references/*.md`, `agents/openai.yaml`, helper scripts (`validate_skill.py`, `telemetry_record.py`, `telemetry_aggregate.py`, `test_telemetry_privacy.py`), eval artifacts, and packaged subskills such as `skills/grilling/SKILL.md` and `skills/handoff/SKILL.md` under `~/.agents/skills/end-to-end-loop/`.
 
 For a local Hermes profile, copy this repository or the skill folder under:
 
@@ -150,7 +160,7 @@ Release readiness depends on more than local validation. The next release train 
 
 Current branch baseline:
 
-- `evals/trigger-cases.json` contains 20 seed trigger cases.
+- `evals/trigger-cases.json` contains trigger cases for delivery-loop, deploy, backlog/Copilot, telemetry, grilling/stress-test, and handoff behavior.
 - `evals/outcome-scenarios.md` defines eight manual outcome scenarios covering bugfix, feature, release, deploy, CAVEMAN, planning-only, and scheduled unattended maintenance paths.
 - `evals/result-log-template.json` provides a structured template for recording scenario results with evidence, acceptance criteria, delivery classification, CI, security, CAVEMAN, and deploy-policy status.
 - `evals/results/` contains filled scenario-result logs and sanitized examples for release-readiness evaluation.

@@ -101,17 +101,18 @@ Score whether the run:
 Maintain `evals/trigger-cases.json` with realistic prompts. Include positive,
 negative, ambiguous, and safety-gate cases.
 
-Minimum v0.3.0 eval set:
+Minimum trigger-case floor (enforced by `scripts/validate_skill.py`):
 
 - at least 20 total trigger cases;
+- at least 8 should-trigger positives and at least 8 should-not-trigger negatives;
 - at least 5 near-miss negatives;
-- at least 3 outcome scenarios in `evals/outcome-scenarios.md`;
-- at least 1 deploy-block scenario;
-- at least 1 CAVEMAN-missing scenario.
+- at least 3 deploy-policy cases, and at least 2 each for CAVEMAN, backlog,
+  Copilot, and telemetry/measurement.
 
-Minimum current static gate:
+Minimum outcome-scenario gate (enforced by `scripts/validate_skill.py`):
 
-- at least 8 outcome scenarios;
+- at least 8 outcome scenarios in `evals/outcome-scenarios.md`, including at least
+  one deploy-block scenario and one CAVEMAN-missing scenario;
 - explicit coverage for `CAVEMAN`, `live-deploy`, `repo-only`, `prep-only`, an approved custom domain, `git diff --check`, and JSON validation;
 - scenario text includes fail conditions so evaluators can identify unsafe overreach, skipped evidence, and false delivery claims.
 
