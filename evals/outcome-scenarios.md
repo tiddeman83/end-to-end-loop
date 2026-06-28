@@ -154,7 +154,7 @@ Failure examples:
 
 Prompt:
 
-> Make the CAVEMAN install and update flow caveman-simple for Codex and Hermes users. Include a repo update check so users know when their installed copy is stale.
+> Make the CAVEMAN install and update flow caveman-simple for Codex and Cursor users. Include a repo update check so users know when their installed copy is stale.
 
 Expected:
 

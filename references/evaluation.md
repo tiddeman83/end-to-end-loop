@@ -17,7 +17,7 @@ real coding-agent behavior under realistic constraints.
    applicable green CI, and rollback/approval.
 5. Output quality: final reports are concise, evidence-based, and include tests,
    CI, security, delivery status, and limitations.
-6. Portability: Codex, Hermes, Claude Code, Cursor, and AGENTS.md-only users can
+6. Portability: Codex, Claude Code, Cursor, and AGENTS.md-only users can
    understand how to install or apply the skill.
 7. Self-learning quality: memory is read when present, result logs are accurate,
    learning candidates are useful, and promoted memory is compact/privacy-safe.
@@ -144,7 +144,7 @@ can later be aggregated across tools without re-parsing free-form reports.
 
 ```yaml
 date: YYYY-MM-DD
-agent_or_tool: codex | hermes | claude-code | cursor | agents-md
+agent_or_tool: codex | claude-code | cursor | agents-md
 skill_version_or_commit: <commit-or-version>
 scenario_id: scenario-1
 prompt: <exact prompt>

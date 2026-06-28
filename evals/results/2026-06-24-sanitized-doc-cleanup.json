@@ -1,6 +1,6 @@
 {
   "date": "2026-06-24",
-  "agent_or_tool": "hermes",
+  "agent_or_tool": "claude-code",
   "skill_version_or_commit": "sanitized-example",
   "scenario_id": "scenario-8",
   "prompt": "Scheduled unattended maintenance: make a safe product-doc cleanup, validate, push a branch, and report blockers without merging or deploying.",

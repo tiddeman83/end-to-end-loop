@@ -24,8 +24,12 @@ This repo develops the `end-to-end-loop` Agent Skill. The production skill entry
   green CI, rollback, credentials approval, and smoke/security checks.
 - Without those conditions, produce a deployment readiness report instead.
 
-## Product Boundary
+## Maintenance
 
-- This repo documents and validates the public `end-to-end-loop` tool/skill.
-- Private office automation, status dashboards, task routing, and internal governance belong outside this product repo.
-- Keep examples generic and avoid private repo names, private access details, or internal personas in public-facing docs.
+- This repo develops and validates the `end-to-end-loop` Agent Skill. It is
+  maintained by the repository owner, working through coding agents such as
+  Claude Code. There is no separate agent fleet or approval board that governs it.
+- Keep examples generic. Do not add secrets, private repo names, access details,
+  or invented internal personas/processes to any doc.
+- Describe only what the skill actually does. Do not document aspirational
+  capabilities, teams, or governance as if they exist.

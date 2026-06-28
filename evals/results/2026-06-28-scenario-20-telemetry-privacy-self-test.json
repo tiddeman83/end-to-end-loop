@@ -1,9 +1,9 @@
 {
   "date": "2026-06-28",
-  "agent_or_tool": "hermes",
+  "agent_or_tool": "claude-code",
   "skill_version_or_commit": "99702a3+telemetry-privacy-self-test",
   "scenario_id": "scenario-20",
-  "prompt": "DevBoss sprint: mature end-to-end-loop telemetry feature with privacy-safe local measurement evidence, backlog and GitHub Copilot gates active.",
+  "prompt": "Sprint: mature end-to-end-loop telemetry feature with privacy-safe local measurement evidence, backlog and GitHub Copilot gates active.",
   "expected_trigger": true,
   "actual_trigger": true,
   "outcome": "passed",

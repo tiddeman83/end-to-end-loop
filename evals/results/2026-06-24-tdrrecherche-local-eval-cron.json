@@ -1,6 +1,6 @@
 {
   "date": "2026-06-24",
-  "agent_or_tool": "hermes",
+  "agent_or_tool": "claude-code",
   "skill_version_or_commit": "e01443e",
   "scenario_id": "scenario-10",
   "prompt": "Run first local cross-repo eval on tdrrecherche",

@@ -37,7 +37,7 @@ Do not replace the normal packet fields. This only adds telemetry-specific state
 5. Never store full prompts, transcripts, secrets, tokens, cookies, environment variables, raw stdout/stderr, file contents, private paths, hostnames, usernames, home directories, or credential-helper output by default.
 6. Store command data as a `cmd_class` and optional redacted/summarized arguments. For risky commands, store a class plus hash only.
 7. Machine identity is coarse: OS family, architecture, and optional resource class. No host or user identity.
-8. Public performance or reliability claims need Tijmen/release approval plus multi-run and ideally multi-machine evidence.
+8. Public performance or reliability claims need owner/release approval plus multi-run and ideally multi-machine evidence.
 9. OpenTelemetry/OTLP export is an optional adapter only. It must never create a default network write.
 
 ## Local JSONL event schema v0
@@ -75,7 +75,7 @@ Enums:
 Example:
 
 ```json
-{"schema_version":"telemetry-event-v0","event":"run_start","run_id":"2026-06-28T14-00Z-a1","timestamp":"2026-06-28T14:00:00Z","tool":"hermes","os":"linux","arch":"x86_64","mode":"standard","options":["backlog","github-copilot"],"telemetry_mode":"local-jsonl","skill_commit":"13214f2"}
+{"schema_version":"telemetry-event-v0","event":"run_start","run_id":"2026-06-28T14-00Z-a1","timestamp":"2026-06-28T14:00:00Z","tool":"claude-code","os":"linux","arch":"x86_64","mode":"standard","options":["backlog","github-copilot"],"telemetry_mode":"local-jsonl","skill_commit":"13214f2"}
 {"schema_version":"telemetry-event-v0","event":"phase_end","run_id":"2026-06-28T14-00Z-a1","timestamp":"2026-06-28T14:02:00Z","phase":"VERIFY","duration_ms":1532,"status":"pass"}
 {"schema_version":"telemetry-event-v0","event":"command","run_id":"2026-06-28T14-00Z-a1","timestamp":"2026-06-28T14:02:04Z","cmd_class":"validator","duration_ms":421,"exit_code":0,"stdout_sha256":"e3b0c44298fc1c149afbf4c8996fb924"}
 ```
@@ -93,7 +93,7 @@ Useful commands:
 
 ```bash
 python3 scripts/telemetry_record.py --run-id local-a run-start \
-  --tool hermes --mode standard --option backlog --option github-copilot
+  --tool claude-code --mode standard --option backlog --option github-copilot
 python3 scripts/telemetry_record.py --run-id local-a wrap --cmd-class validator -- \
   python3 scripts/validate_skill.py .
 python3 scripts/telemetry_record.py --run-id local-a run-end \

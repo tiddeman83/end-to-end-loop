@@ -160,7 +160,7 @@
     "reason": "Analysis-only near miss; should not enter code-producing loop."
   },
   {
-    "query": "Improve the CAVEMAN install and update instructions for Codex and Hermes, then validate the skill package.",
+    "query": "Improve the CAVEMAN install and update instructions for Codex and Cursor, then validate the skill package.",
     "should_trigger": true,
     "reason": "Installation/update documentation change with validation requirement."
   },

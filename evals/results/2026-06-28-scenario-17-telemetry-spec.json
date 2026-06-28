@@ -1,6 +1,6 @@
 {
   "date": "2026-06-28",
-  "agent_or_tool": "hermes",
+  "agent_or_tool": "claude-code",
   "skill_version_or_commit": "13214f2",
   "scenario_id": "scenario-17",
   "prompt": "Maintainer sprint: mature end-to-end-loop new features, prioritizing local telemetry spec/schema with backlog and GitHub Copilot options.",

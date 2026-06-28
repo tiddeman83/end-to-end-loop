@@ -4,7 +4,7 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 
 ## Preferences
 
-- PREF Keep the production skill portable across Codex, Hermes, Claude Code, Cursor, and AGENTS.md-compatible agents.
+- PREF Keep the production skill portable across Codex, Claude Code, Cursor, and AGENTS.md-compatible agents.
 - PREF CAVEMAN remains mandatory for code-producing execution and iteration phases, and companion skills should be installed/update-checked before use.
 - PREF Live deploy is opt-in per task; otherwise stop at prepared delivery or deploy-readiness reporting.
 - PREF Keep private operations, office workflows, dashboard coordination, task-routing, and internal personas outside this product repo.

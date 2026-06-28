@@ -179,3 +179,33 @@ Validation plan:
 
 - `python3 scripts/validate_skill.py .` from a folder named `end-to-end-loop`.
 - `git diff --check`.
+
+## 2026-06-28 — v0.1.0-alpha.2 release: honest docs, Hermes removed
+
+Goal: cut the first tagged alpha and make the documentation truthful. Earlier
+docs (authored under the prior agent setup) described a governance/management
+apparatus — an owner/maintainer approval board, a mandatory external review gate,
+and a private "operations repo" with internal agents, dashboards, and
+task-routing — that does not exist. This repo is maintained by its owner via
+Claude Code.
+
+Changes:
+
+- Rewrote `README.md` into a clear what / why / how-to-use guide; replaced the
+  governance "release posture/baseline/maintenance" sections with an honest
+  Status, Evaluation, and Maintenance section.
+- Removed Hermes entirely as a supported target tool: deleted `.hermes.md`,
+  removed the Hermes adapter section and sync recipe, and dropped Hermes from
+  tool lists, the validator's required files and policy terms, the result-log
+  tool enum, and example values across docs, evals, and scripts.
+- Deleted `research/product-office-separation-plan.md` (described the fictional
+  operations apparatus).
+- De-personalized release-approval language (named-person gate -> owner/release).
+- Added `CHANGELOG.md`; bumped `VERSION` to `0.1.0-alpha.2`.
+- Folded in the diagnosing-bugs/tdd subskills and handoff wiring merged in #8.
+
+Validation plan:
+
+- `python3 scripts/validate_skill.py .` from a folder named `end-to-end-loop`.
+- `python3 -m py_compile scripts/*.py` and `python3 scripts/test_telemetry_privacy.py`.
+- `git diff --check`.

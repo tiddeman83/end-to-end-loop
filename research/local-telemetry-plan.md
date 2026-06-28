@@ -90,14 +90,14 @@ Rules:
 5. Never store secrets, full prompts by default, raw stdout/stderr by default, environment variables, file contents, or private paths unless explicitly enabled.
 6. Store command names and sanitized arguments carefully; for risky commands store command class plus hash instead of full text.
 7. Machine identity should be coarse: OS, arch, CPU/RAM class, not hostname/user/home path.
-8. Public claims require Tijmen/release approval and multiple-machine evidence.
+8. Public claims require owner/release approval and multiple-machine evidence.
 
 ## Proposed data model
 
 Local JSONL event examples:
 
 ```json
-{"event":"run_start","run_id":"2026-06-28T14-00Z-abc","skill_commit":"c5a30b5","tool":"hermes","os":"linux","arch":"x86_64","mode":"standard","options":["backlog"]}
+{"event":"run_start","run_id":"2026-06-28T14-00Z-abc","skill_commit":"c5a30b5","tool":"claude-code","os":"linux","arch":"x86_64","mode":"standard","options":["backlog"]}
 {"event":"phase_end","run_id":"...","phase":"VERIFY","duration_ms":1532,"status":"pass"}
 {"event":"command","run_id":"...","cmd_class":"validator","duration_ms":421,"exit_code":0,"stdout_sha256":"..."}
 {"event":"resource_sample","run_id":"...","rss_peak_kb":123456,"user_cpu_s":1.2,"system_cpu_s":0.3}

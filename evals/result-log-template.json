@@ -1,6 +1,6 @@
 {
   "date": "YYYY-MM-DD",
-  "agent_or_tool": "codex|hermes|claude-code|cursor|agents-md|copilot|other",
+  "agent_or_tool": "codex|claude-code|cursor|agents-md|copilot|other",
   "skill_version_or_commit": "<commit-or-version>",
   "scenario_id": "scenario-1",
   "prompt": "<exact prompt>",

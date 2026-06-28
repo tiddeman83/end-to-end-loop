@@ -163,7 +163,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command_name", required=True)
 
     start = sub.add_parser("run-start", help="Append a run_start event.")
-    start.add_argument("--tool", default="hermes")
+    start.add_argument("--tool", default="claude-code")
     start.add_argument("--mode", default="standard")
     start.add_argument("--option", action="append", default=[])
     start.add_argument("--telemetry-mode", choices=["local-jsonl", "aggregate-only", "off"], default="local-jsonl")

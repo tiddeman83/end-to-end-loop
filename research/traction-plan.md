@@ -68,7 +68,7 @@ Better metrics:
 
 ## Private review gate
 
-Tijmen review is mandatory before first pre-release.
+Owner review is required before the first pre-release.
 
 Do not tag a public pre-release until:
 
@@ -80,7 +80,7 @@ Do not tag a public pre-release until:
 - 3 external reviewers can explain the project correctly;
 - 2 users can try it without hand-holding;
 - 1 skeptical reviewer says the claims are appropriately scoped;
-- Tijmen has reviewed the repo and explicitly approves `v0.1.0-alpha` or equivalent.
+- the owner has reviewed the repo and explicitly approves `v0.1.0-alpha` or equivalent.
 
 ## Suggested launch sequence
 
@@ -117,7 +117,7 @@ Prioritize practical developer communities:
 - GitHub repo and Discussions/Issues;
 - X/Twitter developer/AI audience;
 - LinkedIn for professional delivery framing;
-- Aider, Cline, Continue, Cursor, Claude Code and Hermes/Nous communities where allowed;
+- Aider, Cline, Continue, Cursor, and Claude Code communities where allowed;
 - Hacker News Show HN only after README/demo/evidence are strong;
 - Reddit only with practical examples, not hype.
 
