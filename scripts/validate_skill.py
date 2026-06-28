@@ -72,6 +72,7 @@ def check_required_files(root: Path) -> None:
         "references/local-telemetry.md",
         "evals/telemetry-events.fixture.jsonl",
         "evals/telemetry-summary.example.json",
+        "scripts/telemetry_record.py",
         "scripts/validate_skill.py",
         "handoff/hermes-devboss-brief.md",
         "handoff/hermes-market-research-prompt.md",
@@ -438,6 +439,7 @@ def check_telemetry_artifacts(root: Path) -> None:
     reference = root / "references/local-telemetry.md"
     fixture = root / "evals/telemetry-events.fixture.jsonl"
     summary_path = root / "evals/telemetry-summary.example.json"
+    recorder = root / "scripts/telemetry_record.py"
     gitignore = root / ".gitignore"
 
     text = reference.read_text(encoding="utf-8")
@@ -456,6 +458,20 @@ def check_telemetry_artifacts(root: Path) -> None:
     for term in required_terms:
         if term not in text:
             fail(f"Telemetry reference missing required privacy/schema term: {term}")
+
+    recorder_text = recorder.read_text(encoding="utf-8")
+    required_recorder_terms = [
+        "DEFAULT_PATH = Path(\".end-to-end-loop/telemetry.local.jsonl\")",
+        "subprocess.run",
+        "cmd_class",
+        "duration_ms",
+        "exit_code",
+        "FORBIDDEN_EVENT_KEYS",
+        "raw command text",
+    ]
+    for term in required_recorder_terms:
+        if term not in recorder_text:
+            fail(f"Telemetry recorder missing required privacy/recording term: {term}")
 
     if ".end-to-end-loop/telemetry.local.jsonl" not in gitignore.read_text(encoding="utf-8"):
         fail(".gitignore must exclude .end-to-end-loop/telemetry.local.jsonl")

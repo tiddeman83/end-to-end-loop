@@ -80,6 +80,31 @@ Example:
 {"schema_version":"telemetry-event-v0","event":"command","run_id":"2026-06-28T14-00Z-a1","timestamp":"2026-06-28T14:02:04Z","cmd_class":"validator","duration_ms":421,"exit_code":0,"stdout_sha256":"e3b0c44298fc1c149afbf4c8996fb924"}
 ```
 
+## Local recorder helper
+
+`scripts/telemetry_record.py` is the opt-in stdlib helper for local machines.
+It appends JSONL events to `.end-to-end-loop/telemetry.local.jsonl` by default
+or to `E2E_LOOP_TELEMETRY_PATH` / `--telemetry-path` when explicitly supplied.
+It never stores raw command text, stdout, stderr, environment variables, current
+working directory, hostnames, usernames, home paths, prompts, transcripts, or
+private file contents.
+
+Useful commands:
+
+```bash
+python3 scripts/telemetry_record.py --run-id local-a run-start \
+  --tool hermes --mode standard --option backlog --option github-copilot
+python3 scripts/telemetry_record.py --run-id local-a wrap --cmd-class validator -- \
+  python3 scripts/validate_skill.py .
+python3 scripts/telemetry_record.py --run-id local-a run-end \
+  --duration-ms 120000 --outcome passed --delivery-classification repo-only
+```
+
+`wrap` lets the child process inherit stdout/stderr for the operator, but only
+records `cmd_class`, `duration_ms`, `exit_code`, and stdlib resource samples.
+Use the narrowest safe `cmd_class` instead of storing shell commands. Generated
+local telemetry files remain ignored by default and should not be committed.
+
 ## Shareable telemetry summary schema v0
 
 Use this for release evidence or public-safe reports. It must not include raw event lines.

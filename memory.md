@@ -136,3 +136,4 @@ iterations do not re-litigate settled points.
 - 2026-06-28: CAVEMAN ULTRA must remain active across every phase and prompt evolution as the compact orchestration/context layer, not only during code-producing work.
 - 2026-06-28: Telemetry feature policy is local-first and opt-in: raw JSONL stays local, `.end-to-end-loop/telemetry.local.jsonl` is gitignored, OpenTelemetry/OTLP is optional only, and public claims require approval.
 - 2026-06-28: Telemetry validator coverage requires `references/local-telemetry.md`, JSONL fixture parsing, shareable summary validation, and no raw prompt/stdout/stderr/env/private identity fields in fixtures.
+- 2026-06-28: Telemetry local recorder is opt-in/stdlib/local-only; `wrap` records `cmd_class`, `duration_ms`, `exit_code`, and resource sample, not raw command/stdout/stderr/env/cwd/identity.
