@@ -67,3 +67,21 @@ Validation plan:
 - `python3 scripts/telemetry_aggregate.py evals/telemetry-events.fixture.jsonl --source fixture --claim-scope fixture-only`.
 - Validate from a temporary folder named `end-to-end-loop`.
 - `git diff --check`.
+
+## 2026-06-28 — Telemetry privacy self-test slice
+
+Goal: harden the telemetry measurement feature with a local smoke test that proves recorder/aggregator privacy guards work, not just that the happy-path fixture aggregates.
+
+Changes:
+
+- Added `scripts/test_telemetry_privacy.py`, a stdlib-only local test for fixture aggregation plus forbidden raw/private key rejection.
+- Documented the test in `references/local-telemetry.md` and included it in installed helper packaging.
+- Extended the validator so the helper must exist and be copied by `scripts/install.sh`.
+- Ignored Python `__pycache__/` artifacts created by local validation.
+
+Validation plan:
+
+- `python3 -m py_compile scripts/validate_skill.py scripts/telemetry_record.py scripts/telemetry_aggregate.py scripts/test_telemetry_privacy.py`.
+- `python3 scripts/test_telemetry_privacy.py`.
+- Validate from a temporary folder named `end-to-end-loop`.
+- `git diff --check`.

@@ -75,6 +75,7 @@ def check_required_files(root: Path) -> None:
         "evals/telemetry-summary.example.json",
         "scripts/telemetry_aggregate.py",
         "scripts/telemetry_record.py",
+        "scripts/test_telemetry_privacy.py",
         "scripts/install.sh",
         "scripts/validate_skill.py",
         "agents/openai.yaml",
@@ -602,7 +603,12 @@ def check_telemetry_artifacts(root: Path) -> None:
             fail(f"Telemetry summary fixture field {key!r} should be {expected!r}; got {summary.get(key)!r}")
 
     install_text = (root / "scripts/install.sh").read_text(encoding="utf-8")
-    for rel in ("scripts/validate_skill.py", "scripts/telemetry_record.py", "scripts/telemetry_aggregate.py"):
+    for rel in (
+        "scripts/validate_skill.py",
+        "scripts/telemetry_record.py",
+        "scripts/telemetry_aggregate.py",
+        "scripts/test_telemetry_privacy.py",
+    ):
         if rel not in install_text:
             fail(f"Install script must copy documented helper: {rel}")
 

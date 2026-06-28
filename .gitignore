@@ -3,3 +3,5 @@
 .end-to-end-loop/results/*.local.json
 .end-to-end-loop/telemetry.local.jsonl
 .end-to-end-loop/telemetry.local.*.jsonl
+__pycache__/
+scripts/__pycache__/

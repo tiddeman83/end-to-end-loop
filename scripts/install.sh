@@ -17,5 +17,6 @@ cp "$REPO_ROOT/agents/openai.yaml" "$SKILL_DIR/agents/openai.yaml"
 cp "$REPO_ROOT/scripts/validate_skill.py" "$SKILL_DIR/scripts/validate_skill.py"
 cp "$REPO_ROOT/scripts/telemetry_record.py" "$SKILL_DIR/scripts/telemetry_record.py"
 cp "$REPO_ROOT/scripts/telemetry_aggregate.py" "$SKILL_DIR/scripts/telemetry_aggregate.py"
+cp "$REPO_ROOT/scripts/test_telemetry_privacy.py" "$SKILL_DIR/scripts/test_telemetry_privacy.py"
 
 echo "Done. Reload your agent session to pick up changes."

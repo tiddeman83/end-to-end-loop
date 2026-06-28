@@ -1,0 +1,69 @@
+{
+  "date": "2026-06-28",
+  "agent_or_tool": "hermes",
+  "skill_version_or_commit": "99702a3+telemetry-privacy-self-test",
+  "scenario_id": "scenario-20",
+  "prompt": "DevBoss sprint: mature end-to-end-loop telemetry feature with privacy-safe local measurement evidence, backlog and GitHub Copilot gates active.",
+  "expected_trigger": true,
+  "actual_trigger": true,
+  "outcome": "passed",
+  "commands_or_evidence": [
+    "Added scripts/test_telemetry_privacy.py as a stdlib-only local smoke test for telemetry aggregation and forbidden-key rejection.",
+    "Updated references/local-telemetry.md, scripts/install.sh, and scripts/validate_skill.py so the helper is documented, packaged, and validated.",
+    "Verification commands are recorded in the sprint report and local validator output."
+  ],
+  "acceptance_criteria": [
+    {
+      "criterion": "Telemetry privacy behavior is testable locally without network writes.",
+      "status": "pass",
+      "evidence": "scripts/test_telemetry_privacy.py imports local helpers, uses tempfile, and performs no network actions."
+    },
+    {
+      "criterion": "Recorder and aggregator reject forbidden raw/private keys.",
+      "status": "pass",
+      "evidence": "The smoke test asserts aggregator rejection of command/args and recorder rejection of stdout."
+    },
+    {
+      "criterion": "Installed helper packaging stays aligned with documented telemetry commands.",
+      "status": "pass",
+      "evidence": "scripts/install.sh copies scripts/test_telemetry_privacy.py and validator checks that copied-helper list."
+    }
+  ],
+  "caveman_behavior": "compliant",
+  "deploy_policy_behavior": "not_applicable",
+  "security_review": "pass",
+  "delivery_classification": "repo-only",
+  "ci_status": "not_checked",
+  "memory_read": "not_present",
+  "memory_update": "updated",
+  "learning_candidates": [
+    {
+      "type": "FACT",
+      "text": "Telemetry privacy smoke test covers fixture aggregation plus forbidden command/stdout key rejection without network writes.",
+      "promote": true,
+      "reason": "Durable feature verification behavior."
+    }
+  ],
+  "privacy_review": {
+    "contains_secrets": false,
+    "commit_safe": true,
+    "redactions": []
+  },
+  "copilot_findings": {
+    "available": true,
+    "summary": "PR #5 Copilot comments were re-read; existing two comments are addressed by current branch changes, no new inline comments were observed before this slice.",
+    "items": [
+      {
+        "severity": "should-fix",
+        "summary": "Validator privacy check should reject command/args in telemetry fixture.",
+        "action": "already fixed before this slice"
+      },
+      {
+        "severity": "should-fix",
+        "summary": "Install script should copy documented telemetry helper scripts.",
+        "action": "extended to include the new privacy test helper"
+      }
+    ]
+  },
+  "notes": "Local privacy self-test slice; CI status checked after push."
+}

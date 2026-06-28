@@ -115,6 +115,7 @@ Example:
 ```bash
 python3 scripts/telemetry_aggregate.py evals/telemetry-events.fixture.jsonl \
   --source fixture --claim-scope fixture-only
+python3 scripts/test_telemetry_privacy.py
 ```
 
 Required fields:
@@ -154,6 +155,7 @@ Rules:
 - [ ] `.gitignore` excludes `.end-to-end-loop/telemetry.local.jsonl` and local/private result logs.
 - [ ] `scripts/validate_skill.py` validates telemetry fixtures and summaries.
 - [ ] `scripts/telemetry_aggregate.py` deterministically converts the fixture JSONL into the shareable summary shape.
+- [ ] `scripts/test_telemetry_privacy.py` passes, including forbidden raw/private key rejection for recorder and aggregator helpers.
 - [ ] JSONL fixture parses one JSON object per line.
 - [ ] Summary fixture has `raw_logs_included: false` and no private path/host/user fields.
 - [ ] Security review confirms no prompts, secrets, env vars, stdout/stderr, or private paths are collected by default.
