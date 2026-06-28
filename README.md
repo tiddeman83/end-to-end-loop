@@ -13,11 +13,11 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 `end-to-end-loop` gives agents a disciplined delivery contract:
 
 - discover the real goal and side effects before acting;
-- plan with pass/fail acceptance criteria;
+- plan agile feature/user-story slices with pass/fail acceptance criteria and explicit verification layers;
 - execute code-producing work only through a CAVEMAN-compatible lane that is installed and update-checked;
 - route work by complexity to cheaper/faster models or scripts where safe;
 - consider helper agents for parallelizable discovery, build, review, tests, and reporting;
-- verify with observed evidence, not confidence;
+- verify with observed evidence, not confidence; verification is the most important layer of the loop;
 - run smoke tests and security review;
 - deliver or deploy only inside the approved scope;
 - report outcome, evidence, CI/test state, limitations, and rollback notes.
@@ -34,6 +34,7 @@ The skill is designed for Codex, Hermes Agent, Claude Code, Cursor, and AGENTS.m
 
 ```text
 SKILL.md                         # production skill core
+VERSION                          # package/run version to present at start/report
 references/phase-checklists.md   # phase gates and summaries
 references/test-and-security.md  # smoke/security/side-effect gates
 references/deploy-readiness.md   # deploy-readiness rubric and hosting/custom-domain gates
@@ -42,6 +43,7 @@ references/evaluation.md         # trigger/release/eval guidance
 references/self-learning.md      # per-repo compact memory/result-log rules
 references/report-template.md    # delivery report template
 references/mission-mode.md       # optional helper-agent/model-routing layer
+skills/grilling/SKILL.md          # packaged subskill for one-question-at-a-time plan grilling
 scripts/validate_skill.py        # dependency-free repo validator
 .github/workflows/validate.yml   # CI validation
 AGENTS.md                        # general coding-agent project instructions
@@ -73,7 +75,7 @@ For generic Agent Skills-compatible tools, install the full package with:
 bash scripts/install.sh
 ```
 
-The script installs `SKILL.md`, `references/*.md`, and `agents/openai.yaml` under `~/.agents/skills/end-to-end-loop/`.
+The script installs `SKILL.md`, `VERSION`, `references/*.md`, `agents/openai.yaml`, helper scripts, and packaged subskills such as `skills/grilling/SKILL.md` under `~/.agents/skills/end-to-end-loop/`.
 
 For a local Hermes profile, copy this repository or the skill folder under:
 
@@ -150,7 +152,7 @@ Release readiness depends on more than local validation. The next release train 
 
 Current branch baseline:
 
-- `evals/trigger-cases.json` contains 20 seed trigger cases.
+- `evals/trigger-cases.json` contains trigger cases for delivery-loop, deploy, backlog/Copilot, telemetry, and grilling/stress-test behavior.
 - `evals/outcome-scenarios.md` defines eight manual outcome scenarios covering bugfix, feature, release, deploy, CAVEMAN, planning-only, and scheduled unattended maintenance paths.
 - `evals/result-log-template.json` provides a structured template for recording scenario results with evidence, acceptance criteria, delivery classification, CI, security, CAVEMAN, and deploy-policy status.
 - `evals/results/` contains filled scenario-result logs and sanitized examples for release-readiness evaluation.

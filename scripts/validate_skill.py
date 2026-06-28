@@ -12,7 +12,7 @@ from typing import Any, cast
 
 
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-REF_RE = re.compile(r"`?(references/[A-Za-z0-9_.\-/]+|handoff/[A-Za-z0-9_.\-/]+|scripts/[A-Za-z0-9_.\-/]+)`?")
+REF_RE = re.compile(r"`?(references/[A-Za-z0-9_.\-/]+|handoff/[A-Za-z0-9_.\-/]+|scripts/[A-Za-z0-9_.\-/]+|skills/[A-Za-z0-9_.\-/]+)`?")
 
 
 def fail(message: str) -> None:
@@ -60,9 +60,19 @@ def check_frontmatter(root: Path, text: str) -> None:
         fail("SKILL.md body should stay under 500 lines")
 
 
+
+def check_version_file(root: Path) -> None:
+    version_path = root / "VERSION"
+    version = version_path.read_text(encoding="utf-8").strip() if version_path.is_file() else ""
+    if not version:
+        fail("VERSION must be present and non-empty")
+    if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.]+)?(?:\+[A-Za-z0-9.]+)?", version):
+        fail(f"VERSION should be semver-like; got {version!r}")
+
 def check_required_files(root: Path) -> None:
     required = [
         "SKILL.md",
+        "VERSION",
         "references/phase-checklists.md",
         "references/test-and-security.md",
         "references/adapters.md",
@@ -79,6 +89,7 @@ def check_required_files(root: Path) -> None:
         "scripts/install.sh",
         "scripts/validate_skill.py",
         "agents/openai.yaml",
+        "skills/grilling/SKILL.md",
         "AGENTS.md",
         ".hermes.md",
         ".github/workflows/validate.yml",
@@ -124,11 +135,41 @@ def check_policy_terms(root: Path) -> None:
         "Mission Mode",
         "telemetry",
         "local-first",
+        "agile",
+        "verification layers",
+        "Codex connector",
+        "Codex agentic reviewer",
+        "production runtime environment",
+        "local development environment",
     ]
     for term in required_terms:
         if term not in combined:
             fail(f"Required policy term missing: {term}")
 
+
+
+def check_subskills(root: Path) -> None:
+    skills_dir = root / "skills"
+    if not skills_dir.is_dir():
+        fail("Missing skills/ directory for packaged subskills")
+    for skill_path in sorted(skills_dir.glob("*/SKILL.md")):
+        data, body = parse_frontmatter(skill_path.read_text(encoding="utf-8"))
+        allowed = {"name", "description"}
+        extras = set(data) - allowed
+        if extras:
+            fail(f"Only name and description are allowed in {skill_path.relative_to(root)} frontmatter: {sorted(extras)}")
+        name = data.get("name", "")
+        description = data.get("description", "")
+        if not NAME_RE.fullmatch(name):
+            fail(f"Invalid subskill name in {skill_path.relative_to(root)}: {name!r}")
+        if name != skill_path.parent.name:
+            fail(f"Subskill name {name!r} must match folder name {skill_path.parent.name!r}")
+        if not description:
+            fail(f"description is required in {skill_path.relative_to(root)}")
+        if len(description) > 1024:
+            fail(f"description is too long in {skill_path.relative_to(root)}: {len(description)} > 1024")
+        if not body.strip():
+            fail(f"Subskill body is required in {skill_path.relative_to(root)}")
 
 def check_json_files(root: Path) -> None:
     for path in root.rglob("*.json"):
@@ -163,6 +204,8 @@ def check_trigger_cases(root: Path) -> None:
     backlog_cases = 0
     copilot_cases = 0
     telemetry_cases = 0
+    grilling_cases = 0
+    codex_reviewer_cases = 0
 
     for idx, case in enumerate(cases, start=1):
         if not isinstance(case, dict):
@@ -204,6 +247,10 @@ def check_trigger_cases(root: Path) -> None:
             copilot_cases += 1
         if "telemetry" in text or "measurement" in text or "performance" in text:
             telemetry_cases += 1
+        if any(term in text for term in ("grill", "stress-test", "poke holes", "interrogate")):
+            grilling_cases += 1
+        if "codex" in text and "review" in text:
+            codex_reviewer_cases += 1
 
     if positives < 8:
         fail(f"Trigger evals need at least 8 should-trigger positives; found {positives}")
@@ -221,6 +268,10 @@ def check_trigger_cases(root: Path) -> None:
         fail(f"Trigger evals need at least 2 Copilot-option cases; found {copilot_cases}")
     if telemetry_cases < 2:
         fail(f"Trigger evals need at least 2 telemetry/measurement cases; found {telemetry_cases}")
+    if grilling_cases < 2:
+        fail(f"Trigger evals need at least 2 grilling/stress-test cases; found {grilling_cases}")
+    if codex_reviewer_cases < 1:
+        fail(f"Trigger evals need at least 1 Codex reviewer case; found {codex_reviewer_cases}")
 
 
 def check_outcome_scenarios(root: Path) -> None:
@@ -603,6 +654,9 @@ def check_telemetry_artifacts(root: Path) -> None:
             fail(f"Telemetry summary fixture field {key!r} should be {expected!r}; got {summary.get(key)!r}")
 
     install_text = (root / "scripts/install.sh").read_text(encoding="utf-8")
+    if "skills/." not in install_text and "skills/" not in install_text:
+        fail("Install script must copy packaged subskills from skills/")
+
     for rel in (
         "scripts/validate_skill.py",
         "scripts/telemetry_record.py",
@@ -635,7 +689,9 @@ def main() -> int:
         fail("SKILL.md not found")
     text = skill_path.read_text(encoding="utf-8")
     check_frontmatter(root, text)
+    check_version_file(root)
     check_required_files(root)
+    check_subskills(root)
     check_references(root, text)
     check_policy_terms(root)
     check_json_files(root)

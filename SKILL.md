@@ -43,6 +43,16 @@ scope, then report clearly.
 10. Before code-producing work, check that required CAVEMAN companion skills are
    installed and update-checked when the tool supports it. Treat skill install,
    skill update, and repo freshness checks as explicit side effects.
+11. Work in an agile way: features and user stories need tightly scoped goals,
+   clear skill settings/options, and precise verification layers before build.
+12. Verification is the most important part of the loop. Use grilling when needed
+   to define observable acceptance criteria and test/review layers before code.
+13. On first run in a target project, initiate by understanding both the production
+   runtime environment and the local development environment, then have the user
+   confirm that environment model through a grilling routine before implementation.
+14. At the start of every end-to-end-loop run and in every report, present the
+   skill version from `VERSION` when available; if unavailable, say
+   `end-to-end-loop version: unknown` rather than guessing.
 
 ## CAVEMAN Hard Gate
 
@@ -87,6 +97,7 @@ example.
 | `deep` | architecture, security, deploy, auth, data, broad refactor, repeated failure | high-reasoning review, more helper agents, full reference/eval coverage |
 | `backlog` | user supplies or asks to build a backlog before implementation | run BACKLOG before PLAN; do not start implementation until dependencies, feature interactions, ordering, complexity, model routing, and acceptance slices are explicit |
 | `github-copilot` | GitHub repo work with CI/CD, PRs, or user-requested Copilot feedback | collect Copilot feedback where authenticated/available and feed it into VERIFY/TEST/ITERATE before claiming CI/CD or PR readiness |
+| `grilling` | user asks to grill, stress-test, interrogate, or poke holes in a plan/design before building; or feature/user-story scope or verification is not crisp enough | use `skills/grilling/SKILL.md`; ask exactly one question at a time with a recommended answer, define goals and verification layers precisely, and inspect codebase instead of asking when the repo can answer |
 
 During BACKLOG or PLAN classify each workstream:
 
@@ -206,14 +217,20 @@ incomplete.
 
 Do:
 
-- Restate the user's intended outcome and concrete done state.
+- Restate the user's intended outcome, feature/user-story slice, and concrete done state.
+- Present the active skill version from `VERSION` when available.
+- Identify whether this is the first run in the target project. If yes, discover
+  the production runtime environment and local development environment, then use
+  `grilling` to get user confirmation of that environment model before build.
 - Identify inputs, files, permissions, credentials, environments, target users,
   dependencies, and constraints.
 - Identify side effects: filesystem writes, network calls, external services,
   installs, skill installs/updates, repo freshness checks, Copilot/GitHub API
   reads, secrets, CI, deploy, data changes, destructive operations.
-- Decide whether operating options apply: `backlog`, `github-copilot`, `lean`,
-  `standard`, or `deep`.
+- Decide whether operating options apply: `backlog`, `github-copilot`, `grilling`,
+  `lean`, `standard`, or `deep`; record the selected skill settings/goals.
+- If goals, scope, dependencies, or verification layers are vague, enter
+  `grilling` before PLAN and resolve one decision at a time.
 - Ask only material questions that cannot be safely inferred. Prefer one grouped
   question set over drip-fed clarification.
 - Record assumptions and risks.
@@ -258,7 +275,7 @@ Goal: produce a concrete, verifiable path.
 Do:
 
 - Choose operating mode/options (`lean`, `standard`, `deep`, `backlog`,
-  `github-copilot`) and classify complexity (`level_0`..`level_3`) for each
+  `github-copilot`, `grilling`) and classify complexity (`level_0`..`level_3`) for each
   workstream or backlog slice.
 - Route work to the cheapest adequate execution path: deterministic tools/scripts
   for mechanical checks, cheap/fast models for low-risk summaries or scans,
@@ -270,11 +287,15 @@ Do:
 - If `github-copilot` applies, plan where Copilot feedback is collected and how
   must-fix findings re-enter ITERATE.
 - Break work into small steps with verification hooks.
-- Define acceptance criteria as pass/fail statements.
+- Define acceptance criteria as pass/fail statements, with explicit verification
+  layers for the slice: unit, integration, smoke, manual, security, CI, telemetry,
+  reviewer, or other checks as applicable.
 - Choose the delivery target: `none`, `repo-only`, `prep-only`, or `live-deploy`.
 - Decide whether deploy is in scope. If yes, apply the deploy policy.
 - Define test strategy: unit checks, integration checks, smoke path, security
-  review, and CI expectations.
+  review, CI expectations, and any required model/agent reviewer. When running on
+  Claude and a Codex connector is installed so Codex can be prompted, add a Codex
+  agentic reviewer to the verification plan for code-producing work.
 - Identify rollback or recovery for risky operations.
 
 Exit: written plan, acceptance criteria, deploy classification, and test strategy.
@@ -385,8 +406,11 @@ Goal: make the outcome auditable and easy to continue.
 Report:
 
 - What changed and why.
+- Skill version reported for this run (`VERSION` or `unknown`).
+- First-run environment status: production runtime environment, local development
+  environment, and whether user confirmation happened through grilling when needed.
 - Acceptance criteria and evidence.
-- Tests, smoke checks, security review, and CI status.
+- Tests, smoke checks, security review, reviewer status, and CI status.
 - Delivery/deploy classification and result.
 - Operating mode/options, complexity/model routing decisions, and CAVEMAN ULTRA
   compression status after prompt evolution.
@@ -406,6 +430,8 @@ Use `references/report-template.md` for larger tasks.
 - Read `references/backlog-and-copilot.md` when `backlog` or `github-copilot`
   options are selected, when CI/CD feedback must include Copilot findings, or when
   long prompts need CAVEMAN ULTRA context compression.
+- Read `skills/grilling/SKILL.md` when the user asks to grill, stress-test,
+  interrogate, or poke holes in a plan/design before building.
 - Read `references/local-telemetry.md` when local measurement, performance
   evidence, phase/command timing, token/cost capture, CAVEMAN compliance metrics,
   Copilot availability metrics, or telemetry research is in scope. Telemetry is

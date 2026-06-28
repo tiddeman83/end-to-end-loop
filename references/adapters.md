@@ -97,6 +97,7 @@ Notes:
 - For high-risk repo changes, use permission rules to ask/deny tools rather than
   embedding broad autonomy in the skill.
 - Evaluate in fresh sessions and compare with-skill versus without-skill behavior.
+- When a Claude session has a Codex connector installed and prompting Codex is possible, add a Codex agentic reviewer for code-producing work. Route it through VERIFY/TEST as reviewer evidence: provide the scoped goal, relevant diff/files, acceptance criteria, verification layers, and ask for must-fix/should-fix/false-positive findings.
 
 ## Cursor
 
