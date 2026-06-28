@@ -1,0 +1,5 @@
+# end-to-end-loop local/private artifacts
+.end-to-end-loop/memory.local.md
+.end-to-end-loop/results/*.local.json
+.end-to-end-loop/telemetry.local.jsonl
+.end-to-end-loop/telemetry.local.*.jsonl

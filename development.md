@@ -647,3 +647,39 @@ Verification target:
 
 - `python3 <tmp>/end-to-end-loop/scripts/validate_skill.py <tmp>/end-to-end-loop`.
 - `git diff --check`.
+
+## 2026-06-28 — Iteration 19: local telemetry spec/schema slice
+
+- Completed first telemetry implementation slice: `references/local-telemetry.md` now defines the opt-in local JSONL event schema, shareable summary schema, privacy contract, CAVEMAN packet extensions, and ordered telemetry backlog.
+- Added `.gitignore` entries for local/private `.end-to-end-loop` telemetry and memory/result artifacts so raw local logs stay out of commits by default.
+- Added telemetry fixtures: `evals/telemetry-events.fixture.jsonl` and `evals/telemetry-summary.example.json`.
+- Tightened `scripts/validate_skill.py` to require telemetry artifacts, validate JSONL events, validate shareable summaries, enforce no raw/private keys in fixtures, and require telemetry trigger coverage.
+- Extended `evals/trigger-cases.json` with telemetry positive/negative trigger cases.
+- Copilot status: `gh` authenticated; `gh copilot --help` available, but full invocation skipped because prior repo memory says it may auto-download/install tooling. `gh-copilot` binary not installed. No Copilot findings collected.
+
+Verification:
+
+- `python3 -m py_compile scripts/validate_skill.py` -> pass.
+- `python3 -m json.tool evals/trigger-cases.json` -> pass.
+- `python3 -m json.tool evals/telemetry-summary.example.json` -> pass.
+- JSONL fixture parse -> `jsonl ok: 6 lines`.
+- Temp basename validation at `/tmp/end-to-end-loop-validate/end-to-end-loop` -> `end-to-end-loop skill validation passed`.
+- `git diff --check` -> pass.
+- GitHub Actions on `main`: latest `Validate skill` run `28320440018` success for commit `13214f2`; branch CI not run yet until push/PR.
+
+## 2026-06-28 — Iteration 20: local telemetry recorder slice
+
+- Completed second telemetry implementation slice: added `scripts/telemetry_record.py`, a stdlib-only opt-in local JSONL recorder.
+- Recorder supports `run-start`, `phase-end`, `wrap`, and `run-end`; `wrap` records `cmd_class`, command duration, exit code, and optional stdlib resource sample while letting stdout/stderr remain operator-visible but unpersisted.
+- Privacy controls: recorder refuses forbidden event keys (`prompt`, raw `stdout`/`stderr`, `env`, `cwd`, command text/args, hostname/user/home identity) and defaults to `.end-to-end-loop/telemetry.local.jsonl` / `E2E_LOOP_TELEMETRY_PATH`.
+- Updated `references/local-telemetry.md` with recorder usage and strengthened `scripts/validate_skill.py` to require/check the recorder helper.
+- Copilot status: `gh` authenticated; no PR exists for the branch yet and no branch Actions runs existed before this commit/push attempt. Copilot findings were not collected because no PR/code-review surface exists and no new tooling install is approved.
+
+Verification:
+
+- `python3 -m py_compile scripts/validate_skill.py scripts/telemetry_record.py` -> pass.
+- `python3 -m json.tool evals/telemetry-summary.example.json` -> pass.
+- JSONL fixture parse -> `jsonl ok: 6 lines`.
+- Recorder smoke: `run-start`, `wrap --cmd-class validator -- python3 -m py_compile ...`, `run-end` into `/tmp/e2e-loop-telemetry-test.jsonl` -> `telemetry recorder smoke ok: 4 events` with no forbidden keys.
+- Temp basename validation at `/tmp/end-to-end-loop-validate/end-to-end-loop` -> `end-to-end-loop skill validation passed`.
+- `git diff --check` -> pass.

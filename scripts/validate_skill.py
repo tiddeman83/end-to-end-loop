@@ -8,6 +8,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from typing import Any, cast
 
 
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -68,6 +69,10 @@ def check_required_files(root: Path) -> None:
         "references/evaluation.md",
         "references/self-learning.md",
         "references/report-template.md",
+        "references/local-telemetry.md",
+        "evals/telemetry-events.fixture.jsonl",
+        "evals/telemetry-summary.example.json",
+        "scripts/telemetry_record.py",
         "scripts/validate_skill.py",
         "handoff/hermes-devboss-brief.md",
         "handoff/hermes-market-research-prompt.md",
@@ -95,7 +100,8 @@ def check_policy_terms(root: Path) -> None:
     phase = (root / "references/phase-checklists.md").read_text(encoding="utf-8")
     adapters = (root / "references/adapters.md").read_text(encoding="utf-8")
     self_learning = (root / "references/self-learning.md").read_text(encoding="utf-8")
-    combined = "\n".join([skill, safety, phase, adapters, self_learning])
+    local_telemetry = (root / "references/local-telemetry.md").read_text(encoding="utf-8")
+    combined = "\n".join([skill, safety, phase, adapters, self_learning, local_telemetry])
     required_terms = [
         "CAVEMAN",
         "live deploy",
@@ -111,6 +117,8 @@ def check_policy_terms(root: Path) -> None:
         "backlog",
         "Copilot",
         "model routing",
+        "telemetry",
+        "local-first",
     ]
     for term in required_terms:
         if term not in combined:
@@ -149,6 +157,7 @@ def check_trigger_cases(root: Path) -> None:
     caveman_cases = 0
     backlog_cases = 0
     copilot_cases = 0
+    telemetry_cases = 0
 
     for idx, case in enumerate(cases, start=1):
         if not isinstance(case, dict):
@@ -188,6 +197,8 @@ def check_trigger_cases(root: Path) -> None:
             backlog_cases += 1
         if "copilot" in text:
             copilot_cases += 1
+        if "telemetry" in text or "measurement" in text or "performance" in text:
+            telemetry_cases += 1
 
     if positives < 8:
         fail(f"Trigger evals need at least 8 should-trigger positives; found {positives}")
@@ -203,6 +214,8 @@ def check_trigger_cases(root: Path) -> None:
         fail(f"Trigger evals need at least 2 backlog-option cases; found {backlog_cases}")
     if copilot_cases < 2:
         fail(f"Trigger evals need at least 2 Copilot-option cases; found {copilot_cases}")
+    if telemetry_cases < 2:
+        fail(f"Trigger evals need at least 2 telemetry/measurement cases; found {telemetry_cases}")
 
 
 def check_outcome_scenarios(root: Path) -> None:
@@ -422,6 +435,139 @@ def check_eval_result_logs(root: Path) -> None:
             fail(f"{path.relative_to(root)} copilot_findings has invalid types")
 
 
+def check_telemetry_artifacts(root: Path) -> None:
+    reference = root / "references/local-telemetry.md"
+    fixture = root / "evals/telemetry-events.fixture.jsonl"
+    summary_path = root / "evals/telemetry-summary.example.json"
+    recorder = root / "scripts/telemetry_record.py"
+    gitignore = root / ".gitignore"
+
+    text = reference.read_text(encoding="utf-8")
+    required_terms = [
+        "opt-in",
+        "local-first",
+        "telemetry.local.jsonl",
+        "no default network writes",
+        "OpenTelemetry/OTLP export is an optional adapter",
+        "Never store full prompts",
+        "raw stdout/stderr",
+        "privacy_review",
+        "telemetry-summary-v0",
+        "telemetry-event-v0",
+    ]
+    for term in required_terms:
+        if term not in text:
+            fail(f"Telemetry reference missing required privacy/schema term: {term}")
+
+    recorder_text = recorder.read_text(encoding="utf-8")
+    required_recorder_terms = [
+        "DEFAULT_PATH = Path(\".end-to-end-loop/telemetry.local.jsonl\")",
+        "subprocess.run",
+        "cmd_class",
+        "duration_ms",
+        "exit_code",
+        "FORBIDDEN_EVENT_KEYS",
+        "raw command text",
+    ]
+    for term in required_recorder_terms:
+        if term not in recorder_text:
+            fail(f"Telemetry recorder missing required privacy/recording term: {term}")
+
+    if ".end-to-end-loop/telemetry.local.jsonl" not in gitignore.read_text(encoding="utf-8"):
+        fail(".gitignore must exclude .end-to-end-loop/telemetry.local.jsonl")
+
+    event_allowed = {"run_start", "phase_end", "command", "resource_sample", "quality_gate", "run_end"}
+    phase_allowed = {"DISCOVER", "BACKLOG", "PLAN", "EXECUTE", "VERIFY", "ITERATE", "TEST", "DELIVER", "DEPLOY", "REPORT"}
+    status_allowed = {"pass", "fail", "blocked", "skipped"}
+    outcome_allowed = {"passed", "failed", "blocked", "partial"}
+    cmd_allowed = {
+        "validator",
+        "json-validation",
+        "git",
+        "test",
+        "lint",
+        "build",
+        "smoke",
+        "security-review",
+        "ci-check",
+        "copilot-check",
+        "other",
+    }
+
+    lines = [line for line in fixture.read_text(encoding="utf-8").splitlines() if line.strip()]
+    if len(lines) < 3:
+        fail("Telemetry JSONL fixture must include at least 3 events")
+    seen_events: set[str] = set()
+    for idx, line in enumerate(lines, start=1):
+        parsed_event: Any = None
+        try:
+            parsed_event = json.loads(line)
+        except json.JSONDecodeError as exc:
+            fail(f"Invalid JSONL telemetry fixture line {idx}: {exc}")
+        event: dict[str, Any] = cast(dict[str, Any], parsed_event) if isinstance(parsed_event, dict) else {}
+        if not event:
+            fail(f"Telemetry fixture line {idx} must be a JSON object")
+        for key in ("schema_version", "event", "run_id", "timestamp"):
+            if not isinstance(event.get(key), str) or not event[key].strip():
+                fail(f"Telemetry fixture line {idx} missing non-empty {key!r}")
+        if event["schema_version"] != "telemetry-event-v0":
+            fail(f"Telemetry fixture line {idx} has wrong schema_version")
+        if event["event"] not in event_allowed:
+            fail(f"Telemetry fixture line {idx} has invalid event {event['event']!r}")
+        seen_events.add(event["event"])
+        if event["event"] == "phase_end":
+            if event.get("phase") not in phase_allowed or event.get("status") not in status_allowed:
+                fail(f"Telemetry phase_end line {idx} has invalid phase/status")
+        if event["event"] == "command":
+            if event.get("cmd_class") not in cmd_allowed:
+                fail(f"Telemetry command line {idx} has invalid cmd_class")
+            if not isinstance(event.get("exit_code"), int):
+                fail(f"Telemetry command line {idx} needs integer exit_code")
+        if event["event"] == "run_end" and event.get("outcome") not in outcome_allowed:
+            fail(f"Telemetry run_end line {idx} has invalid outcome")
+
+        forbidden_keys = {"prompt", "stdout", "stderr", "env", "hostname", "username", "home_path", "cwd"}
+        present_forbidden = forbidden_keys & set(event)
+        if present_forbidden:
+            fail(f"Telemetry fixture line {idx} contains forbidden raw/private keys: {sorted(present_forbidden)}")
+
+    for required_event in ("run_start", "command", "run_end"):
+        if required_event not in seen_events:
+            fail(f"Telemetry fixture missing required event: {required_event}")
+
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    required_summary_keys = {
+        "schema_version",
+        "generated_at",
+        "source",
+        "runs",
+        "machines",
+        "median_duration_ms",
+        "p90_duration_ms",
+        "validation_pass_rate",
+        "caveman_compliance_rate",
+        "copilot_available_rate",
+        "privacy_review",
+        "claim_scope",
+    }
+    missing = sorted(required_summary_keys - set(summary))
+    if missing:
+        fail(f"Telemetry summary missing required keys: {missing}")
+    if summary.get("schema_version") != "telemetry-summary-v0":
+        fail("Telemetry summary has wrong schema_version")
+    if not isinstance(summary.get("runs"), int) or summary["runs"] < 1:
+        fail("Telemetry summary runs must be a positive integer")
+    if not isinstance(summary.get("machines"), dict) or not summary["machines"]:
+        fail("Telemetry summary machines must be a non-empty object")
+    privacy = summary.get("privacy_review")
+    if not isinstance(privacy, dict):
+        fail("Telemetry summary privacy_review must be an object")
+    if privacy.get("raw_logs_included") is not False or privacy.get("contains_secrets") is not False:
+        fail("Telemetry summary must exclude raw logs and secrets")
+    if summary.get("claim_scope") == "public-claim-approved":
+        fail("Telemetry example must not claim public approval")
+
+
 def check_line_hygiene(root: Path) -> None:
     for path in root.rglob("*"):
         if not path.is_file() or ".git" in path.parts:
@@ -452,6 +598,7 @@ def main() -> int:
     check_outcome_scenarios(root)
     check_eval_result_template(root)
     check_eval_result_logs(root)
+    check_telemetry_artifacts(root)
     check_line_hygiene(root)
     print("end-to-end-loop skill validation passed")
     return 0

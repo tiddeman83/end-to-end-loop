@@ -406,6 +406,11 @@ Use `references/report-template.md` for larger tasks.
 - Read `references/backlog-and-copilot.md` when `backlog` or `github-copilot`
   options are selected, when CI/CD feedback must include Copilot findings, or when
   long prompts need CAVEMAN ULTRA context compression.
+- Read `references/local-telemetry.md` when local measurement, performance
+  evidence, phase/command timing, token/cost capture, CAVEMAN compliance metrics,
+  Copilot availability metrics, or telemetry research is in scope. Telemetry is
+  local-first and opt-in; default operation must not create network writes or
+  commit raw logs.
 - Read `references/phase-checklists.md` for concrete phase checklists.
 - Read `references/test-and-security.md` for side-effect, CI, smoke, and security
   gates.

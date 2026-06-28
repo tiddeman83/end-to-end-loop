@@ -123,5 +123,15 @@
     "query": "After CI passes, check gh copilot or GitHub Copilot review comments and process any must-fix feedback before delivery.",
     "should_trigger": true,
     "reason": "Copilot CI/CD feedback processing is an explicit delivery gate."
+  },
+  {
+    "query": "Add local telemetry so end-to-end-loop can measure phase timings, command durations, resource usage, and CAVEMAN compliance without uploading data.",
+    "should_trigger": true,
+    "reason": "Telemetry and performance measurement are new feature work requiring privacy-safe implementation and verification."
+  },
+  {
+    "query": "Explain what telemetry means in software observability, with no repo changes.",
+    "should_trigger": false,
+    "reason": "Explanation-only telemetry request should not trigger code-producing delivery workflow."
   }
 ]
