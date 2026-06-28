@@ -10,7 +10,8 @@
   "commands_or_evidence": [
     "Added scripts/test_telemetry_privacy.py as a stdlib-only local smoke test for telemetry aggregation and forbidden-key rejection.",
     "Updated references/local-telemetry.md, scripts/install.sh, and scripts/validate_skill.py so the helper is documented, packaged, and validated.",
-    "Verification commands are recorded in the sprint report and local validator output."
+    "Verification commands are recorded in the sprint report and local validator output.",
+    "GitHub Actions Validate skill run 28331217477 passed on commit ba70cb5."
   ],
   "acceptance_criteria": [
     {
@@ -33,7 +34,7 @@
   "deploy_policy_behavior": "not_applicable",
   "security_review": "pass",
   "delivery_classification": "repo-only",
-  "ci_status": "not_checked",
+  "ci_status": "green",
   "memory_read": "not_present",
   "memory_update": "updated",
   "learning_candidates": [
@@ -65,5 +66,5 @@
       }
     ]
   },
-  "notes": "Local privacy self-test slice; CI status checked after push."
+  "notes": "Local privacy self-test slice; GitHub Actions validation is green for the pushed branch tip."
 }
