@@ -92,7 +92,6 @@ def check_required_files(root: Path) -> None:
         "skills/grilling/SKILL.md",
         "skills/handoff/SKILL.md",
         "AGENTS.md",
-        ".hermes.md",
         ".github/workflows/validate.yml",
     ]
     for rel in required:
@@ -124,7 +123,6 @@ def check_policy_terms(root: Path) -> None:
         "explicit",
         "CI",
         "rollback",
-        "Hermes",
         "AGENTS.md",
         "self-learning",
         "memory",
@@ -382,7 +380,7 @@ EVAL_RESULT_REQUIRED_KEYS = {
 }
 
 EVAL_RESULT_ENUMS = {
-    "agent_or_tool": {"codex", "hermes", "claude-code", "cursor", "agents-md", "copilot", "other"},
+    "agent_or_tool": {"codex", "claude-code", "cursor", "agents-md", "copilot", "other"},
     "expected_trigger": {True, False, "planning_only"},
     "actual_trigger": {True, False, "planning_only"},
     "outcome": {"passed", "failed", "blocked", "partial"},
@@ -677,7 +675,7 @@ def check_line_hygiene(root: Path) -> None:
     for path in root.rglob("*"):
         if not path.is_file() or ".git" in path.parts:
             continue
-        if path.suffix not in {".md", ".py", ".yml", ".yaml", ".json"} and path.name not in {"SKILL.md", "AGENTS.md", ".hermes.md"}:
+        if path.suffix not in {".md", ".py", ".yml", ".yaml", ".json"} and path.name not in {"SKILL.md", "AGENTS.md"}:
             continue
         text = path.read_text(encoding="utf-8")
         for idx, line in enumerate(text.splitlines(), start=1):

@@ -138,7 +138,7 @@ Guardrail: it must not mark anything green without observed evidence.
 
 ### `adapter-builder`
 
-Produces target-specific installation/adaptation guidance for Codex, Hermes, Claude Code, Cursor, and AGENTS.md-style environments from `references/adapters.md`.
+Produces target-specific installation/adaptation guidance for Codex, Claude Code, Cursor, and AGENTS.md-style environments from `references/adapters.md`.
 
 ### `loop-reviewer`
 

@@ -1,6 +1,6 @@
 {
   "date": "2026-06-28",
-  "agent_or_tool": "hermes",
+  "agent_or_tool": "claude-code",
   "skill_version_or_commit": "local-recorder-slice",
   "scenario_id": "scenario-18",
   "prompt": "Maintainer sprint: implement local telemetry recorder slice for end-to-end-loop after local/privacy-safe telemetry spec.",

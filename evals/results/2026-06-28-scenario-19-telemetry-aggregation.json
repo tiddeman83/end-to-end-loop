@@ -1,6 +1,6 @@
 {
   "date": "2026-06-28",
-  "agent_or_tool": "hermes",
+  "agent_or_tool": "claude-code",
   "skill_version_or_commit": "telemetry-aggregation-slice",
   "scenario_id": "scenario-19",
   "prompt": "Maintainer sprint: implement local telemetry aggregation slice for end-to-end-loop with backlog and GitHub Copilot feedback gates.",

@@ -24,7 +24,7 @@ Goal: make CAVEMAN enforcement usable across tools.
 
 Work:
 
-- Define exact CAVEMAN adapters for Codex, Hermes, Claude Code, and Cursor.
+- Define exact CAVEMAN adapters for Codex, Claude Code, and Cursor.
 - Decide whether a "CAVEMAN exception" should fail release readiness.
 - Add examples of compliant and non-compliant execution reports.
 
@@ -84,7 +84,7 @@ Work:
 - Evals pass.
 - Paper polished.
 - Website live if approved.
-- Installation instructions tested for Codex, Hermes, Claude Code, Cursor, and AGENTS.md-only agents.
+- Installation instructions tested for Codex, Claude Code, Cursor, and AGENTS.md-only agents.
 
 ## Research questions
 

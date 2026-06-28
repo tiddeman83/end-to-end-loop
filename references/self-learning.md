@@ -76,7 +76,7 @@ Write one JSON object per meaningful run when repo writes are in scope.
   "schema_version": "1.0",
   "date": "YYYY-MM-DD",
   "run_id": "YYYY-MM-DD-HHMM-slug",
-  "agent_or_tool": "codex|hermes|claude-code|cursor|agents-md|copilot|other",
+  "agent_or_tool": "codex|claude-code|cursor|agents-md|copilot|other",
   "skill_version_or_commit": "<commit-or-version>",
   "repo": {
     "name": "<repo>",

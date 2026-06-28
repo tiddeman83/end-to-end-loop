@@ -6,9 +6,8 @@ description: "Run software and coding work through a disciplined delivery loop: 
 # End-to-End Loop
 
 Use this skill as the operating loop for software work that must reach a
-verified result. It is a portable core: follow it in Codex, Hermes, Claude Code,
-Cursor, AGENTS.md-compatible agents, or any coding tool with equivalent
-capabilities.
+verified result. It is a portable core: follow it in Codex, Claude Code, Cursor,
+AGENTS.md-compatible agents, or any coding tool with equivalent capabilities.
 
 The loop is a frame, not a cage. Scale ceremony to task risk and size, but keep
 the gates real: understand the task, plan it, execute through the required lane,
@@ -467,7 +466,7 @@ Use `references/report-template.md` for larger tasks.
 - Read `references/deploy-readiness.md` when a task requests live deploy,
   release readiness, hosting work, or custom-domain verification.
 - Read `references/adapters.md` when installing or adapting the skill for Codex,
-  Hermes, Claude Code, Cursor, or AGENTS.md-only agents.
+  Claude Code, Cursor, or AGENTS.md-only agents.
 - Read `references/evaluation.md` when evaluating trigger quality, output quality,
   or release readiness.
 - Read `references/self-learning.md` when maintaining per-repo memory, writing

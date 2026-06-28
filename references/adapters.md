@@ -34,7 +34,7 @@ end-to-end-loop/
 ```
 
 Development files (`development.md`, `memory.md`, `paper.md`, `.github/`,
-`.hermes.md`, `AGENTS.md`) belong in the repo, not
+`AGENTS.md`) belong in the repo, not
 necessarily in a minimal installed skill package. Installed copies should record
 or preserve their source repo and commit when possible so agents can run a
 freshness check before relying on stale instructions.
@@ -52,50 +52,6 @@ freshness check before relying on stale instructions.
 - Install or update CAVEMAN ULTRA/CODE/REVIEW companion skills before EXECUTE and
   ITERATE when Codex skill install/update is available. If install/update is
   blocked, stop before code changes and ask for a user-approved exception.
-
-## Hermes Agent
-
-Hermes supports the Agent Skills standard and uses `~/.hermes/skills/` as the
-primary skill directory. It can also scan external skill directories configured in
-`~/.hermes/config.yaml`.
-
-Recommended setup:
-
-```yaml
-skills:
-  write_approval: true
-  external_dirs:
-    - ~/.agents/skills
-    - /path/to/end-to-end-loop-parent
-```
-
-Notes:
-
-- Hermes loads skills progressively with `skills_list()`, `skill_view(name)`, and
-  `skill_view(name, path)`.
-- Hermes supports `SKILL.md` frontmatter fields beyond the open standard, including
-  `version`, `platforms`, `metadata.hermes`, required env vars, and toolset
-  conditions. Do not require those fields in the universal core.
-- For this repo, give Hermes project context through `.hermes.md` and `AGENTS.md`.
-- Turn on `skills.write_approval` before allowing Hermes to modify this skill.
-- Install/update `end-to-end-loop` and companion CAVEMAN skills under the active
-  profile only, normally `~/.hermes/skills/software-development/`. Do not edit
-  another profile's skills unless explicitly directed.
-- Before use, load `end-to-end-loop`, `caveman-ultra`, `caveman-code`, and a
-  reviewer/Cavecrew skill when available. If missing, use Hermes skill management
-  or the configured source repo to install/update them; otherwise report
-  `missing-blocked` before code changes.
-- For repo-backed installs, check freshness with `git fetch origin --prune` and a
-  compare against the configured upstream branch. Validate in a temporary folder
-  named exactly `end-to-end-loop`, sync the installed copy only after validation,
-  then start a fresh session or reload skills.
-- Keep Hermes-specific product context in `.hermes.md` and generic project
-  instructions in `AGENTS.md`; private operations workflows should live outside
-  this public-facing product package.
-- Hermes persistent memory may complement repo memory, but repo memory should stay
-  explicit, reviewable, compact, and privacy-safe. Prefer
-  `.end-to-end-loop/memory.md` for sanitized repo facts and
-  `.end-to-end-loop/memory.local.md` for private local facts.
 
 ## Claude Code
 
@@ -170,19 +126,18 @@ rm -rf "$tmp/end-to-end-loop/.git"
 python3 "$tmp/end-to-end-loop/scripts/validate_skill.py" "$tmp/end-to-end-loop"
 ```
 
-### Hermes active-profile sync
+### Installed-copy sync
 
 ```bash
-install_root="$HOME/.hermes/skills/software-development"
+install_root="$HOME/.agents/skills"
 mkdir -p "$install_root"
 # after validation only:
 rsync -a --delete --exclude .git /path/to/end-to-end-loop/ "$install_root/end-to-end-loop/"
 ```
 
 If `rsync` is missing, use a small Python `shutil.copytree(..., dirs_exist_ok=True)`
-after deleting the old installed copy. Then start a fresh Hermes session or reload
-skills. Use `skills_list()`/`skill_view()` to verify `end-to-end-loop`,
-`caveman-ultra`, `caveman-code`, and `cavecrew` or a configured reviewer lane.
+after deleting the old installed copy. Then start a fresh session or reload skills,
+and verify `end-to-end-loop` and any configured CAVEMAN companion lane are present.
 
 ### CAVEMAN companion check
 
@@ -218,8 +173,8 @@ different names. Acceptable mappings:
 
 | Required role | Preferred name | Adapter examples |
 | --- | --- | --- |
-| Execution orchestration | CAVEMAN ULTRA | caveman-ultra, cavecrew-builder, configured Hermes engineering agent |
-| Code modification | CAVEMAN CODE | caveman-code, code-focused CAVEMAN agent, configured Hermes implementation agent |
+| Execution orchestration | CAVEMAN ULTRA | caveman-ultra, cavecrew-builder, configured engineering agent |
+| Code modification | CAVEMAN CODE | caveman-code, code-focused CAVEMAN agent, configured implementation agent |
 | Review compression | CAVEMAN REVIEW | caveman-review, code-review with caveman output style |
 
 If no mapping exists, the run is blocked before code changes unless the user grants
