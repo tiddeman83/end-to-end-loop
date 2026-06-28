@@ -157,7 +157,7 @@ Acceptance:
 
 Deliverables:
 
-- aggregation script from JSONL -> shareable summary;
+- `scripts/telemetry_aggregate.py` from JSONL -> shareable summary;
 - release-readiness metric section;
 - example telemetry summary from local fixture, not a broad claim.
 

@@ -27,6 +27,7 @@ The skill turns delivery into a lightweight gate sequence:
 - Deploy safety: live deploy is never implied by code completion.
 - Sanitized learning: durable memory and result logs must be compact and safe to commit.
 - Product boundary: public docs describe the delivery-loop tool, not private office operations.
+- Local telemetry: measurement starts as opt-in local JSONL plus sanitized aggregate summaries; OpenTelemetry/OTLP remains an optional adapter, not the default data path.
 
 ## Evaluation strategy
 
@@ -52,3 +53,7 @@ Product-facing helper agents may improve adoption if kept functional and bounded
 - `deploy-readiness-checker` prepares deploy-readiness reports.
 
 Mission Mode should classify work by reasoning level: Level 0 mechanical/cheap checks, Level 1 standard implementation support, Level 2 deep review/safety/architecture, and Level 3 human approval for merge/release/deploy/admin/secrets/public claims. These helpers should not become an internal office simulation or a release-approval authority.
+
+## Local telemetry research track
+
+The telemetry feature supports release-readiness evidence by measuring local runs without turning raw logs into memory. The current design keeps raw JSONL local by default and shares only aggregate summaries with explicit privacy review fields. This enables timing, validation-pass, CAVEMAN-compliance, and Copilot-availability evidence while avoiding full prompts, stdout/stderr, env vars, private paths, machine identity, and public overclaims from small samples.

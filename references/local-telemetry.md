@@ -108,6 +108,14 @@ local telemetry files remain ignored by default and should not be committed.
 ## Shareable telemetry summary schema v0
 
 Use this for release evidence or public-safe reports. It must not include raw event lines.
+`scripts/telemetry_aggregate.py` is the opt-in stdlib helper for this slice: it reads an explicitly supplied local JSONL file, refuses forbidden raw/private keys, emits aggregate JSON only, and performs no default network writes.
+
+Example:
+
+```bash
+python3 scripts/telemetry_aggregate.py evals/telemetry-events.fixture.jsonl \
+  --source fixture --claim-scope fixture-only
+```
 
 Required fields:
 
@@ -145,6 +153,7 @@ Rules:
 
 - [ ] `.gitignore` excludes `.end-to-end-loop/telemetry.local.jsonl` and local/private result logs.
 - [ ] `scripts/validate_skill.py` validates telemetry fixtures and summaries.
+- [ ] `scripts/telemetry_aggregate.py` deterministically converts the fixture JSONL into the shareable summary shape.
 - [ ] JSONL fixture parses one JSON object per line.
 - [ ] Summary fixture has `raw_logs_included: false` and no private path/host/user fields.
 - [ ] Security review confirms no prompts, secrets, env vars, stdout/stderr, or private paths are collected by default.

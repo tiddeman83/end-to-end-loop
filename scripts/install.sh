@@ -9,10 +9,13 @@ SKILL_DIR="$HOME/.agents/skills/end-to-end-loop"
 
 echo "Installing end-to-end-loop skill to $SKILL_DIR ..."
 
-mkdir -p "$SKILL_DIR/references" "$SKILL_DIR/agents"
+mkdir -p "$SKILL_DIR/references" "$SKILL_DIR/agents" "$SKILL_DIR/scripts"
 
 cp "$REPO_ROOT/SKILL.md" "$SKILL_DIR/SKILL.md"
 cp "$REPO_ROOT/references/"*.md "$SKILL_DIR/references/"
 cp "$REPO_ROOT/agents/openai.yaml" "$SKILL_DIR/agents/openai.yaml"
+cp "$REPO_ROOT/scripts/validate_skill.py" "$SKILL_DIR/scripts/validate_skill.py"
+cp "$REPO_ROOT/scripts/telemetry_record.py" "$SKILL_DIR/scripts/telemetry_record.py"
+cp "$REPO_ROOT/scripts/telemetry_aggregate.py" "$SKILL_DIR/scripts/telemetry_aggregate.py"
 
 echo "Done. Reload your agent session to pick up changes."

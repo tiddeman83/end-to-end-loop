@@ -73,6 +73,7 @@ def check_required_files(root: Path) -> None:
         "references/local-telemetry.md",
         "evals/telemetry-events.fixture.jsonl",
         "evals/telemetry-summary.example.json",
+        "scripts/telemetry_aggregate.py",
         "scripts/telemetry_record.py",
         "scripts/install.sh",
         "scripts/validate_skill.py",
@@ -442,6 +443,7 @@ def check_telemetry_artifacts(root: Path) -> None:
     reference = root / "references/local-telemetry.md"
     fixture = root / "evals/telemetry-events.fixture.jsonl"
     summary_path = root / "evals/telemetry-summary.example.json"
+    aggregator = root / "scripts/telemetry_aggregate.py"
     recorder = root / "scripts/telemetry_record.py"
     gitignore = root / ".gitignore"
 
@@ -457,6 +459,7 @@ def check_telemetry_artifacts(root: Path) -> None:
         "privacy_review",
         "telemetry-summary-v0",
         "telemetry-event-v0",
+        "scripts/telemetry_aggregate.py",
     ]
     for term in required_terms:
         if term not in text:
@@ -475,6 +478,21 @@ def check_telemetry_artifacts(root: Path) -> None:
     for term in required_recorder_terms:
         if term not in recorder_text:
             fail(f"Telemetry recorder missing required privacy/recording term: {term}")
+
+    aggregator_text = aggregator.read_text(encoding="utf-8")
+    required_aggregator_terms = [
+        "telemetry-summary-v0",
+        "FORBIDDEN_EVENT_KEYS",
+        "raw/private keys",
+        "public-claim-approved requires human approval",
+        "never performs network writes",
+        "validation_pass_rate",
+        "caveman_compliance_rate",
+        "copilot_available_rate",
+    ]
+    for term in required_aggregator_terms:
+        if term not in aggregator_text:
+            fail(f"Telemetry aggregator missing required privacy/summary term: {term}")
 
     if ".end-to-end-loop/telemetry.local.jsonl" not in gitignore.read_text(encoding="utf-8"):
         fail(".gitignore must exclude .end-to-end-loop/telemetry.local.jsonl")
@@ -529,7 +547,7 @@ def check_telemetry_artifacts(root: Path) -> None:
         if event["event"] == "run_end" and event.get("outcome") not in outcome_allowed:
             fail(f"Telemetry run_end line {idx} has invalid outcome")
 
-        forbidden_keys = {"prompt", "stdout", "stderr", "env", "hostname", "username", "home_path", "cwd"}
+        forbidden_keys = {"prompt", "stdout", "stderr", "env", "hostname", "username", "home_path", "cwd", "command", "args"}
         present_forbidden = forbidden_keys & set(event)
         if present_forbidden:
             fail(f"Telemetry fixture line {idx} contains forbidden raw/private keys: {sorted(present_forbidden)}")
@@ -569,6 +587,24 @@ def check_telemetry_artifacts(root: Path) -> None:
         fail("Telemetry summary must exclude raw logs and secrets")
     if summary.get("claim_scope") == "public-claim-approved":
         fail("Telemetry example must not claim public approval")
+    expected_fixture_fields = {
+        "source": "fixture",
+        "runs": 1,
+        "median_duration_ms": 300000,
+        "p90_duration_ms": None,
+        "validation_pass_rate": 1.0,
+        "caveman_compliance_rate": 1.0,
+        "copilot_available_rate": 0.0,
+        "claim_scope": "fixture-only",
+    }
+    for key, expected in expected_fixture_fields.items():
+        if summary.get(key) != expected:
+            fail(f"Telemetry summary fixture field {key!r} should be {expected!r}; got {summary.get(key)!r}")
+
+    install_text = (root / "scripts/install.sh").read_text(encoding="utf-8")
+    for rel in ("scripts/validate_skill.py", "scripts/telemetry_record.py", "scripts/telemetry_aggregate.py"):
+        if rel not in install_text:
+            fail(f"Install script must copy documented helper: {rel}")
 
 
 def check_line_hygiene(root: Path) -> None:

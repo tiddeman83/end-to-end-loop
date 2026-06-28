@@ -49,3 +49,21 @@ Validation plan:
 - Validate from a temporary folder named `end-to-end-loop`.
 - Run JSON validation through `scripts/validate_skill.py`.
 - Run `git diff --check`.
+
+## 2026-06-28 — Local telemetry aggregation slice
+
+Goal: advance the telemetry research feature from recorder-only evidence to deterministic, shareable aggregation without weakening privacy.
+
+Changes:
+
+- Added `scripts/telemetry_aggregate.py`, a stdlib-only helper that reads an explicitly supplied local JSONL file and emits aggregate `telemetry-summary-v0` JSON.
+- Kept aggregation local-first and privacy-safe: forbidden raw/private event keys include prompts, stdout/stderr, env, cwd, host/user/home identity, raw commands, and raw args.
+- Extended the telemetry fixture with a CAVEMAN compliance quality gate and updated the example summary as fixture-only evidence.
+- Updated validation/install coverage so documented helper scripts are packaged and validator checks Copilot-identified privacy/install gaps.
+
+Validation plan:
+
+- `python3 -m py_compile scripts/validate_skill.py scripts/telemetry_record.py scripts/telemetry_aggregate.py`.
+- `python3 scripts/telemetry_aggregate.py evals/telemetry-events.fixture.jsonl --source fixture --claim-scope fixture-only`.
+- Validate from a temporary folder named `end-to-end-loop`.
+- `git diff --check`.

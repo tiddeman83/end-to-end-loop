@@ -18,6 +18,7 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 - FACT Optional public helper agents, if added, should live under the Mission Mode product layer with functional names, narrow scopes, explicit reasoning levels, cheaper/standard/high-reasoning routing, and human approval gates for merge/release/deploy/admin/secrets/public claims.
 - FACT The loop uses lean/standard/deep operating modes and level_0..level_3 complexity routing to minimize tokens, wall time, and model cost without weakening evidence or approval gates.
 - FACT Repo-backed skill copies should check source freshness/self-update status before maintained repo work when feasible.
+- FACT Local telemetry is opt-in local JSONL plus sanitized aggregation; recorder/aggregator must not store prompts, raw output, env, cwd, host/user/home identity, raw commands, or raw args by default.
 
 ## Risks / avoid
 
@@ -28,3 +29,4 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 ## Next
 
 - NEXT Decide whether to implement Mission Mode as packaged optional public helper agents: mission-planner, loop-verifier, loop-reporter, adapter-builder, loop-reviewer, loop-eval-runner, deploy-readiness-checker.
+- NEXT Telemetry follow-up after aggregation: define release-readiness metric language and keep public performance claims behind human approval plus multi-run evidence.

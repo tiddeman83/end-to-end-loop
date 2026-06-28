@@ -1,6 +1,6 @@
 {
   "schema_version": "telemetry-summary-v0",
-  "generated_at": "2026-06-28T14:10:00Z",
+  "generated_at": "2026-06-28T16:03:18Z",
   "source": "fixture",
   "runs": 1,
   "machines": {
@@ -15,9 +15,9 @@
     "raw_logs_included": false,
     "contains_secrets": false,
     "notes": [
-      "fixture-only sample",
       "raw local telemetry is not included",
-      "not a public performance claim"
+      "fixture-only sample",
+      "small sample; not a public performance claim"
     ]
   },
   "claim_scope": "fixture-only"
