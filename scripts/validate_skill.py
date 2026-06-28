@@ -66,7 +66,7 @@ def check_version_file(root: Path) -> None:
     version = version_path.read_text(encoding="utf-8").strip() if version_path.is_file() else ""
     if not version:
         fail("VERSION must be present and non-empty")
-    if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.]+)?(?:\+[A-Za-z0-9.]+)?", version):
+    if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.-]+)?(?:\+[A-Za-z0-9.-]+)?", version):
         fail(f"VERSION should be semver-like; got {version!r}")
 
 def check_required_files(root: Path) -> None:

@@ -231,8 +231,9 @@ Do:
   `lean`, `standard`, or `deep`; record the selected skill settings/goals.
 - If goals, scope, dependencies, or verification layers are vague, enter
   `grilling` before PLAN and resolve one decision at a time.
-- Ask only material questions that cannot be safely inferred. Prefer one grouped
-  question set over drip-fed clarification.
+- Ask only material questions that cannot be safely inferred. Outside `grilling`,
+  prefer one grouped question set over drip-fed clarification. Inside `grilling`,
+  ask exactly one question at a time and wait for feedback.
 - Record assumptions and risks.
 - If present, read `.end-to-end-loop/memory.md` and
   `.end-to-end-loop/memory.local.md` for repo-specific facts, commands,
