@@ -136,3 +136,21 @@ Validation plan:
 - Run telemetry privacy smoke test.
 - Run install smoke test against a temporary home.
 - Run `git diff --check`.
+
+## 2026-06-28 — Handoff subskill slice
+
+Goal: package a compact continuation handoff mode as a subskill of the end-to-end loop.
+
+Changes:
+
+- Added `skills/handoff/SKILL.md` with user-provided frontmatter and behavior.
+- Handoff writes a redacted document to the OS temporary directory, not the workspace.
+- Handoff suggests skills for the next agent and references existing artifacts instead of duplicating PRDs, plans, ADRs, issues, commits, or diffs.
+- Validator now accepts supported subskill frontmatter fields such as `argument-hint` and `disable-model-invocation`.
+
+Validation plan:
+
+- Validate from a temporary folder named `end-to-end-loop`.
+- Run telemetry privacy smoke test.
+- Run install smoke test against a temporary home.
+- Run `git diff --check`.

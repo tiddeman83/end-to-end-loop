@@ -90,6 +90,7 @@ def check_required_files(root: Path) -> None:
         "scripts/validate_skill.py",
         "agents/openai.yaml",
         "skills/grilling/SKILL.md",
+        "skills/handoff/SKILL.md",
         "AGENTS.md",
         ".hermes.md",
         ".github/workflows/validate.yml",
@@ -154,10 +155,10 @@ def check_subskills(root: Path) -> None:
         fail("Missing skills/ directory for packaged subskills")
     for skill_path in sorted(skills_dir.glob("*/SKILL.md")):
         data, body = parse_frontmatter(skill_path.read_text(encoding="utf-8"))
-        allowed = {"name", "description"}
+        allowed = {"name", "description", "argument-hint", "disable-model-invocation"}
         extras = set(data) - allowed
         if extras:
-            fail(f"Only name and description are allowed in {skill_path.relative_to(root)} frontmatter: {sorted(extras)}")
+            fail(f"Unsupported frontmatter fields in {skill_path.relative_to(root)}: {sorted(extras)}")
         name = data.get("name", "")
         description = data.get("description", "")
         if not NAME_RE.fullmatch(name):
@@ -206,6 +207,7 @@ def check_trigger_cases(root: Path) -> None:
     telemetry_cases = 0
     grilling_cases = 0
     codex_reviewer_cases = 0
+    handoff_cases = 0
 
     for idx, case in enumerate(cases, start=1):
         if not isinstance(case, dict):
@@ -251,6 +253,8 @@ def check_trigger_cases(root: Path) -> None:
             grilling_cases += 1
         if "codex" in text and "review" in text:
             codex_reviewer_cases += 1
+        if any(term in text for term in ("handoff", "hand off", "resume later", "another agent")):
+            handoff_cases += 1
 
     if positives < 8:
         fail(f"Trigger evals need at least 8 should-trigger positives; found {positives}")
@@ -272,6 +276,8 @@ def check_trigger_cases(root: Path) -> None:
         fail(f"Trigger evals need at least 2 grilling/stress-test cases; found {grilling_cases}")
     if codex_reviewer_cases < 1:
         fail(f"Trigger evals need at least 1 Codex reviewer case; found {codex_reviewer_cases}")
+    if handoff_cases < 2:
+        fail(f"Trigger evals need at least 2 handoff cases; found {handoff_cases}")
 
 
 def check_outcome_scenarios(root: Path) -> None:

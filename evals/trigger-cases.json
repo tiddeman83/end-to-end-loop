@@ -203,5 +203,15 @@
     "query": "Use the end-to-end-loop and show me the skill version before you start.",
     "should_trigger": true,
     "reason": "Every end-to-end-loop run must present the active skill version."
+  },
+  {
+    "query": "Create a handoff for the next agent so it can resume this branch without rereading the whole chat.",
+    "should_trigger": true,
+    "reason": "Handoff request should invoke the handoff subskill and create a redacted temp-dir continuation document."
+  },
+  {
+    "query": "Explain what a project handoff is, no files or continuation document needed.",
+    "should_trigger": false,
+    "reason": "Explanation-only near miss should not create a handoff document."
   }
 ]

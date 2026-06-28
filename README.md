@@ -44,6 +44,7 @@ references/self-learning.md      # per-repo compact memory/result-log rules
 references/report-template.md    # delivery report template
 references/mission-mode.md       # optional helper-agent/model-routing layer
 skills/grilling/SKILL.md          # packaged subskill for one-question-at-a-time plan grilling
+skills/handoff/SKILL.md           # packaged subskill for redacted temp-dir continuation handoffs
 scripts/validate_skill.py        # dependency-free repo validator
 .github/workflows/validate.yml   # CI validation
 AGENTS.md                        # general coding-agent project instructions
@@ -75,7 +76,7 @@ For generic Agent Skills-compatible tools, install the full package with:
 bash scripts/install.sh
 ```
 
-The script installs `SKILL.md`, `VERSION`, `references/*.md`, `agents/openai.yaml`, helper scripts, and packaged subskills such as `skills/grilling/SKILL.md` under `~/.agents/skills/end-to-end-loop/`.
+The script installs `SKILL.md`, `VERSION`, `references/*.md`, `agents/openai.yaml`, helper scripts, and packaged subskills such as `skills/grilling/SKILL.md` and `skills/handoff/SKILL.md` under `~/.agents/skills/end-to-end-loop/`.
 
 For a local Hermes profile, copy this repository or the skill folder under:
 
@@ -152,7 +153,7 @@ Release readiness depends on more than local validation. The next release train 
 
 Current branch baseline:
 
-- `evals/trigger-cases.json` contains trigger cases for delivery-loop, deploy, backlog/Copilot, telemetry, and grilling/stress-test behavior.
+- `evals/trigger-cases.json` contains trigger cases for delivery-loop, deploy, backlog/Copilot, telemetry, grilling/stress-test, and handoff behavior.
 - `evals/outcome-scenarios.md` defines eight manual outcome scenarios covering bugfix, feature, release, deploy, CAVEMAN, planning-only, and scheduled unattended maintenance paths.
 - `evals/result-log-template.json` provides a structured template for recording scenario results with evidence, acceptance criteria, delivery classification, CI, security, CAVEMAN, and deploy-policy status.
 - `evals/results/` contains filled scenario-result logs and sanitized examples for release-readiness evaluation.

@@ -98,6 +98,7 @@ example.
 | `backlog` | user supplies or asks to build a backlog before implementation | run BACKLOG before PLAN; do not start implementation until dependencies, feature interactions, ordering, complexity, model routing, and acceptance slices are explicit |
 | `github-copilot` | GitHub repo work with CI/CD, PRs, or user-requested Copilot feedback | collect Copilot feedback where authenticated/available and feed it into VERIFY/TEST/ITERATE before claiming CI/CD or PR readiness |
 | `grilling` | user asks to grill, stress-test, interrogate, or poke holes in a plan/design before building; or feature/user-story scope or verification is not crisp enough | use `skills/grilling/SKILL.md`; ask exactly one question at a time with a recommended answer, define goals and verification layers precisely, and inspect codebase instead of asking when the repo can answer |
+| `handoff` | user asks to hand off, compact, resume later, or prepare another agent/session to continue | use `skills/handoff/SKILL.md`; write a redacted temporary handoff document with suggested skills and references to existing artifacts instead of duplicating them |
 
 During BACKLOG or PLAN classify each workstream:
 

@@ -25,6 +25,8 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 
 - FACT Every end-to-end-loop run should present the active skill version from `VERSION`; first target-project runs should discover production runtime and local development environments, then confirm them through grilling before build.
 
+- FACT `skills/handoff/SKILL.md` is a packaged subskill for redacted continuation handoffs: write the handoff document to the OS temp directory, include suggested skills, and reference existing artifacts instead of duplicating them.
+
 ## Risks / avoid
 
 - RISK Historical/private result logs can leak product-irrelevant operational context if committed as examples.
