@@ -209,3 +209,21 @@ Validation plan:
 - `python3 scripts/validate_skill.py .` from a folder named `end-to-end-loop`.
 - `python3 -m py_compile scripts/*.py` and `python3 scripts/test_telemetry_privacy.py`.
 - `git diff --check`.
+
+
+## 2026-06-28 — Deep review/improvement option
+
+Goal: make integral skill and documentation reviews first-class so broad audit requests produce ranked evidence-backed findings rather than subjective rewrites.
+
+Changes:
+
+- Added a `review-improve` operating option to `SKILL.md` for deep documentation/skill audits.
+- Added phase-checklist and report-template coverage for reviewed surfaces, ranked findings, applied changes, deferred follow-ups, and validation evidence.
+- Updated README positioning and paper rationale to describe review-improve as a maintenance discipline.
+- Fixed stale `CAVEMAN/Cavekit` terminology in the rationale.
+
+Validation plan:
+
+- `python3 scripts/validate_skill.py .`.
+- `python3 scripts/test_telemetry_privacy.py`.
+- `git diff --check`.

@@ -10,9 +10,8 @@ verified result. It is a portable core: follow it in Codex, Claude Code, Cursor,
 AGENTS.md-compatible agents, or any coding tool with equivalent capabilities.
 
 The loop is a frame, not a cage. Scale ceremony to task risk and size, but keep
-the gates real: understand the task, plan it, execute through the required lane,
-verify observed behavior, test and review safety, deliver only within approved
-scope, then report clearly.
+the gates real: understand, plan, execute through the required lane, verify, test,
+deliver only within approved scope, then report clearly.
 
 ## Non-Negotiables
 
@@ -97,7 +96,18 @@ example.
 | `backlog` | user supplies or asks to build a backlog before implementation | run BACKLOG before PLAN; do not start implementation until dependencies, feature interactions, ordering, complexity, model routing, and acceptance slices are explicit |
 | `github-copilot` | GitHub repo work with CI/CD, PRs, or user-requested Copilot feedback | collect Copilot feedback where authenticated/available and feed it into VERIFY/TEST/ITERATE before claiming CI/CD or PR readiness |
 | `grilling` | user asks to grill, stress-test, interrogate, or poke holes in a plan/design before building; or feature/user-story scope or verification is not crisp enough | use `skills/grilling/SKILL.md`; ask exactly one question at a time with a recommended answer, define goals and verification layers precisely, and inspect codebase instead of asking when the repo can answer |
+| `review-improve` | user asks for a deep/integral review, documentation audit, skill audit, gap analysis, or improvement proposal for this skill or another repo | run a review-first pass before editing: inventory surfaces, compare cross-document claims, identify contradictions/staleness/aspirational language, rank findings by risk/value, then implement only scoped, evidence-backed improvements |
 | `handoff` | user asks to hand off, compact, resume later, or prepare another agent/session to continue | use `skills/handoff/SKILL.md`; write a redacted temporary handoff document with suggested skills and references to existing artifacts instead of duplicating them |
+
+### Review-Improve Option
+
+Use `review-improve` for deep documentation/skill audits. Inventory production
+skill, references, subskills, README, evals, validators, install scripts, release
+notes, and memory/research docs. Compare cross-document claims for names,
+triggers, required files, version/status, gates, examples, stale/duplicated or
+aspirational claims, private/internal details, and validator gaps. Rank findings,
+make scoped evidence-backed improvements, report deferred follow-ups, and update
+`development.md`, `memory.md`, and `paper.md` when decisions/rationale change.
 
 During BACKLOG or PLAN classify each workstream:
 
@@ -227,8 +237,9 @@ Do:
 - Identify side effects: filesystem writes, network calls, external services,
   installs, skill installs/updates, repo freshness checks, Copilot/GitHub API
   reads, secrets, CI, deploy, data changes, destructive operations.
-- Decide whether operating options apply: `backlog`, `github-copilot`, `grilling`,
-  `lean`, `standard`, or `deep`; record the selected skill settings/goals.
+- Decide whether operating options apply: `backlog`, `github-copilot`,
+  `grilling`, `review-improve`, `lean`, `standard`, or `deep`; record the
+  selected skill settings/goals.
 - If goals, scope, dependencies, or verification layers are vague, enter
   `grilling` before PLAN and resolve one decision at a time.
 - Ask only material questions that cannot be safely inferred. Outside `grilling`,
@@ -276,8 +287,8 @@ Goal: produce a concrete, verifiable path.
 Do:
 
 - Choose operating mode/options (`lean`, `standard`, `deep`, `backlog`,
-  `github-copilot`, `grilling`) and classify complexity (`level_0`..`level_3`) for each
-  workstream or backlog slice.
+  `github-copilot`, `grilling`, `review-improve`) and classify complexity
+  (`level_0`..`level_3`) for each workstream or backlog slice.
 - Route work to the cheapest adequate execution path: deterministic tools/scripts
   for mechanical checks, cheap/fast models for low-risk summaries or scans,
   standard coding models for bounded implementation, and high-reasoning models or
@@ -424,6 +435,8 @@ Report:
   compression status after prompt evolution.
 - Backlog output when used: dependency map, interference findings, ordered slices,
   first batch, and changed ordering rationale.
+- Review-improve output when used: reviewed surfaces, ranked findings, changes
+  made, deferred follow-ups, and validation evidence.
 - Copilot feedback status when `github-copilot` applies: source, findings processed,
   false positives, blockers/unavailability, or user waiver.
 - CAVEMAN lane used or approved exception.

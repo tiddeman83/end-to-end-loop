@@ -21,6 +21,7 @@ with a word on why. This closes the loop back to DISCOVER/PLAN.>
 - Mode/options: <lean|standard|deep + backlog? + github-copilot?>
 - Complexity/model routing: <level_0..level_3 per workstream and chosen route>
 - Backlog: <dependency/interference/order summary if used, or not selected>
+- Review-improve: <reviewed surfaces + ranked findings + changes/deferred follow-ups if used>
 - Copilot feedback: <collected + processed / unavailable + blocker / waived; include must-fix status>
 - Smoke tests: <what was exercised, result - pass/fail>
 - CI: <workflow/check/local equivalent, result, or why not applicable>
