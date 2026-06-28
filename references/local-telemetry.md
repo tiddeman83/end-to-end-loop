@@ -8,7 +8,7 @@ Telemetry is a research and evidence feature, not memory. Keep raw telemetry loc
 
 | Field | Value |
 |---|---|
-| owner | DevBoss / end-to-end-loop maintainer |
+| owner | end-to-end-loop maintainer |
 | lane | New feature: telemetry research and measurement |
 | output | Local-first telemetry schema, fixtures, validation, and future recorder/aggregation plan |
 | acceptance | Opt-in/local-only rules documented; fixture and summary validate; raw local logs excluded from commits; no default network writes |

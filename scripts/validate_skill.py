@@ -69,13 +69,14 @@ def check_required_files(root: Path) -> None:
         "references/evaluation.md",
         "references/self-learning.md",
         "references/report-template.md",
+        "references/mission-mode.md",
         "references/local-telemetry.md",
         "evals/telemetry-events.fixture.jsonl",
         "evals/telemetry-summary.example.json",
         "scripts/telemetry_record.py",
+        "scripts/install.sh",
         "scripts/validate_skill.py",
-        "handoff/hermes-devboss-brief.md",
-        "handoff/hermes-market-research-prompt.md",
+        "agents/openai.yaml",
         "AGENTS.md",
         ".hermes.md",
         ".github/workflows/validate.yml",
@@ -100,8 +101,9 @@ def check_policy_terms(root: Path) -> None:
     phase = (root / "references/phase-checklists.md").read_text(encoding="utf-8")
     adapters = (root / "references/adapters.md").read_text(encoding="utf-8")
     self_learning = (root / "references/self-learning.md").read_text(encoding="utf-8")
+    mission_mode = (root / "references/mission-mode.md").read_text(encoding="utf-8")
     local_telemetry = (root / "references/local-telemetry.md").read_text(encoding="utf-8")
-    combined = "\n".join([skill, safety, phase, adapters, self_learning, local_telemetry])
+    combined = "\n".join([skill, safety, phase, adapters, self_learning, mission_mode, local_telemetry])
     required_terms = [
         "CAVEMAN",
         "live deploy",
@@ -117,6 +119,7 @@ def check_policy_terms(root: Path) -> None:
         "backlog",
         "Copilot",
         "model routing",
+        "Mission Mode",
         "telemetry",
         "local-first",
     ]
@@ -233,7 +236,7 @@ def check_outcome_scenarios(root: Path) -> None:
         "live-deploy": "live-deploy policy coverage",
         "repo-only": "repo-only delivery coverage",
         "prep-only": "prep-only delivery coverage",
-        "dev-boss.nl": "DevBoss/Firebase site coverage",
+        "hosting": "generic hosting/site readiness coverage",
         "git diff --check": "diff hygiene verification coverage",
         "JSON validation": "structured-data validation coverage",
     }

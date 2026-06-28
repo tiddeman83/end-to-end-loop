@@ -415,7 +415,7 @@ Use `references/report-template.md` for larger tasks.
 - Read `references/test-and-security.md` for side-effect, CI, smoke, and security
   gates.
 - Read `references/deploy-readiness.md` when a task requests live deploy,
-  release readiness, Firebase Hosting work, or dev-boss.nl verification.
+  release readiness, hosting work, or custom-domain verification.
 - Read `references/adapters.md` when installing or adapting the skill for Codex,
   Hermes, Claude Code, Cursor, or AGENTS.md-only agents.
 - Read `references/evaluation.md` when evaluating trigger quality, output quality,
@@ -432,8 +432,8 @@ When improving this skill itself, update:
 - `development.md` for decisions and iteration results.
 - `memory.md` for durable user preferences and settled decisions.
 - `paper.md` for research findings and shareable rationale.
-- Handoff files under `handoff/` when Hermes or DevBoss operating instructions
-  change.
+- Adapter handoff files under `handoff/` when product operating instructions
+  change and those files exist in the package.
 - `references/self-learning.md`, result-log templates, and validators when memory
   behavior changes.
 - `references/backlog-and-copilot.md`, trigger evals, and report/checklist templates

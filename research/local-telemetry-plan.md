@@ -199,7 +199,7 @@ No-go boundaries:
 
 ## Recommended next action
 
-Add a planned feature card to the DevBoss release sprint:
+Add a planned feature card to the release sprint:
 
 1. `telemetry-spec` first;
 2. `local-recorder` second;

@@ -3,7 +3,7 @@
   "agent_or_tool": "hermes",
   "skill_version_or_commit": "13214f2",
   "scenario_id": "scenario-17",
-  "prompt": "DevBoss cron sprint: mature end-to-end-loop new features, prioritizing local telemetry spec/schema with backlog and GitHub Copilot options.",
+  "prompt": "Maintainer sprint: mature end-to-end-loop new features, prioritizing local telemetry spec/schema with backlog and GitHub Copilot options.",
   "expected_trigger": true,
   "actual_trigger": true,
   "outcome": "passed",

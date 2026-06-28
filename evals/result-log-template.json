@@ -42,5 +42,22 @@
     "summary": "<summary or not available>",
     "items": []
   },
-  "notes": "<short notes>"
+  "notes": "<short notes>",
+  "optimization_metrics": {
+    "token_budget_policy": "<how context/tokens were minimized or not applicable>",
+    "estimated_or_measured_tokens": "<number, estimate, unavailable, or not_applicable>",
+    "wall_time_seconds": "<number, unavailable, or not_applicable>",
+    "tool_call_count": "<number, unavailable, or not_applicable>",
+    "model_routing_decisions": [
+      {
+        "task": "<subtask>",
+        "reasoning_level": "level_0|level_1|level_2|level_3|not_applicable",
+        "model_class": "script|cheap_fast|standard|high_reasoning|human|not_applicable",
+        "rationale": "<why this was sufficient>"
+      }
+    ],
+    "helper_agents_used": [],
+    "repo_update_check": "<checked_current|stale|not_checked|not_applicable>",
+    "install_update_check": "<checked|not_checked|not_applicable>"
+  }
 }

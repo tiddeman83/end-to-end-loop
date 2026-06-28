@@ -3,7 +3,7 @@
   "agent_or_tool": "hermes",
   "skill_version_or_commit": "local-recorder-slice",
   "scenario_id": "scenario-18",
-  "prompt": "DevBoss cron sprint: implement local telemetry recorder slice for end-to-end-loop after local/privacy-safe telemetry spec.",
+  "prompt": "Maintainer sprint: implement local telemetry recorder slice for end-to-end-loop after local/privacy-safe telemetry spec.",
   "expected_trigger": true,
   "actual_trigger": true,
   "outcome": "passed",
