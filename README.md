@@ -47,6 +47,8 @@ references/backlog-and-copilot.md # backlog sequencing + GitHub Copilot feedback
 references/local-telemetry.md     # opt-in local-first telemetry schema and privacy contract
 skills/grilling/SKILL.md          # packaged subskill for one-question-at-a-time plan grilling
 skills/handoff/SKILL.md           # packaged subskill for redacted temp-dir continuation handoffs
+skills/diagnosing-bugs/SKILL.md   # packaged subskill: feedback-loop-first bug/regression diagnosis
+skills/tdd/SKILL.md               # packaged subskill: test-first red-green-refactor
 scripts/validate_skill.py         # dependency-free repo validator
 scripts/install.sh                # install full package, subskills, evals, and helper scripts
 scripts/telemetry_record.py       # opt-in local telemetry recorder

@@ -309,6 +309,10 @@ Goal: implement the plan through the required execution lane.
 Do:
 
 - Pass implementation work through CAVEMAN as defined above.
+- For new behavior or a bug fix that should be pinned by a test, prefer test-first
+  via `skills/tdd/SKILL.md`: one failing behavioral test (red), minimal code
+  (green), then refactor; test behavior through public interfaces and slice
+  vertically.
 - Work step by step and keep progress visible.
 - Keep changes scoped to the plan and repo conventions.
 - Preserve user or teammate changes. Never revert unrelated work.
@@ -342,6 +346,9 @@ Goal: close gaps found in VERIFY.
 Do:
 
 - Convert each failing criterion into a focused mini-plan.
+- When a failure is a bug or regression rather than missing work, switch to
+  `skills/diagnosing-bugs/SKILL.md`: build a reproducible feedback loop before
+  hypothesizing or fixing, and do not fix without a failing loop.
 - Re-execute through CAVEMAN for code changes.
 - Re-run verification.
 - Change approach if repeated attempts do not make progress.
@@ -424,6 +431,10 @@ Report:
 - Known limitations, follow-ups, and rollback/recovery notes.
 - Learning update: result-log path, memory update status, durable learning
   candidates, and privacy/commit-safety decision.
+- Handoff: when the `handoff` option is selected or another agent/session will
+  resume the work, produce a handoff document via `skills/handoff/SKILL.md` that
+  references existing artifacts instead of duplicating them, lists suggested next
+  skills, and redacts secrets/PII.
 
 Use `references/report-template.md` for larger tasks.
 
@@ -434,6 +445,13 @@ Use `references/report-template.md` for larger tasks.
   long prompts need CAVEMAN ULTRA context compression.
 - Read `skills/grilling/SKILL.md` when the user asks to grill, stress-test,
   interrogate, or poke holes in a plan/design before building.
+- Read `skills/handoff/SKILL.md` when handing off, compacting, or preparing
+  another agent/session to resume the work.
+- Read `skills/diagnosing-bugs/SKILL.md` when EXECUTE/VERIFY/ITERATE turns into
+  debugging a crash, wrong output, flaky test, or performance regression; build a
+  reproducible feedback loop before hypothesizing or fixing.
+- Read `skills/tdd/SKILL.md` when adding new behavior or locking in a bug fix
+  test-first (red-green-refactor, behavior over implementation, vertical slices).
 - Read `references/local-telemetry.md` when local measurement, performance
   evidence, phase/command timing, token/cost capture, CAVEMAN compliance metrics,
   Copilot availability metrics, or telemetry research is in scope. Telemetry is

@@ -154,3 +154,28 @@ Validation plan:
 - Run telemetry privacy smoke test.
 - Run install smoke test against a temporary home.
 - Run `git diff --check`.
+
+## 2026-06-28 — Diagnosing-bugs and TDD subskills; finish handoff wiring
+
+Goal: enrich the loop with technique disciplines adapted from the open
+`mattpocock/skills` library, and finish wiring the handoff subskill that was
+packaged but not routed.
+
+Changes:
+
+- Added `skills/diagnosing-bugs/SKILL.md`: a feedback-loop-first debugging
+  discipline (build a red-capable, deterministic, fast, unattended repro before
+  hypothesizing or fixing). Wired into ITERATE-toward-verify-green and Reference
+  Routing.
+- Added `skills/tdd/SKILL.md`: red-green-refactor, behavior-over-implementation,
+  vertical slices. Wired into EXECUTE and Reference Routing.
+- Finished handoff integration: added a Reference Routing pointer to
+  `skills/handoff/SKILL.md` and a REPORT bullet (reference-don't-duplicate,
+  suggested next skills, redact secrets/PII).
+- Grilling was already integrated upstream; left unchanged.
+- Updated README repository layout with the two new subskills.
+
+Validation plan:
+
+- `python3 scripts/validate_skill.py .` from a folder named `end-to-end-loop`.
+- `git diff --check`.
