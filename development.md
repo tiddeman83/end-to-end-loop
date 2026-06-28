@@ -635,3 +635,15 @@ Verification target:
 - `python3 -m json.tool evals/trigger-cases.json`.
 - `python3 -m py_compile scripts/validate_skill.py`.
 - `git diff --check`.
+## 2026-06-28 — Iteration 18: local telemetry research intake
+
+- Added `research/local-telemetry-plan.md` as research-first design input for measuring end-to-end-loop performance on local machines.
+- Recommendation: implement telemetry as local-first, opt-in JSONL plus sanitized aggregation; treat OpenTelemetry/OTLP as optional adapter, not the default path.
+- Proposed metrics: phase durations, command durations/exit codes, resource usage where stdlib-safe, verification outcomes, CAVEMAN compliance, Copilot status, backlog completeness, and token/cost where available.
+- Safety boundaries: no full prompts, secrets, env vars, raw stdout/stderr, private paths, hostnames, or network export by default.
+- Updated the DevBoss scheduled sprint to focus only on new feature completion and to process telemetry as a research/spec gate before implementation.
+
+Verification target:
+
+- `python3 <tmp>/end-to-end-loop/scripts/validate_skill.py <tmp>/end-to-end-loop`.
+- `git diff --check`.
