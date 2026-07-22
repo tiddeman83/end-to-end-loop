@@ -36,6 +36,17 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 
 ## Next
 
+- FACT The 2026-07-22 production assessment classifies v0.1.0-alpha.2 as usable
+  alpha, not production-ready (`17/40` evidence rubric); comparative multi-tool
+  runs, recovery/state, and measured cost remain release blockers.
+- FACT The product should remain an assurance/delivery-policy layer over agent
+  runtimes; prioritize executable run state, deterministic transitions,
+  risk-triggered context, and budgets before a broad helper-agent fleet.
+- NEXT Refresh `research/competitive-production-assessment.md` primary sources in
+  a network-enabled environment; this pass's web tool returned 401 and direct
+  HTTPS returned 403.
+- BLOCK This checkout has no configured Git remote or upstream, preventing
+  freshness comparison, push, remote CI verification, and release publication.
 - NEXT Decide whether to implement Mission Mode as packaged optional public helper agents: mission-planner, loop-verifier, loop-reporter, adapter-builder, loop-reviewer, loop-eval-runner, deploy-readiness-checker.
 - NEXT Telemetry follow-up after aggregation: define release-readiness metric language and keep public performance claims behind human approval plus multi-run evidence.
 - NEXT Telemetry follow-up: add release-readiness metric language only after local privacy tests stay green on real runs.

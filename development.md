@@ -2,6 +2,39 @@
 
 This log records product-facing development decisions for the `end-to-end-loop` skill.
 
+## 2026-07-22 — Competitive research and production assessment
+
+Goal: assess comparable agent frameworks and determine whether the current skill
+is ready for production before planning a new release.
+
+Decisions:
+
+- Classify `0.1.0-alpha.2` as a usable alpha, not production-ready; the documented
+  assessment score is `17/40` and lacks comparative, multi-tool, recovery, and
+  cost evidence.
+- Position the product as a portable assurance/delivery-policy layer over agent
+  runtimes rather than another general orchestration runtime.
+- Prioritize a versioned run state, deterministic transitions, risk-triggered
+  reference routing, explicit budgets/termination, and comparative evaluations.
+- Defer a broad named helper-agent fleet until a bounded specialist protocol and
+  evidence of positive coordination value exist.
+- Target `0.1.0-alpha.3` for the next vertical slice; do not make production or
+  major-version claims yet.
+- Record the research limitation: configured web access returned 401 and direct
+  HTTPS returned 403, so primary-source URLs are indexed but require a refresh
+  in a network-enabled release pass.
+- Record the repository limitation: this checkout has no Git remote or branch
+  upstream, so freshness comparison, push, remote CI, and release publication
+  cannot be completed from the current environment.
+
+Validation plan:
+
+- `python3 scripts/validate_skill.py .`.
+- `python3 scripts/test_telemetry_privacy.py`.
+- `python3 -m py_compile scripts/*.py`.
+- install smoke test against a temporary home.
+- `git diff --check` and focused diff review.
+
 ## Settled product direction
 
 - The repository packages a portable delivery-loop skill for coding agents.

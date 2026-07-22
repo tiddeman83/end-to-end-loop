@@ -63,7 +63,40 @@ Work:
 - Draft landing page, install pages, safety page, research page, and changelog.
 - Decide whether website source belongs in this repo or a separate site repo.
 
+## 2026-07-22 production research decision
+
+The competitive and production assessment in
+`research/competitive-production-assessment.md` supersedes the dates and release
+ordering below where they conflict. The current skill scored `17/40` on the
+evidence rubric: usable alpha, not production-ready. The immediate priority is
+an executable, budgeted, resumable single-agent kernel plus comparative evals,
+not a helper-agent fleet.
+
+### Ordered backlog
+
+| Order | Slice | Complexity / route | Acceptance signal |
+|---:|---|---|---|
+| 1 | Versioned run-state and transition schema | `level_2`; high-reasoning design, CAVEMAN CODE implementation | Interrupted run resumes at an allowed phase; invalid transitions fail deterministically. |
+| 2 | Capability preflight and risk-triggered reference router | `level_1`; standard implementation | Lean tasks avoid unrelated references while safety/deploy triggers load required gates. |
+| 3 | Budget, retry, escalation, and termination contract | `level_2`; high-reasoning design and reviewer | A run stops on success, hard block, retry ceiling, or budget ceiling and reports the reason. |
+| 4 | Comparative evaluation harness and held-out tasks | `level_2`; independent evaluator | Baseline/current task success, regressions, evidence, time, calls, tokens when available, retries, and interventions are recorded. |
+| 5 | Minimal runtime package manifest | `level_1`; deterministic size checks plus standard implementation | Runtime and maintainer artifacts are separated; install/context size is measured and regression-tested. |
+| 6 | Bounded specialist protocol | `level_2`; only after slices 1-4 | Specialist has typed input/output, scoped tools, budget, evidence, and termination; coordinator owns final state. |
+| 7 | Release candidate | `level_3`; maintainer approval | Production gates in the assessment pass with green remote CI and authenticated release evidence. |
+
+First batch: slices 1-2. They create the control plane needed for cheaper context
+routing and later agent specialization without prematurely paying multi-agent
+coordination cost.
+
 ## Proposed next release milestones
+
+### v0.1.0-alpha.3 - Executable-kernel experiment
+
+- Run-state and transition schema.
+- Capability/risk preflight.
+- Budget and termination fields.
+- Minimal-package measurement.
+- First baseline-versus-current evaluation pairs.
 
 ### v0.3.0 - Eval-backed release
 
@@ -73,9 +106,10 @@ Work:
 - CAVEMAN compliance examples.
 - Sanitized product result logs.
 
-### v0.4.0 - Helper-agent MVP
+### v0.4.0 - Bounded specialist MVP
 
-- Optional helper-agent specs.
+- One common specialist protocol before named helper roles.
+- Optional helper-agent specs only where measured coordination value is positive.
 - Agent output schemas.
 - Helper-agent eval coverage.
 

@@ -62,3 +62,23 @@ The telemetry feature supports release-readiness evidence by measuring local run
 ## Review-improve research track
 
 Deep review work needs its own lightweight option because it is neither pure planning nor ordinary implementation. The review-improve path treats documentation and skill changes as evidence-backed maintenance: inventory the surfaces, compare cross-document claims, rank findings by risk/value, make scoped edits, and report deferred follow-ups. This keeps broad audit requests from becoming subjective rewrites while still allowing the loop to improve itself.
+
+## 2026 production-readiness research direction
+
+Comparison with agent runtimes, coding harnesses, evaluation systems, and secure
+delivery standards suggests that the loop's defensible role is an assurance and
+delivery-policy layer, not a new general-purpose runtime. Current frameworks
+already provide tool invocation, durable execution, sessions, handoffs, and
+multi-agent transport. The missing contribution here is a portable,
+machine-readable contract that decides which action is allowed next, what
+evidence closes a gate, when to stop or escalate, and how much context and budget
+the run may consume.
+
+Accordingly, the next research hypothesis is that a stateful single-agent kernel
+with risk-triggered reference loading will improve verified success per unit cost
+more than adding a standing set of named helper agents. That hypothesis must be
+tested with baseline-versus-skill repository tasks, repeated trials, and
+sanitized measurements of success, regressions, evidence completeness, wall
+time, tool calls, tokens where exposed, retries, and human interventions. Until
+that evidence and multi-tool recovery tests exist, production-readiness claims
+remain out of scope.
