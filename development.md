@@ -2,6 +2,41 @@
 
 This log records product-facing development decisions for the `end-to-end-loop` skill.
 
+## 2026-07-27 — Executable kernel, cost controls, and GitHub delivery
+
+Goal: convert the production-readiness research into a bounded alpha release,
+refresh primary sources, and add repeatable PR/CI/CD maintenance.
+
+Changes:
+
+- Added `loop-state-v2` with atomic persistence, validated resume, acceptance
+  evidence, hard budgets, retry ceilings, blockers, and deterministic stop reasons.
+- Added `loop-preflight-v2` risk/capability routing with selected context byte
+  measurement.
+- Added `runtime-package-v1`, a 250 KB ceiling, deterministic ZIP build, and a
+  minimal installer that excludes maintainer-only material.
+- Expanded CI across kernel, packaging, telemetry privacy, repository validation,
+  and clean installation; pinned third-party actions and limited permissions.
+- Added tag-gated release publishing, Dependabot updates, Copilot instructions,
+  and a review-focused Copilot skill.
+- Refreshed primary-source research. Confirmed that Copilot review comments do not
+  count as approvals and therefore supplement rather than replace CI/human merge
+  judgment.
+
+Release decision:
+
+- Bump to `0.1.0-alpha.3`; do not claim production readiness.
+- Use automatic Copilot review on new pushes if repository rules allow it.
+- Run weekly research/improvement through a bounded Codex task that opens a PR;
+  do not make preview GitHub Agentic Workflows the only maintenance route.
+
+Validation plan:
+
+- Kernel, runtime-package, telemetry privacy, repository validator, compile, and
+  minimal-install smoke tests.
+- GitHub pull request with CI and Copilot review.
+- Tag/release workflow remains untriggered until maintainer merges and tags.
+
 ## 2026-07-22 — Competitive research and production assessment
 
 Goal: assess comparable agent frameworks and determine whether the current skill

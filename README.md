@@ -57,15 +57,16 @@ The skill gives an agent a disciplined delivery contract:
 
 ### Install
 
-For Agent Skills-compatible tools, install the full package:
+For Agent Skills-compatible tools, install the measured runtime package:
 
 ```bash
 bash scripts/install.sh
 ```
 
-This copies `SKILL.md`, `VERSION`, `references/*.md`, the packaged subskills under
-`skills/`, the eval artifacts, `agents/openai.yaml`, and the helper scripts into
-`~/.agents/skills/end-to-end-loop/`. Reload your agent session afterward.
+This copies only files declared in `runtime-package.json`: production skill,
+references, subskills, UI metadata, executable kernel, and opt-in telemetry
+helpers. Maintainer-only eval history, CI, research, and validators stay out of
+the installed runtime. Reload your agent session afterward.
 
 You can also place the skill folder under your tool's skills directory directly,
 for example `.codex/skills/`, `~/.claude/skills/`, or `.cursor/skills/`. See
@@ -119,12 +120,19 @@ skills/handoff/SKILL.md           # subskill: redacted temp-dir continuation han
 skills/diagnosing-bugs/SKILL.md   # subskill: feedback-loop-first bug/regression diagnosis
 skills/tdd/SKILL.md               # subskill: test-first red-green-refactor
 scripts/validate_skill.py         # dependency-free repo validator
-scripts/install.sh                # install the full package
+scripts/loop_kernel.py             # persisted state, routing, budgets, retry/stop policy
+scripts/test_loop_kernel.py        # executable-kernel behavior tests
+scripts/package_runtime.py         # measure/build deterministic runtime package
+scripts/test_package_runtime.py    # runtime size/content/reproducibility tests
+scripts/install.sh                # install runtime-package.json contents
 scripts/telemetry_record.py       # opt-in local telemetry recorder
 scripts/telemetry_aggregate.py    # local-first telemetry aggregator
 scripts/test_telemetry_privacy.py # telemetry privacy self-test
 agents/openai.yaml                # Codex/OpenAI UI metadata
 .github/workflows/validate.yml    # CI validation
+.github/workflows/release.yml     # tag-gated runtime release publishing
+.github/rulesets/main.json        # applied main-branch CI/Copilot policy
+runtime-package.json              # minimal install surface and byte ceiling
 AGENTS.md                         # general coding-agent project instructions
 CHANGELOG.md                      # release history
 research/                         # design/research notes (not part of the installed skill)
@@ -137,6 +145,9 @@ memory.md                         # durable product decisions and sanitized lear
 
 ```bash
 python3 scripts/validate_skill.py .
+python3 scripts/test_loop_kernel.py
+python3 scripts/test_package_runtime.py
+python3 scripts/test_telemetry_privacy.py
 git diff --check
 ```
 
@@ -169,10 +180,11 @@ results.
 
 ## Status & versioning
 
-This is **v0.1.0-alpha.2** — an early, usable alpha. The loop, gates, subskills,
-validator, and CI are in place; broader benchmarks and multi-tool evidence are
-still being built. The version is recorded in `VERSION`, presented at the start
-of each run, and tracked in `CHANGELOG.md`.
+This is **v0.1.0-alpha.3** — an early, usable alpha. It adds an executable,
+resumable control kernel, hard budgets/retry ceilings, measured runtime
+packaging, stronger CI/CD, and Copilot review guidance. Comparative multi-tool
+benchmarks and production recovery evidence are still missing, so this is not a
+production-ready claim.
 
 ## Maintenance
 

@@ -27,6 +27,13 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 
 - FACT `skills/handoff/SKILL.md` is a packaged subskill for redacted continuation handoffs: write the handoff document to the OS temp directory, include suggested skills, and reference existing artifacts instead of duplicating them.
 - FACT Deep documentation or skill audit requests should use the `review-improve` option: inventory surfaces, compare cross-document claims, rank evidence-backed findings, make scoped edits, and report deferred follow-ups.
+- FACT `scripts/loop_kernel.py` is the executable policy control plane: persisted
+  state, deterministic transitions, risk routing, budgets, retry ceilings, and
+  stop reasons; it does not execute tools or grant permissions.
+- FACT `runtime-package.json` defines the minimal installed runtime and a 250 KB
+  regression ceiling; eval history, research, CI, and validators stay maintainer-only.
+- FACT GitHub Copilot review is additional evidence only: it comments rather than
+  approves and cannot replace deterministic CI or maintainer merge judgment.
 
 ## Risks / avoid
 
@@ -42,11 +49,12 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 - FACT The product should remain an assurance/delivery-policy layer over agent
   runtimes; prioritize executable run state, deterministic transitions,
   risk-triggered context, and budgets before a broad helper-agent fleet.
-- NEXT Refresh `research/competitive-production-assessment.md` primary sources in
-  a network-enabled environment; this pass's web tool returned 401 and direct
-  HTTPS returned 403.
-- BLOCK This checkout has no configured Git remote or upstream, preventing
-  freshness comparison, push, remote CI verification, and release publication.
+- FACT Primary sources were refreshed successfully on 2026-07-27; findings live
+  in `research/2026-07-27-production-follow-up.md`.
+- FACT Repository remote is `origin`, default branch is `main`, and the 2026-07-27
+  freshness check found the working branch identical to `origin/main`.
+- NEXT Run repeated baseline/current tasks across two supported tools and measure
+  cost per verified success before any production-ready claim.
 - NEXT Decide whether to implement Mission Mode as packaged optional public helper agents: mission-planner, loop-verifier, loop-reporter, adapter-builder, loop-reviewer, loop-eval-runner, deploy-readiness-checker.
 - NEXT Telemetry follow-up after aggregation: define release-readiness metric language and keep public performance claims behind human approval plus multi-run evidence.
 - NEXT Telemetry follow-up: add release-readiness metric language only after local privacy tests stay green on real runs.

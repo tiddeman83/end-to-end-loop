@@ -21,6 +21,30 @@ packets, bounded recovery, and baseline-versus-skill evaluations on real tasks.
 Do not build a large named-agent fleet first. That would add coordination cost
 before the single-agent loop is measurable.
 
+## 2026-07-27 implementation reassessment
+
+Fresh primary-source research and the alpha.3 implementation are recorded in
+`research/2026-07-27-production-follow-up.md`. The original `17/40` score below
+remains the historical alpha.2 baseline.
+
+Current local evidence raises the provisional score to **24/40**:
+
+| Dimension | Alpha.3 local score | Change |
+|---|---:|---|
+| Safety and deployment control | 3/4 | unchanged; live delivery remains gated |
+| Verification discipline | 3/4 | kernel/package/privacy/install tests added |
+| Runtime agency | 3/4 | persisted state, transitions, routing, budgets, and stop reasons implemented |
+| Cost and token efficiency | 2/4 | runtime/context byte proxies enforced; verified-success cost not measured |
+| Reliability and recovery | 2/4 | atomic resume and retry ceilings tested; remote side-effect idempotency missing |
+| Portability | 2/4 | unchanged; cross-tool behavior runs missing |
+| Observability | 2/4 | state adds usage/termination fields; real-run trace aggregation remains limited |
+| Security and supply chain | 3/4 | least privilege, pinned actions, Dependabot, and checksum release prepared |
+| Evaluation maturity | 1/4 | comparative repeated trials still absent |
+| Release operations | 3/4 | remote, CI/CD, auto review, and release workflow prepared; remote PR evidence pending |
+
+This remains below the `30/40` production-candidate threshold and does not change
+the “usable alpha, not production-ready” decision.
+
 ## Research method and limitation
 
 The review combined:

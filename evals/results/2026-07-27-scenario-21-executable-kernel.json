@@ -1,0 +1,71 @@
+{
+  "date": "2026-07-27",
+  "agent_or_tool": "codex",
+  "skill_version_or_commit": "0.1.0-alpha.3-pre-commit",
+  "scenario_id": "scenario-21",
+  "prompt": "Deepen production research, implement agentic and cost improvements, and prepare automatic PR, CI/CD, weekly maintenance, and Copilot review.",
+  "expected_trigger": true,
+  "actual_trigger": true,
+  "outcome": "passed",
+  "commands_or_evidence": [
+    "Freshness check found HEAD and origin/main at the same commit before edits.",
+    "Loop kernel behavior tests passed locally.",
+    "Runtime package behavior tests passed locally.",
+    "Telemetry privacy tests passed locally.",
+    "Runtime measurement stayed below the declared 250 KB limit."
+  ],
+  "acceptance_criteria": [
+    {
+      "criterion": "Interrupted runs resume only through deterministic allowed transitions.",
+      "status": "pass",
+      "evidence": "scripts/test_loop_kernel.py persists PLAN state and rejects PLAN to DEPLOY."
+    },
+    {
+      "criterion": "Budget and retry ceilings stop further work deterministically.",
+      "status": "pass",
+      "evidence": "Kernel tests reach tool-call and retry boundaries and observe blocked stop reasons."
+    },
+    {
+      "criterion": "Installed runtime excludes maintainer-only eval and CI files.",
+      "status": "pass",
+      "evidence": "Runtime package and installation tests assert no eval directory is installed."
+    },
+    {
+      "criterion": "CI/CD and Copilot review are prepared without treating Copilot as approval.",
+      "status": "pass",
+      "evidence": "Pinned validation/release workflows and Copilot instructions are present; docs retain human merge judgment."
+    }
+  ],
+  "caveman_behavior": "compliant",
+  "deploy_policy_behavior": "compliant",
+  "security_review": "pass",
+  "delivery_classification": "repo-only",
+  "ci_status": "not_checked",
+  "memory_read": "yes",
+  "memory_update": "updated",
+  "learning_candidates": [
+    {
+      "type": "FACT",
+      "text": "Executable loop state, focused routing, budgets, retry ceilings, and stop reasons are locally behavior-tested in alpha.3.",
+      "promote": true,
+      "reason": "Durable implemented product behavior."
+    },
+    {
+      "type": "RISK",
+      "text": "Copilot reviews comment but do not approve or block merge; deterministic CI and maintainer judgment remain required.",
+      "promote": true,
+      "reason": "Durable GitHub product constraint confirmed by current primary docs."
+    }
+  ],
+  "privacy_review": {
+    "contains_secrets": false,
+    "commit_safe": true,
+    "redactions": []
+  },
+  "copilot_findings": {
+    "available": false,
+    "summary": "Copilot review will be requested after the pull request is opened.",
+    "items": []
+  },
+  "notes": "Local alpha.3 implementation evidence; remote CI and Copilot findings are reported separately after PR creation."
+}

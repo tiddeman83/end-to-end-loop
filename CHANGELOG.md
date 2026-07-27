@@ -3,6 +3,33 @@
 All notable changes to `end-to-end-loop` are recorded here. Versions are tracked
 in `VERSION` and follow semver-like alpha labeling until a stable release.
 
+## v0.1.0-alpha.3 — 2026-07-27
+
+Executable-kernel and release-automation alpha.
+
+### Added
+
+- Versioned persisted run state with deterministic phase transitions, acceptance
+  evidence, hard budgets, retry ceilings, and explicit stop reasons.
+- Risk-triggered preflight routing with measured selected-context bytes.
+- Minimal runtime manifest, byte regression ceiling, deterministic ZIP builder,
+  and package behavior tests.
+- CI gates for kernel, packaging, telemetry privacy, validation, and clean install.
+- Tag-gated GitHub Release workflow, Dependabot action updates, Copilot custom
+  instructions, and a review-focused Copilot skill.
+
+### Changed
+
+- Installer now excludes maintainer-only eval history, research, validator, and
+  CI files. Current measured runtime is under the 250 KB ceiling.
+- Copilot review is treated as an additional finding source, never as an approval
+  or replacement for deterministic CI and maintainer merge judgment.
+
+### Notes
+
+- The release remains alpha. Comparative task success/cost evidence, multi-tool
+  recovery runs, and production side-effect idempotency remain open gates.
+
 ## v0.1.0-alpha.2 — 2026-06-28
 
 First tagged alpha prerelease.

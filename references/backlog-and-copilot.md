@@ -55,7 +55,7 @@ Record Copilot status in VERIFY/TEST and final REPORT:
 
 ```text
 COPILOT_STATUS: collected | unavailable | waived
-SOURCE: PR review | gh copilot | gh-copilot | GitHub API | CI annotation | other
+SOURCE: PR review | gh pr --reviewer @copilot | GitHub API | Copilot CLI | other
 AUTH/TOOLING: <observed command/API status>
 FINDINGS:
 - id: <copilot-1>
@@ -72,6 +72,10 @@ Rules:
 - Unresolved must-fix Copilot findings block PR/CI/CD readiness like failing tests.
 - False positives need a short rationale.
 - If unavailable, name the blocker and keep normal review/security gates active.
+- Copilot always comments; it does not approve, request changes, satisfy required
+  approvals, or replace deterministic CI.
+- Prefer automatic repository rules with `review_on_push` only when review cost is
+  acceptable. Otherwise request one review after the branch is locally green.
 
 ## Model routing hints
 

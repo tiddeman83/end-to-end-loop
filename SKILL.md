@@ -99,6 +99,11 @@ example.
 | `review-improve` | user asks for a deep/integral review, documentation audit, skill audit, gap analysis, or improvement proposal for this skill or another repo | run a review-first pass before editing: inventory surfaces, compare cross-document claims, identify contradictions/staleness/aspirational language, rank findings by risk/value, then implement only scoped, evidence-backed improvements |
 | `handoff` | user asks to hand off, compact, resume later, or prepare another agent/session to continue | use `skills/handoff/SKILL.md`; write a redacted temporary handoff document with suggested skills and references to existing artifacts instead of duplicating them |
 
+## Executable Control Kernel
+
+For multi-step, interrupted, budget-sensitive, or release work, use
+`scripts/loop_kernel.py` and follow `references/executable-kernel.md`.
+
 ### Review-Improve Option
 
 Use `review-improve` for deep documentation/skill audits. Inventory production
@@ -165,8 +170,8 @@ Rules:
 
 1. Check availability without installing new Copilot tooling unless installation is
    explicitly in scope. Acceptable sources include PR review comments, GitHub code
-   review surfaces, `gh copilot` or `gh-copilot` when already installed, CI bot
-   annotations, and authenticated GitHub API/CLI reads.
+   review surfaces, `gh pr create --reviewer @copilot`, authenticated GitHub
+   API/CLI reads, or Copilot CLI when already installed.
 2. Treat Copilot feedback as evidence, not decoration. Categorize findings as
    must-fix, should-fix, false-positive, or blocked/unavailable, with rationale.
 3. Feed must-fix Copilot findings back into ITERATE before reporting CI/CD green or
@@ -175,6 +180,8 @@ Rules:
    review/security gates as fallback. Do not fabricate Copilot findings.
 5. In CI/CD pipelines controlled by this skill, require a Copilot-feedback step or
    explicit unavailable/waived status in the pipeline report before delivery.
+6. Copilot submits comments, not approvals. Never count it as required human
+   approval or represent it as a deterministic merge gate.
 
 ## Deploy Policy
 
@@ -455,6 +462,8 @@ Use `references/report-template.md` for larger tasks.
 - Read `references/backlog-and-copilot.md` when `backlog` or `github-copilot`
   options are selected, when CI/CD feedback must include Copilot findings, or when
   long prompts need CAVEMAN ULTRA context compression.
+- Read `references/executable-kernel.md` for persisted state, preflight routing,
+  budgets, retries, termination, and resume.
 - Read `skills/grilling/SKILL.md` when the user asks to grill, stress-test,
   interrogate, or poke holes in a plan/design before building.
 - Read `skills/handoff/SKILL.md` when handing off, compacting, or preparing
@@ -491,13 +500,5 @@ Use `references/report-template.md` for larger tasks.
 
 When improving this skill itself, update:
 
-- `development.md` for decisions and iteration results.
-- `memory.md` for durable user preferences and settled decisions.
-- `paper.md` for research findings and shareable rationale.
-- Adapter handoff files under `handoff/` when product operating instructions
-  change and those files exist in the package.
-- `references/self-learning.md`, result-log templates, and validators when memory
-  behavior changes.
-- `references/backlog-and-copilot.md`, trigger evals, and report/checklist templates
-  when backlog sequencing, Copilot feedback, CAVEMAN ULTRA compression, or model
-  routing behavior changes.
+Keep `development.md`, `memory.md`, and `paper.md` aligned with decisions. Update owning
+references, evals, validators, and optional `handoff/` files when behavior changes.
