@@ -88,6 +88,18 @@ First batch: slices 1-2. They create the control plane needed for cheaper contex
 routing and later agent specialization without prematurely paying multi-agent
 coordination cost.
 
+## 2026-07-27 implementation status
+
+- Done locally: slices 1-3 through `loop-state-v2` and `loop-preflight-v2`.
+- Done locally: slice 5 through `runtime-package-v1`, measurement, byte ceiling,
+  deterministic archive, and minimal installer.
+- In progress: slice 4. Schemas and local evidence exist, but repeated
+  baseline/current multi-tool trials are still absent.
+- Deferred: slice 6. No specialist fleet until evaluation shows coordination
+  benefit.
+- Prepared, not released: alpha.3 CI/CD, automatic Copilot review, and tagged
+  release publishing.
+
 ## Proposed next release milestones
 
 ### v0.1.0-alpha.3 - Executable-kernel experiment

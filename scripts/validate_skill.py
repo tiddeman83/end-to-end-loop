@@ -77,6 +77,7 @@ def check_required_files(root: Path) -> None:
         "references/test-and-security.md",
         "references/adapters.md",
         "references/evaluation.md",
+        "references/executable-kernel.md",
         "references/self-learning.md",
         "references/report-template.md",
         "references/mission-mode.md",
@@ -86,13 +87,22 @@ def check_required_files(root: Path) -> None:
         "scripts/telemetry_aggregate.py",
         "scripts/telemetry_record.py",
         "scripts/test_telemetry_privacy.py",
+        "scripts/loop_kernel.py",
+        "scripts/test_loop_kernel.py",
+        "scripts/package_runtime.py",
+        "scripts/test_package_runtime.py",
         "scripts/install.sh",
         "scripts/validate_skill.py",
+        "runtime-package.json",
         "agents/openai.yaml",
         "skills/grilling/SKILL.md",
         "skills/handoff/SKILL.md",
         "AGENTS.md",
         ".github/workflows/validate.yml",
+        ".github/workflows/release.yml",
+        ".github/copilot-instructions.md",
+        ".github/skills/code-review/SKILL.md",
+        ".github/rulesets/main.json",
     ]
     for rel in required:
         if not (root / rel).is_file():
@@ -658,17 +668,52 @@ def check_telemetry_artifacts(root: Path) -> None:
             fail(f"Telemetry summary fixture field {key!r} should be {expected!r}; got {summary.get(key)!r}")
 
     install_text = (root / "scripts/install.sh").read_text(encoding="utf-8")
-    if "skills/." not in install_text and "skills/" not in install_text:
-        fail("Install script must copy packaged subskills from skills/")
+    if "runtime-package.json" not in install_text:
+        fail("Install script must install from runtime-package.json")
 
-    for rel in (
-        "scripts/validate_skill.py",
+
+def check_runtime_package(root: Path) -> None:
+    path = root / "runtime-package.json"
+    try:
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        fail(f"Invalid runtime-package.json: {exc}")
+    if manifest.get("schema_version") != "runtime-package-v1":
+        fail("runtime-package.json has unsupported schema_version")
+    profiles = manifest.get("profiles")
+    runtime = profiles.get("runtime") if isinstance(profiles, dict) else None
+    if not isinstance(runtime, list) or not runtime:
+        fail("runtime-package.json must define a non-empty profiles.runtime list")
+    if len(runtime) != len(set(runtime)):
+        fail("runtime-package.json must not contain duplicate paths")
+    required_runtime = {
+        "SKILL.md",
+        "VERSION",
+        "runtime-package.json",
+        "scripts/loop_kernel.py",
         "scripts/telemetry_record.py",
         "scripts/telemetry_aggregate.py",
-        "scripts/test_telemetry_privacy.py",
-    ):
-        if rel not in install_text:
-            fail(f"Install script must copy documented helper: {rel}")
+    }
+    missing_runtime = sorted(required_runtime - set(runtime))
+    if missing_runtime:
+        fail(f"runtime package missing required files: {missing_runtime}")
+    forbidden_runtime_prefixes = ("evals/", ".github/")
+    for rel in runtime:
+        if not isinstance(rel, str) or not rel:
+            fail("runtime package entries must be non-empty strings")
+        if rel.startswith("/") or ".." in Path(rel).parts:
+            fail(f"runtime package contains unsafe path: {rel}")
+        if rel.startswith(forbidden_runtime_prefixes):
+            fail(f"maintainer-only path must not be in runtime package: {rel}")
+        if not (root / rel).is_file():
+            fail(f"runtime package path does not exist: {rel}")
+    limits = manifest.get("limits")
+    byte_limit = limits.get("runtime_bytes") if isinstance(limits, dict) else None
+    if not isinstance(byte_limit, int) or byte_limit < 1:
+        fail("runtime-package.json limits.runtime_bytes must be a positive integer")
+    runtime_bytes = sum((root / rel).stat().st_size for rel in runtime)
+    if runtime_bytes > byte_limit:
+        fail(f"runtime package exceeds byte limit: {runtime_bytes} > {byte_limit}")
 
 
 def check_line_hygiene(root: Path) -> None:
@@ -704,6 +749,7 @@ def main() -> int:
     check_eval_result_template(root)
     check_eval_result_logs(root)
     check_telemetry_artifacts(root)
+    check_runtime_package(root)
     check_line_hygiene(root)
     print("end-to-end-loop skill validation passed")
     return 0

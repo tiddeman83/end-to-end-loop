@@ -1,0 +1,32 @@
+{
+  "schema_version": "runtime-package-v1",
+  "profiles": {
+    "runtime": [
+      "SKILL.md",
+      "VERSION",
+      "runtime-package.json",
+      "agents/openai.yaml",
+      "references/adapters.md",
+      "references/backlog-and-copilot.md",
+      "references/deploy-readiness.md",
+      "references/evaluation.md",
+      "references/executable-kernel.md",
+      "references/local-telemetry.md",
+      "references/mission-mode.md",
+      "references/phase-checklists.md",
+      "references/report-template.md",
+      "references/self-learning.md",
+      "references/test-and-security.md",
+      "scripts/loop_kernel.py",
+      "scripts/telemetry_aggregate.py",
+      "scripts/telemetry_record.py",
+      "skills/diagnosing-bugs/SKILL.md",
+      "skills/grilling/SKILL.md",
+      "skills/handoff/SKILL.md",
+      "skills/tdd/SKILL.md"
+    ]
+  },
+  "limits": {
+    "runtime_bytes": 250000
+  }
+}

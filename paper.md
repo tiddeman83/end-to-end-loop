@@ -82,3 +82,24 @@ sanitized measurements of success, regressions, evidence completeness, wall
 time, tool calls, tokens where exposed, retries, and human interventions. Until
 that evidence and multi-tool recovery tests exist, production-readiness claims
 remain out of scope.
+
+## Executable control and delivery automation
+
+The alpha.3 experiment turns the policy hypothesis into a small stdlib-only
+kernel. A versioned state artifact records phase, delivery class, acceptance
+evidence, budgets, observed usage, retry counts, blockers, and termination
+reason. Deterministic transition validation and atomic writes enable bounded
+resume without claiming to be a full agent runtime.
+
+Risk-triggered preflight routing now reports only relevant references and their
+selected byte total. A separate runtime manifest prevents repository history,
+eval logs, CI, and research from inflating every installation. These are useful
+cost proxies, not proof of cheaper verified outcomes; token and cost claims still
+require comparative task runs.
+
+GitHub delivery separates deterministic and probabilistic evidence. CI runs the
+kernel, package, privacy, validator, and install gates with least-privilege
+permissions. GitHub Copilot reviews the pull-request diff using repository
+instructions and a focused review skill. Its findings must be adjudicated, but
+because Copilot submits comments rather than approvals, it cannot replace CI or
+the maintainer's merge/release decision.
