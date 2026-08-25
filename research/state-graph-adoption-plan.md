@@ -61,7 +61,7 @@ The gap is not conceptual, it is that none of it is *materialized*:
 This is the same finding as `research/competitive-production-assessment.md`
 ("Runtime agency 1/4 — the phase diagram is not an executable state machine and
 cannot resume deterministically"), scored 17/40 overall. The research report does
-not open a new track; it **sharpens the existing alpha.3 backlog** (slices 1-3:
+not open a new track; it **sharpens the existing kernel backlog** (`alpha.4` slices 1-3:
 run-state schema, risk-triggered router, budget/termination contract) and adds
 four things that backlog did not name: reducers, router/node separation, a
 failure taxonomy for the repair cycle, and interrupt-before as a list.
@@ -85,7 +85,7 @@ failure taxonomy for the repair cycle, and interrupt-before as a list.
 Goal: make the existing linear loop an explicit, resumable, bounded state
 machine, without adding ceremony to small tasks and without weakening any gate.
 
-Target release: `0.1.0-alpha.3` (replaces and sharpens the slice list in
+Target release: `0.1.0-alpha.4` (replaces and sharpens the slice list in
 `research/improvement-plan.md`).
 
 ### Hard constraint discovered in this pass
@@ -105,7 +105,7 @@ artifact to `.end-to-end-loop/run.json` in the target repo.
 {
   "schema_version": "1.0",
   "run_id": "2026-08-25-1410-auth-fix",
-  "skill_version": "0.1.0-alpha.3",
+  "skill_version": "0.1.0-alpha.4",
   "goal": "…",
   "phase": "VERIFY",
   "mode": ["standard", "github-copilot"],
@@ -265,7 +265,7 @@ Acceptance: each class routes to a named target; no class falls through to
 - `evals/trigger-cases.json`: no new triggers needed for Part 1.
 - `evals/outcome-scenarios.md`: add scenarios for invalid transition, retry
   ceiling, interrupted resume, interrupt-before-deploy.
-- `CHANGELOG.md`, `VERSION` → `0.1.0-alpha.3`; `development.md` decision entry;
+- `CHANGELOG.md`, `VERSION` → `0.1.0-alpha.4`; `development.md` decision entry;
   `memory.md` durable decisions; `paper.md` rationale.
 - Release remains `level_3` (maintainer approval).
 
@@ -501,9 +501,9 @@ research's own directive and this repo's ordering constraint.
 
 | Phase | Release | Content | Acceptance |
 |---|---|---|---|
-| B0 | `alpha.3` | Nothing. Part 1 only. | State kernel green |
-| B1 | `alpha.4` | `references/graph-mode.md` + `skills/graph-mode/SKILL.md`; presets `graph:repair` and `graph:refine` as prose topologies running on the Part-1 kernel; no authoring, no new scripts | Two presets run end to end with caps and evidence; 4 outcome scenarios; trigger cases for graph vs linear vs `graph-engineer` |
-| B2 | `alpha.5` | `graph.json` authoring + `scripts/graph_validate.py` + mermaid render in the report | All 9 static checks enforced; a graph with an unbounded cycle is refused |
+| B0 | `alpha.4` | Nothing. Part 1 only. | State kernel green |
+| B1 | `alpha.5` | `references/graph-mode.md` + `skills/graph-mode/SKILL.md`; presets `graph:repair` and `graph:refine` as prose topologies running on the Part-1 kernel; no authoring, no new scripts | Two presets run end to end with caps and evidence; 4 outcome scenarios; trigger cases for graph vs linear vs `graph-engineer` |
+| B2 | `alpha.6` | `graph.json` authoring + `scripts/graph_validate.py` + mermaid render in the report | All 9 static checks enforced; a graph with an unbounded cycle is refused |
 | B3 | `0.2.0` | `graph:fanout` with `graph-engineer` delegation; `graph:react`, `graph:release`, `graph:longrun` | Delegation boundary tested in both skills; resume-across-session test |
 | B4 | gate | Comparative evals: linear vs `graph:repair` on repair tasks, linear vs `graph:refine` on doc tasks | Task success, laps, wall time, tool calls, interventions recorded before any claim that graph mode helps |
 
@@ -538,7 +538,7 @@ research's own directive and this repo's ordering constraint.
 
 ## 4. Summary
 
-Part 1 is not a new direction: it is the existing `alpha.3` backlog, made
+Part 1 is not a new direction: it is the existing `alpha.4` backlog, made
 sharper by four things the research names and the backlog did not — reducers,
 node/router separation, a failure taxonomy, and interrupt-before as a list. It
 should ship first and alone.

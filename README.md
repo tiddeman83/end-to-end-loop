@@ -169,10 +169,31 @@ results.
 
 ## Status & versioning
 
-This is **v0.1.0-alpha.2** — an early, usable alpha. The loop, gates, subskills,
+This is **v0.1.0-alpha.3** — an early, usable alpha. The loop, gates, subskills,
 validator, and CI are in place; broader benchmarks and multi-tool evidence are
 still being built. The version is recorded in `VERSION`, presented at the start
 of each run, and tracked in `CHANGELOG.md`.
+
+A 2026-07-22 self-assessment (`research/competitive-production-assessment.md`)
+scored the package `17/40` on an evidence rubric: usable alpha, not
+production-ready. The weakest dimensions are runtime agency, measured cost,
+comparative evaluation, and multi-tool portability evidence. Treat that document
+as the honest status page; this README describes what the skill asks an agent to
+do, not proof that it does it better than a baseline.
+
+## Where this is going
+
+The next milestone (`v0.1.0-alpha.4`) makes the loop's implicit state machine
+explicit rather than adding features: a typed run-state artifact with per-key
+reducers, a transition table with deterministic gate checks, routing split out of
+phase prose, iteration ceilings with a named escalation fallback,
+checkpoint/resume, and a machine-readable interrupt-before list for high-risk
+actions. A later, optional graph-based operating mode is scoped but deliberately
+gated behind that kernel and behind comparative evals.
+
+Both plans, including the syntax sketch and the boundary against work-graph
+orchestration skills, are in `research/state-graph-adoption-plan.md`; the ordered
+backlog is in `research/improvement-plan.md`.
 
 ## Maintenance
 

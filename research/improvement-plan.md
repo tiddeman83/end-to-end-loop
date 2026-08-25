@@ -90,7 +90,13 @@ coordination cost.
 
 ## Proposed next release milestones
 
-### v0.1.0-alpha.3 - Executable-kernel experiment
+### v0.1.0-alpha.3 - Research and documentation consolidation (released 2026-08-25)
+
+- Competitive/production assessment and the state-graph adoption plan.
+- Consistent version, status, and next-milestone statements across all documents.
+- No production behavior change; the kernel below was not built in this release.
+
+### v0.1.0-alpha.4 - Executable-kernel experiment
 
 - Run-state and transition schema.
 - Capability/risk preflight.
@@ -149,10 +155,15 @@ The next version should borrow from ReAct, Reflexion, Self-Refine, SWE-agent, SW
 
 ## 2026-08-25 state-graph research decision
 
-`research/state-graph-adoption-plan.md` refines the `alpha.3` slice list above
+`research/state-graph-adoption-plan.md` refines the kernel slice list above
 using state-machine research (typed state, reducers, node/router separation,
 bounded cycles, checkpointing, interrupt-before). It does not add a track: slices
 1-3 stay first, gaining explicit reducer semantics, a transition table, a failure
 taxonomy for the repair cycle, and a machine-readable interrupt-before list. A
 graph-based operating mode is scoped there as a separate, later effort
-(`alpha.4`+), gated on the state kernel shipping first and on comparative evals.
+(`alpha.5`+), gated on the state kernel shipping first and on comparative evals.
+
+`v0.1.0-alpha.3` was cut on 2026-08-25 as a documentation and research release,
+so the executable kernel moves to `v0.1.0-alpha.4`. Where
+`research/competitive-production-assessment.md` says the kernel ships as
+`0.1.0-alpha.3`, read `0.1.0-alpha.4`; its scope is unchanged.

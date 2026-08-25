@@ -27,6 +27,11 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 
 - FACT `skills/handoff/SKILL.md` is a packaged subskill for redacted continuation handoffs: write the handoff document to the OS temp directory, include suggested skills, and reference existing artifacts instead of duplicating them.
 - FACT Deep documentation or skill audit requests should use the `review-improve` option: inventory surfaces, compare cross-document claims, rank evidence-backed findings, make scoped edits, and report deferred follow-ups.
+- FACT Remote `origin` is configured (`github.com/tiddeman83/end-to-end-loop`);
+  push, remote CI, and release publication work. Supersedes the earlier
+  no-remote blocker.
+- FACT Remote tags before v0.1.0-alpha.3 were `v0.1.0-alpha.1` and
+  `v0.1.0-alpha.2.dev`; alpha.2 was never tagged cleanly.
 
 ## Risks / avoid
 
@@ -34,19 +39,44 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
 - AVOID Putting private office governance, dashboards, raw status feeds, secrets, raw chats, or private target repo details in this repo.
 - AVOID Claiming green without observed command output, diff review, smoke evidence, or explicit approval.
 
+## State-graph direction (2026-08-25)
+
+- FACT The loop is already a finite state machine written as prose; the gap is
+  materialization, not concept. Phases are nodes, `Exit:` lines are edges,
+  ITERATE paths are cycles, `level_3` is an interrupt-before list.
+- FACT Adopt the state-machine directives without a framework dependency: typed
+  run state, per-key reducers (evidence append-only/immutable, counters
+  increment-only), routers separated from phases, iteration ceilings with a named
+  ESCALATE fallback, checkpoint/resume, one interrupt-before list.
+- FACT `SKILL.md` is at the validator's 500-line body cap, so core changes must
+  be net-zero on lines: tables replace prose, detail moves to references.
+- PREF A graph operating mode stays optional and later: it must inherit phase
+  gates per node, must not duplicate work-graph orchestration skills
+  (`graph-engineer` owns zones/PRDs/workers; this owns state/cycles/gates), and
+  must prove itself against the linear loop before any claim that it helps.
+- AVOID Turning the skill into an orchestration runtime or taking a framework
+  dependency; the defensible role is the policy layer above runtimes.
+
 ## Next
 
-- FACT The 2026-07-22 production assessment classifies v0.1.0-alpha.2 as usable
+- FACT The 2026-07-22 production assessment classifies the package as usable
   alpha, not production-ready (`17/40` evidence rubric); comparative multi-tool
-  runs, recovery/state, and measured cost remain release blockers.
+  runs, recovery/state, and measured cost remain release blockers. Still true at
+  v0.1.0-alpha.3, which changed documentation only.
 - FACT The product should remain an assurance/delivery-policy layer over agent
   runtimes; prioritize executable run state, deterministic transitions,
   risk-triggered context, and budgets before a broad helper-agent fleet.
 - NEXT Refresh `research/competitive-production-assessment.md` primary sources in
-  a network-enabled environment; this pass's web tool returned 401 and direct
-  HTTPS returned 403.
-- BLOCK This checkout has no configured Git remote or upstream, preventing
-  freshness comparison, push, remote CI verification, and release publication.
+  a network-enabled environment; the 2026-07-22 pass's web tool returned 401 and
+  direct HTTPS returned 403. The same caveat applies to the framework claims in
+  `research/state-graph-adoption-plan.md`, which came from user-supplied
+  secondary research.
+- NEXT Build the `v0.1.0-alpha.4` kernel in order: run-state schema + reducers,
+  then the transition table and `scripts/run_state.py`, then routers, budgets,
+  failure taxonomy, checkpoint/resume/interrupts.
+- NEXT Answer the four open decisions in `research/state-graph-adoption-plan.md`
+  section 3.8: home of graph mode, JSON vs YAML, preset naming, and whether bare
+  `graph` requires confirmation.
 - NEXT Decide whether to implement Mission Mode as packaged optional public helper agents: mission-planner, loop-verifier, loop-reporter, adapter-builder, loop-reviewer, loop-eval-runner, deploy-readiness-checker.
 - NEXT Telemetry follow-up after aggregation: define release-readiness metric language and keep public performance claims behind human approval plus multi-run evidence.
 - NEXT Telemetry follow-up: add release-readiness metric language only after local privacy tests stay green on real runs.

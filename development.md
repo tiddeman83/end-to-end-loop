@@ -294,3 +294,40 @@ Validation plan:
 
 - `python3 scripts/validate_skill.py .` from a folder named `end-to-end-loop`.
 - `git diff --check`.
+
+## 2026-08-25 — v0.1.0-alpha.3 release: documentation consolidation
+
+Goal: bring every document to the same version, status, and direction, then cut a
+release. No production behavior change.
+
+Decisions:
+
+- Cut `v0.1.0-alpha.3` as a documentation and research consolidation release. The
+  executable run-state kernel moves to `v0.1.0-alpha.4`, and the graph-mode
+  delivery phases shift with it (`alpha.5`, `alpha.6`, `0.2.0`).
+- Keep the honest status visible in the README rather than only in the research
+  folder: the `17/40` assessment is linked from "Status & versioning".
+- Leave `SKILL.md` untouched. It sits at 503 lines against the validator's
+  500-line body cap, and nothing in this release requires core changes.
+- Record the earlier "no Git remote" blocker as resolved rather than deleting it,
+  so the memory shows what changed.
+
+Changes:
+
+- `VERSION` -> `0.1.0-alpha.3`; `CHANGELOG.md` entry covering the `review-improve`
+  option, the production assessment, and the state-graph plan.
+- `README.md`: version, a link to the honest self-assessment, and a "Where this
+  is going" section naming the kernel milestone and the deferred graph mode.
+- `paper.md`: state-machine research direction, including the two claims not yet
+  made (cost/success improvement, graph-mode value).
+- `memory.md`: state-graph direction block, resolved remote blocker, tag history,
+  and next actions for the kernel and the four open graph-mode decisions.
+- `research/improvement-plan.md`, `research/state-graph-adoption-plan.md`, and an
+  addendum to `research/competitive-production-assessment.md` for the renumbering.
+
+Validation:
+
+- `python3 scripts/validate_skill.py .` -> passed.
+- `python3 scripts/test_telemetry_privacy.py` -> passed.
+- `python3 -m py_compile scripts/*.py` -> passed.
+- `git diff --check` -> clean.
