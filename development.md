@@ -325,6 +325,18 @@ Changes:
 - `research/improvement-plan.md`, `research/state-graph-adoption-plan.md`, and an
   addendum to `research/competitive-production-assessment.md` for the renumbering.
 
+- Merging the release PR was blocked by a repository ruleset requiring a status
+  check named `Validate and test`, which no workflow produced (the job reported
+  as `validate`). Fixed on the workflow side rather than by weakening the rule:
+  the job is named `Validate and test`, and it now also runs `py_compile` and the
+  telemetry privacy self-test so the name matches the work.
+- Copilot review flagged the `SKILL.md` line-count claims. The first round was a
+  real defect (total lines compared against a body-line cap) and was fixed. The
+  follow-up round asserted 504 total / 500 body; that count comes from splitting
+  a newline-terminated file on `"\n"`. Measured values are 503 total and 499
+  body, matching `wc -l` and the validator's own `splitlines()`. Answered on the
+  thread with the evidence; docs unchanged.
+
 Validation:
 
 - `python3 scripts/validate_skill.py .` -> passed.

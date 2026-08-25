@@ -33,6 +33,10 @@ honest status, and the research direction consistent across every document.
   status, version, and next milestone.
 - Resolved the recorded blocker that the checkout had no configured Git remote;
   push, remote CI, and release publication now work.
+- CI: the validation job is now named `Validate and test`, matching the branch
+  ruleset's required status check, which no workflow previously produced. The job
+  also runs `py_compile` over the helper scripts and the telemetry privacy
+  self-test, so the name describes what actually runs.
 
 ### Notes
 
