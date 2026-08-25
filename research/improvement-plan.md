@@ -146,3 +146,13 @@ The next version should borrow from ReAct, Reflexion, Self-Refine, SWE-agent, SW
 - track wall time, tool calls, files touched, diff size, and human interventions;
 - require source links and uncertainty notes for research conclusions;
 - keep live deploy blocked unless the release gate is explicitly satisfied.
+
+## 2026-08-25 state-graph research decision
+
+`research/state-graph-adoption-plan.md` refines the `alpha.3` slice list above
+using state-machine research (typed state, reducers, node/router separation,
+bounded cycles, checkpointing, interrupt-before). It does not add a track: slices
+1-3 stay first, gaining explicit reducer semantics, a transition table, a failure
+taxonomy for the repair cycle, and a machine-readable interrupt-before list. A
+graph-based operating mode is scoped there as a separate, later effort
+(`alpha.4`+), gated on the state kernel shipping first and on comparative evals.

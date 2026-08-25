@@ -260,3 +260,37 @@ Validation plan:
 - `python3 scripts/validate_skill.py .`.
 - `python3 scripts/test_telemetry_privacy.py`.
 - `git diff --check`.
+
+## 2026-08-25 — State-graph research pass
+
+Goal: evaluate user-supplied research on graph-based state machines and cyclic
+control flow for agentic systems, and decide how it applies to this skill.
+
+Findings:
+
+- The loop is already a finite state machine written as prose; the gap is that
+  state, routing, cycle bounds, and checkpoints are not materialized. This
+  matches the `17/40` competitive assessment, so the research sharpens the
+  existing `alpha.3` backlog rather than opening a new track.
+- Four additions the backlog did not name: key-level reducer semantics,
+  node/router separation, a failure taxonomy for the repair cycle, and
+  interrupt-before as one machine-readable list.
+- `SKILL.md` is at 503 lines against the validator's 500-line body cap, so core
+  changes must be net-zero on lines: tables replace prose, detail moves to
+  references.
+- A graph operating mode is justified only for cyclic/fan-out/resumable/
+  runtime-routed work, must inherit phase gates per node, and must not duplicate
+  the sibling `graph-engineer` skill's work-graph responsibilities.
+
+Changes:
+
+- Added `research/state-graph-adoption-plan.md` (Part 1: adjust the current loop;
+  Part 2: graph mode, syntax, use cases, phased delivery, risks, open decisions).
+- Pointer added to `research/improvement-plan.md`.
+
+No production skill files changed in this pass.
+
+Validation plan:
+
+- `python3 scripts/validate_skill.py .` from a folder named `end-to-end-loop`.
+- `git diff --check`.
