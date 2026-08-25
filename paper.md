@@ -82,3 +82,34 @@ sanitized measurements of success, regressions, evidence completeness, wall
 time, tool calls, tokens where exposed, retries, and human interventions. Until
 that evidence and multi-tool recovery tests exist, production-readiness claims
 remain out of scope.
+
+## 2026-08 state-machine research direction
+
+The loop is already a finite state machine, written as prose: phases are nodes,
+each phase's exit condition is an edge, the two iterate paths are cycles, and the
+`level_3` approval class is an interrupt list in all but name. What it lacks is
+materialization — the state, the routing, the cycle bounds, and the checkpoints
+exist only in an agent's working context, so an interrupted run restarts by
+re-reading policy and improvising.
+
+Research on graph-based agent control flow converges on five directives that
+translate cleanly here without adopting a framework: define the state schema
+first; declare a merge rule (reducer) for every key that accumulates; keep
+routing decisions out of the nodes that do the work; bound every cycle with both
+a global transition ceiling and a per-loop counter that falls back to a named
+escalation route; and persist at trust boundaries so runs resume and pause before
+high-risk actions.
+
+The translation is deliberately minimal: a JSON run artifact, a transition table,
+and dependency-free checking scripts. Taking a dependency on an orchestration
+runtime would trade the skill's portability for machinery those runtimes already
+provide, and the defensible contribution remains the policy layer above them —
+which action is allowed next, what evidence closes a gate, when to stop.
+
+Two claims are explicitly not made yet. First, that making the machine explicit
+improves verified success per unit cost; that requires the baseline-versus-skill
+comparison already scoped as a release gate. Second, that a graph-based operating
+mode is worth its complexity: cyclic, fan-out, resumable, and runtime-routed work
+is a real class, but a mode that costs more than the linear loop on ordinary
+tasks should shrink rather than be defended. Full analysis in
+`research/state-graph-adoption-plan.md`.

@@ -260,3 +260,86 @@ Validation plan:
 - `python3 scripts/validate_skill.py .`.
 - `python3 scripts/test_telemetry_privacy.py`.
 - `git diff --check`.
+
+## 2026-08-25 — State-graph research pass
+
+Goal: evaluate user-supplied research on graph-based state machines and cyclic
+control flow for agentic systems, and decide how it applies to this skill.
+
+Findings:
+
+- The loop is already a finite state machine written as prose; the gap is that
+  state, routing, cycle bounds, and checkpoints are not materialized. This
+  matches the `17/40` competitive assessment, so the research sharpens the
+  existing `alpha.3` backlog rather than opening a new track.
+- Four additions the backlog did not name: key-level reducer semantics,
+  node/router separation, a failure taxonomy for the repair cycle, and
+  interrupt-before as one machine-readable list.
+- `SKILL.md` has 499 body lines against the validator's 500-line body cap (503
+  lines including frontmatter), so core changes must be effectively net-zero on
+  body lines: tables replace prose, detail moves to references.
+- A graph operating mode is justified only for cyclic/fan-out/resumable/
+  runtime-routed work, must inherit phase gates per node, and must not duplicate
+  the sibling `graph-engineer` skill's work-graph responsibilities.
+
+Changes:
+
+- Added `research/state-graph-adoption-plan.md` (Part 1: adjust the current loop;
+  Part 2: graph mode, syntax, use cases, phased delivery, risks, open decisions).
+- Pointer added to `research/improvement-plan.md`.
+
+No production skill files changed in this pass.
+
+Validation plan:
+
+- `python3 scripts/validate_skill.py .` from a folder named `end-to-end-loop`.
+- `git diff --check`.
+
+## 2026-08-25 — v0.1.0-alpha.3 release: documentation consolidation
+
+Goal: bring every document to the same version, status, and direction, then cut a
+release. No production behavior change.
+
+Decisions:
+
+- Cut `v0.1.0-alpha.3` as a documentation and research consolidation release. The
+  executable run-state kernel moves to `v0.1.0-alpha.4`, and the graph-mode
+  delivery phases shift with it (`alpha.5`, `alpha.6`, `0.2.0`).
+- Keep the honest status visible in the README rather than only in the research
+  folder: the `17/40` assessment is linked from "Status & versioning".
+- Leave `SKILL.md` untouched. Its body is 499 lines against the validator's
+  500-line cap, and nothing in this release requires core changes.
+- Record the earlier "no Git remote" blocker as resolved rather than deleting it,
+  so the memory shows what changed.
+
+Changes:
+
+- `VERSION` -> `0.1.0-alpha.3`; `CHANGELOG.md` entry covering the `review-improve`
+  option, the production assessment, and the state-graph plan.
+- `README.md`: version, a link to the honest self-assessment, and a "Where this
+  is going" section naming the kernel milestone and the deferred graph mode.
+- `paper.md`: state-machine research direction, including the two claims not yet
+  made (cost/success improvement, graph-mode value).
+- `memory.md`: state-graph direction block, resolved remote blocker, tag history,
+  and next actions for the kernel and the four open graph-mode decisions.
+- `research/improvement-plan.md`, `research/state-graph-adoption-plan.md`, and an
+  addendum to `research/competitive-production-assessment.md` for the renumbering.
+
+- Merging the release PR was blocked by a repository ruleset requiring a status
+  check named `Validate and test`, which no workflow produced (the job reported
+  as `validate`). Fixed on the workflow side rather than by weakening the rule:
+  the job is named `Validate and test`, and it now also runs `py_compile` and the
+  telemetry privacy self-test so the name matches the work.
+- Copilot review flagged the `SKILL.md` line-count claims. The first round was a
+  real defect (total lines compared against a body-line cap) and was fixed. The
+  follow-up round asserted 504 total / 500 body; that count comes from splitting
+  a newline-terminated file on `"\n"`. Measured values are 503 total and 499
+  body, matching `wc -l` and the validator's own `splitlines()`. Answered on the
+  thread with the evidence; docs unchanged.
+
+Validation:
+
+- `python3 scripts/validate_skill.py .` -> passed.
+- `python3 scripts/test_telemetry_privacy.py` -> passed.
+- `python3 -m py_compile scripts/*.py` -> passed.
+- `git diff --check` -> clean.

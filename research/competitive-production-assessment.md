@@ -194,3 +194,11 @@ only the following vertical slice:
 
 Defer a named multi-agent product, live deployment, broad runtime framework,
 public production claims, and major-version release until the gates above pass.
+
+## Addendum — 2026-08-25
+
+`v0.1.0-alpha.3` was released as a documentation and research consolidation, so
+the vertical slice recommended above now targets **`v0.1.0-alpha.4`**. The scope,
+the `17/40` score, and the mandatory production gates are unchanged; only the
+release number moved. See `research/state-graph-adoption-plan.md` for the sliced
+implementation plan derived from this assessment.
