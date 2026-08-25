@@ -48,8 +48,9 @@ Compact, sanitized learnings for the `end-to-end-loop` skill repository.
   run state, per-key reducers (evidence append-only/immutable, counters
   increment-only), routers separated from phases, iteration ceilings with a named
   ESCALATE fallback, checkpoint/resume, one interrupt-before list.
-- FACT `SKILL.md` is at the validator's 500-line body cap, so core changes must
-  be net-zero on lines: tables replace prose, detail moves to references.
+- FACT `SKILL.md` body is 499 lines against the validator's 500-line body cap
+  (503 lines with frontmatter); the cap counts body only. Core changes must be
+  effectively net-zero on body lines: tables replace prose, detail to references.
 - PREF A graph operating mode stays optional and later: it must inherit phase
   gates per node, must not duplicate work-graph orchestration skills
   (`graph-engineer` owns zones/PRDs/workers; this owns state/cycles/gates), and

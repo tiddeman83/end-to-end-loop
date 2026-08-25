@@ -275,9 +275,9 @@ Findings:
 - Four additions the backlog did not name: key-level reducer semantics,
   node/router separation, a failure taxonomy for the repair cycle, and
   interrupt-before as one machine-readable list.
-- `SKILL.md` is at 503 lines against the validator's 500-line body cap, so core
-  changes must be net-zero on lines: tables replace prose, detail moves to
-  references.
+- `SKILL.md` has 499 body lines against the validator's 500-line body cap (503
+  lines including frontmatter), so core changes must be effectively net-zero on
+  body lines: tables replace prose, detail moves to references.
 - A graph operating mode is justified only for cyclic/fan-out/resumable/
   runtime-routed work, must inherit phase gates per node, and must not duplicate
   the sibling `graph-engineer` skill's work-graph responsibilities.
@@ -307,8 +307,8 @@ Decisions:
   delivery phases shift with it (`alpha.5`, `alpha.6`, `0.2.0`).
 - Keep the honest status visible in the README rather than only in the research
   folder: the `17/40` assessment is linked from "Status & versioning".
-- Leave `SKILL.md` untouched. It sits at 503 lines against the validator's
-  500-line body cap, and nothing in this release requires core changes.
+- Leave `SKILL.md` untouched. Its body is 499 lines against the validator's
+  500-line cap, and nothing in this release requires core changes.
 - Record the earlier "no Git remote" blocker as resolved rather than deleting it,
   so the memory shows what changed.
 

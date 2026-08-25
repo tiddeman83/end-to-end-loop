@@ -90,11 +90,12 @@ Target release: `0.1.0-alpha.4` (replaces and sharpens the slice list in
 
 ### Hard constraint discovered in this pass
 
-`SKILL.md` is **503 lines**; `scripts/validate_skill.py` fails the body over 500
-lines. The core is at its budget. Therefore every slice below is **net-zero or
-net-negative on `SKILL.md` lines**: tables replace prose, and detail moves into
-references. If a slice cannot pay for itself in lines, it ships as a reference
-plus a one-line routing entry.
+`SKILL.md` is **503 lines total, 499 of them body** (everything after the
+frontmatter); `scripts/validate_skill.py` fails when the body exceeds 500. That
+is one line of headroom for eight slices, so every slice below is **net-zero or
+net-negative on `SKILL.md` body lines**: tables replace prose, and detail moves
+into references. If a slice cannot pay for itself in lines, it ships as a
+reference plus a one-line routing entry.
 
 ### Slice A1 — Run-state schema with explicit reducers `level_2`
 
